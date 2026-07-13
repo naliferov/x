@@ -17,11 +17,13 @@ import AssetView from './AssetView.vue'
 const vueModules = import.meta.glob<{ default: Component }>('../scripts/*.vue')
 const vanillaModules = import.meta.glob('../scripts/*.{js,ts}')
 const solidModules = import.meta.glob('../scripts/*.{jsx,tsx}')
-// Docs come in two source formats: hand-authored .html fragments and .md. Both render through the
-// same doc pane — md is compiled to html on load (see renderDoc), so wikilinks, styling, and the
-// edit/save path are shared.
+// Docs come in three source formats: hand-authored .html fragments, .md, and plain .txt. All render
+// through the same doc pane — md is compiled to html on load, txt is escaped into a <pre> (see
+// renderDoc) — so styling and the edit/save path are shared. (.txt.gzip stays a bin: the gzip layer,
+// not the .txt, decides that.)
 const docHtmlModules = import.meta.glob('../data/*.html', { query: '?raw', import: 'default' })
 const docMdModules = import.meta.glob('../data/*.md', { query: '?raw', import: 'default' })
+const docTxtModules = import.meta.glob('../data/*.txt', { query: '?raw', import: 'default' })
 
 const toName = (path: string) =>
   path
@@ -38,7 +40,7 @@ const scripts = [
   .map((s) => ({ ...s, name: toName(s.path) }))
   .sort((a, b) => a.name.localeCompare(b.name))
 
-type DocFormat = 'html' | 'md'
+type DocFormat = 'html' | 'md' | 'txt'
 type Doc = { path: string; name: string; format: DocFormat; load: () => Promise<unknown> }
 const docs: Doc[] = [
   ...Object.keys(docHtmlModules).map((path) => ({
@@ -53,11 +55,24 @@ const docs: Doc[] = [
     format: 'md' as DocFormat,
     load: docMdModules[path],
   })),
+  ...Object.keys(docTxtModules).map((path) => ({
+    path,
+    name: toName(path),
+    format: 'txt' as DocFormat,
+    load: docTxtModules[path],
+  })),
 ].sort((a, b) => a.name.localeCompare(b.name))
 
-// md docs compile to html and render through the same doc pane; html docs pass through untouched.
+const escapeHtml = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+// md compiles to html; txt is escaped into a <pre> (whitespace preserved, long lines wrap); html
+// passes through untouched. All three render through the same doc pane.
 const renderDoc = (source: string, format: DocFormat) =>
-  format === 'md' ? (marked.parse(source) as string) : source
+  format === 'md'
+    ? (marked.parse(source) as string)
+    : format === 'txt'
+      ? `<pre class="doc-txt">${escapeHtml(source)}</pre>`
+      : source
 
 const filter = ref('')
 const matches = (name: string) => name.toLowerCase().includes(filter.value.trim().toLowerCase())
@@ -66,12 +81,13 @@ const visibleDocs = computed(() => docs.filter((d) => matches(d.name)))
 
 // bins share the flat data/ dir with docs — import.meta.glob imports each as a URL (?url), giving us
 // the list + fingerprinted URLs at build time (no manifest). Type is inferred from the content
-// extension; the type-aware viewer (AssetView) renders it (txt, fb2 as a book, images/media as
-// elements, else a download link). The extensions are enumerated (not a bare data/*) so the .md/.html
-// docs living in the same dir aren't emitted as dead url assets or listed as bins — keep this set in
-// sync with binType below. A trailing .gz/.gzip matches via the gz/gzip entries.
+// extension; the type-aware viewer (AssetView) renders it (csv/log/json as text, fb2 as a book,
+// images/media as elements, else a download link). The extensions are enumerated (not a bare data/*)
+// so the .md/.html/.txt docs living in the same dir aren't emitted as dead url assets or listed as
+// bins. Plain .txt is a DOC, but a gzipped .txt.gzip is a bin — matched here via the gz/gzip entries
+// and typed 'txt' by binType (which strips the .gzip layer first).
 const binModules = import.meta.glob(
-  '../data/*.{txt,csv,log,json,fb2,png,jpg,jpeg,gif,webp,avif,svg,opus,mp3,ogg,wav,m4a,flac,aac,mp4,webm,mov,mkv,gz,gzip}',
+  '../data/*.{csv,log,json,fb2,png,jpg,jpeg,gif,webp,avif,svg,opus,mp3,ogg,wav,m4a,flac,aac,mp4,webm,mov,mkv,gz,gzip}',
   { query: '?url', import: 'default', eager: true },
 ) as Record<string, string>
 // Type by CONTENT. A trailing .gz/.gzip is a transparent compression layer — stripped here, inflated
@@ -470,6 +486,11 @@ if (import.meta.hot) {
   border-radius: 6px;
   overflow-x: auto;
   margin: 0.8em 0;
+}
+/* a whole .txt doc renders as one <pre>; wrap long lines instead of scrolling the page. */
+.doc pre.doc-txt {
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 .doc blockquote {
   border-left: 3px solid color-mix(in oklab, currentColor 25%, transparent);

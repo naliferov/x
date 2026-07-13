@@ -8,11 +8,11 @@ import { fileURLToPath } from 'node:url'
 
 // Dev-only writer for the in-app doc editor: POST /__save-doc?name=<doc>&ext=<html|md> writes the
 // body to data/<doc>.<ext>. apply:'serve' keeps it out of the static build (which stays read-only);
-// the name is confined to data/ so a crafted name can't escape the folder. Docs (.html fragments and
-// .md) share the flat data/ dir with bins; docFormatOf gates this writer to md/html only.
+// the name is confined to data/ so a crafted name can't escape the folder. Docs (.html fragments, .md,
+// and plain .txt) share the flat data/ dir with bins; docFormatOf gates this writer to those three.
 const dataDir = resolve(fileURLToPath(new URL('./data', import.meta.url)))
 const docFormatOf = (file: string) =>
-  file.endsWith('.md') ? 'md' : file.endsWith('.html') ? 'html' : null
+  file.endsWith('.md') ? 'md' : file.endsWith('.html') ? 'html' : file.endsWith('.txt') ? 'txt' : null
 const saveDoc = (): Plugin => ({
   name: 'ocraft-save-doc',
   apply: 'serve',
@@ -35,7 +35,8 @@ const saveDoc = (): Plugin => ({
       if (req.method !== 'POST' || !req.url?.startsWith('/__save-doc')) return next()
       const params = new URL(req.url, 'http://localhost').searchParams
       const name = params.get('name') ?? ''
-      const ext = params.get('ext') === 'md' ? 'md' : 'html'
+      const raw = params.get('ext') ?? ''
+      const ext = raw === 'md' || raw === 'txt' ? raw : 'html'
       const file = resolve(dataDir, `${name}.${ext}`)
       if (!name || name.includes('/') || name.includes('\\') || !file.startsWith(dataDir + sep)) {
         res.statusCode = 400
