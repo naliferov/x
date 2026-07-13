@@ -7,10 +7,10 @@ import { resolve, sep, basename } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 // Dev-only writer for the in-app doc editor: POST /__save-doc?name=<doc>&ext=<html|md> writes the
-// body to docs/<doc>.<ext>. apply:'serve' keeps it out of the static build (which stays read-only);
-// the name is confined to docs/ so a crafted name can't escape the folder. Docs come in two source
-// formats — .html fragments and .md — and both flow through the same edit/save path.
-const docsDir = resolve(fileURLToPath(new URL('./docs', import.meta.url)))
+// body to data/<doc>.<ext>. apply:'serve' keeps it out of the static build (which stays read-only);
+// the name is confined to data/ so a crafted name can't escape the folder. Docs (.html fragments and
+// .md) share the flat data/ dir with bins; docFormatOf gates this writer to md/html only.
+const dataDir = resolve(fileURLToPath(new URL('./data', import.meta.url)))
 const docFormatOf = (file: string) =>
   file.endsWith('.md') ? 'md' : file.endsWith('.html') ? 'html' : null
 const saveDoc = (): Plugin => ({
@@ -21,7 +21,7 @@ const saveDoc = (): Plugin => ({
   // patches just the open doc, compiling md as needed) and return [] to cancel the default re-render.
   async handleHotUpdate({ file, read, server }) {
     const format = docFormatOf(file)
-    if (!file.startsWith(docsDir + sep) || !format) return
+    if (!file.startsWith(dataDir + sep) || !format) return
     const source = await read()
     server.ws.send({
       type: 'custom',
@@ -36,8 +36,8 @@ const saveDoc = (): Plugin => ({
       const params = new URL(req.url, 'http://localhost').searchParams
       const name = params.get('name') ?? ''
       const ext = params.get('ext') === 'md' ? 'md' : 'html'
-      const file = resolve(docsDir, `${name}.${ext}`)
-      if (!name || name.includes('/') || name.includes('\\') || !file.startsWith(docsDir + sep)) {
+      const file = resolve(dataDir, `${name}.${ext}`)
+      if (!name || name.includes('/') || name.includes('\\') || !file.startsWith(dataDir + sep)) {
         res.statusCode = 400
         res.end('bad doc name')
         return
@@ -53,10 +53,10 @@ const saveDoc = (): Plugin => ({
   },
 })
 
-// Bins (frontend/bins/*) need no plugin: App.vue discovers them with import.meta.glob('../bins/*',
-// { query: '?url' }), exactly like docs/scripts — Vite emits each as a fingerprinted asset and hands
-// the client its URL at build time. Type is inferred from the extension there. No manifest, no
-// middleware, no copy step.
+// Bins need no plugin: App.vue discovers them with import.meta.glob over frontend/data/ (the flat
+// content dir they share with docs), { query: '?url' } — Vite emits each as a fingerprinted asset
+// and hands the client its URL at build time. Type is inferred from the extension there. No manifest,
+// no middleware, no copy step.
 
 // Scripts are .vue files under ./scripts, compiled by Vite and discovered via import.meta.glob in
 // App.vue — no runtime engine. Devlab itself is offline; the /api and /ws proxies below exist only

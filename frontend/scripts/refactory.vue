@@ -14,11 +14,11 @@
 // - absolute t5:8 still works and also advances the time cursor
 // - i<id>/v<id> pull media from ocraft nodes via the /api proxy; i<name>/v<name> from /api/bin
 //
-// Sources: plain files in scripts/data/*.txt, loaded by NAME (refactory-demo lives there).
+// Sources: plain files in frontend/data/*.txt, loaded by NAME (refactory-demo lives there).
 // No node ids. Media inside a program (i<id>/v<name>) still resolves via the /api proxy.
 import { ref, onMounted, onUnmounted } from 'vue'
 
-const localSources = import.meta.glob('./data/*.txt', {
+const localSources = import.meta.glob('../data/*.txt', {
   query: '?raw',
   import: 'default',
   eager: true,
@@ -404,7 +404,7 @@ const createStage = (host: HTMLElement, src: string) => {
   return clock()
 }
 
-// --- app mode: load a vlang source by data-file NAME (scripts/data/*.txt), edit / run ---
+// --- app mode: load a vlang source by data-file NAME (frontend/data/*.txt), edit / run ---
 // No node ids: sources are plain files. Editing the buffer + run is ephemeral; to persist,
 // edit the file on disk (dev HMR reloads it).
 const STORE_KEY = 'devlab.vlang-app.source' // last loaded file name — survives reloads
@@ -440,7 +440,7 @@ const load = (name: string) => {
   nameField.value = entry.name
   localStorage.setItem(STORE_KEY, entry.name)
   source.value = localSources[entry.path]
-  status.value = `loaded ${entry.name} (edit scripts/data/${entry.name}.txt to persist)`
+  status.value = `loaded ${entry.name} (edit data/${entry.name}.txt to persist)`
   rebuild()
 }
 

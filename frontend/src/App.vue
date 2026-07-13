@@ -20,8 +20,8 @@ const solidModules = import.meta.glob('../scripts/*.{jsx,tsx}')
 // Docs come in two source formats: hand-authored .html fragments and .md. Both render through the
 // same doc pane — md is compiled to html on load (see renderDoc), so wikilinks, styling, and the
 // edit/save path are shared.
-const docHtmlModules = import.meta.glob('../docs/*.html', { query: '?raw', import: 'default' })
-const docMdModules = import.meta.glob('../docs/*.md', { query: '?raw', import: 'default' })
+const docHtmlModules = import.meta.glob('../data/*.html', { query: '?raw', import: 'default' })
+const docMdModules = import.meta.glob('../data/*.md', { query: '?raw', import: 'default' })
 
 const toName = (path: string) =>
   path
@@ -64,15 +64,16 @@ const matches = (name: string) => name.toLowerCase().includes(filter.value.trim(
 const visibleScripts = computed(() => scripts.filter((s) => matches(s.name)))
 const visibleDocs = computed(() => docs.filter((d) => matches(d.name)))
 
-// bins (frontend/bins/*) are discovered exactly like docs/scripts — import.meta.glob imports each
-// file as a URL (?url), giving us the list + fingerprinted URLs at build time (no manifest). Type
-// is inferred from the content extension; the type-aware viewer (AssetView) renders it (txt, fb2 as
-// a book, images/media as elements, else a download link).
-const binModules = import.meta.glob('../bins/*', {
-  query: '?url',
-  import: 'default',
-  eager: true,
-}) as Record<string, string>
+// bins share the flat data/ dir with docs — import.meta.glob imports each as a URL (?url), giving us
+// the list + fingerprinted URLs at build time (no manifest). Type is inferred from the content
+// extension; the type-aware viewer (AssetView) renders it (txt, fb2 as a book, images/media as
+// elements, else a download link). The extensions are enumerated (not a bare data/*) so the .md/.html
+// docs living in the same dir aren't emitted as dead url assets or listed as bins — keep this set in
+// sync with binType below. A trailing .gz/.gzip matches via the gz/gzip entries.
+const binModules = import.meta.glob(
+  '../data/*.{txt,csv,log,json,fb2,png,jpg,jpeg,gif,webp,avif,svg,opus,mp3,ogg,wav,m4a,flac,aac,mp4,webm,mov,mkv,gz,gzip}',
+  { query: '?url', import: 'default', eager: true },
+) as Record<string, string>
 // Type by CONTENT. A trailing .gz/.gzip is a transparent compression layer — stripped here, inflated
 // on load (see AssetView) — NOT part of the type. So foo.txt.gzip is 'txt', foo.fb2.gzip is 'fb2'.
 const binType = (path: string) => {

@@ -2,7 +2,7 @@
 import { ref, computed, watch, nextTick } from 'vue'
 import { fb2ToHtml, decodeFb2 } from './fb2'
 
-// Renders one bin item by its content type. Files live in frontend/bins (fetched on demand). A
+// Renders one bin item by its content type. Files live in frontend/data (fetched on demand). A
 // .gz/.gzip suffix is a TRANSPARENT compression layer — inflated in-browser via DecompressionStream
 // (see isGzipped), independent of type: both txt and fb2 handle it. fb2 books are parsed + rendered
 // with a saved scroll position; images/audio/video get a native element; else a download link.
