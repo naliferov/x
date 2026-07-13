@@ -404,9 +404,10 @@ const createStage = (host: HTMLElement, src: string) => {
   return clock()
 }
 
-// --- app mode: load a vlang source by data-file NAME (frontend/data/*.txt), edit / run ---
-// No node ids: sources are plain files. Editing the buffer + run is ephemeral; to persist,
-// edit the file on disk (dev HMR reloads it).
+// --- app mode: load a vlang source by data-file NAME (frontend/data/*.txt), edit / save / run ---
+// Sources are plain files. The buffer edits live; `run` re-renders the stage; `save` writes the
+// buffer back to frontend/data/<name>.txt via the dev /__save-doc middleware (the same path the doc
+// editor uses — .txt is a doc format now). Typing a new name then saving creates a new source.
 const STORE_KEY = 'devlab.vlang-app.source' // last loaded file name — survives reloads
 // starter state — small canvas so the stage is never blank (also a live tx demo)
 const INIT_SRC = 'p w250 h250 b#1a1a1a\ntx x20 y110 s24 c#888 "vlang"'
@@ -440,7 +441,7 @@ const load = (name: string) => {
   nameField.value = entry.name
   localStorage.setItem(STORE_KEY, entry.name)
   source.value = localSources[entry.path]
-  status.value = `loaded ${entry.name} (edit data/${entry.name}.txt to persist)`
+  status.value = `loaded ${entry.name}`
   rebuild()
 }
 
@@ -450,6 +451,27 @@ const clear = () => {
   status.value = ''
   source.value = INIT_SRC
   rebuild()
+}
+
+// Persist the buffer to frontend/data/<name>.txt (dev only — the middleware isn't served in a build).
+const canSave = import.meta.env.DEV
+const save = async () => {
+  const name = nameField.value.trim()
+  if (!name) {
+    status.value = 'name the file first, then save'
+    return
+  }
+  try {
+    const res = await fetch(`/__save-doc?name=${encodeURIComponent(name)}&ext=txt`, {
+      method: 'POST',
+      body: source.value,
+    })
+    if (!res.ok) throw new Error((await res.text()) || `save failed (${res.status})`)
+    localStorage.setItem(STORE_KEY, name)
+    status.value = `saved data/${name}.txt ✓`
+  } catch (err: any) {
+    status.value = err.message
+  }
 }
 
 onMounted(() => {
@@ -496,12 +518,13 @@ onUnmounted(() => {
           v-model="source"
           name="vlang-source"
           spellcheck="false"
-          class="textarea textarea-bordered min-h-[180px] flex-1 resize-y font-mono text-[12.5px] leading-relaxed whitespace-pre"
+          class="textarea textarea-bordered min-h-[520px] flex-1 resize-y font-mono text-[13.5px] leading-relaxed whitespace-pre"
           placeholder="load a source…"
           @keydown.enter.exact.prevent="rebuild"
         ></textarea>
         <div class="flex items-center gap-2">
           <button class="btn btn-sm btn-primary" @click="rebuild">run</button>
+          <button v-if="canSave" class="btn btn-sm" @click="save">save</button>
           <button class="btn btn-sm" @click="clear">clear</button>
           <span class="text-sm opacity-60">{{ status }}</span>
         </div>
