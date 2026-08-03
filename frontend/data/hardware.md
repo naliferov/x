@@ -56,4 +56,4 @@ watch [https://rozetka.com.ua/ua/casio-309578/p359601027/](https://rozetka.com.u
 [aerodynamics](/doc/aerodynamics)  
 [flight dynamics](/doc/flight-dynamics)  
 [desktop assemble](/doc/desktop-assemble)  
-[instruments](/doc/instruments)
+[ableton instruments](/doc/ableton-instruments)

@@ -1,5 +1,3 @@
-# music artists list
-
 - 5'nizza
 - 50 cent
 - 55 escape

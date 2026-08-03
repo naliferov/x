@@ -84,8 +84,16 @@ watch(
 const lines = computed(() => (text.value ? text.value.split('\n') : []))
 const CAP = 1000 // filter first, then cap what we paint
 const view = computed(() => {
+  // prefix match: the query starts a word on the line, so "кав" hits "кава" but not "заковика"
   const q = filter.value.trim().toLowerCase()
-  const hits = q ? lines.value.filter((line) => line.toLowerCase().includes(q)) : lines.value
+  const hits = q
+    ? lines.value.filter((line) =>
+        line
+          .toLowerCase()
+          .split(/[^\p{L}\p{N}'’-]+/u)
+          .some((word) => word.startsWith(q)),
+      )
+    : lines.value
   return { total: hits.length, rows: hits.slice(0, CAP) }
 })
 </script>

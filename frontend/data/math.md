@@ -1,4 +1,4 @@
-Number systems, arithmetic, sets, lambda calculus. numbers; equations; symbolic algebra; group, ring, module, field; analysis (calculus) sections: foundations, arithmetic, algebra, analysis, combinatorics, geometry and topology, applied mathematics
+number systems, arithmetic, sets, lambda calculus. numbers; equations; symbolic algebra; group, ring, module, field; analysis (calculus) sections: foundations, arithmetic, algebra, analysis, combinatorics, geometry and topology, applied mathematics
 
 ## Geometry
 

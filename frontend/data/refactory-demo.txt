@@ -1,14 +1,3 @@
 p w540 h960 b#eaeaea
 
-//o x0 y750 w540 h210 b#ff000030
-//o x475 y300 w65 h450 b#ff000030
-//o x0 y0 w540 h125 b#ff000030
-
-//tx x60 y450 s60 cblack "це потяг?" t1:3
-//tx x60 y450 s60 cblack "чи не потяг?" t4:6
-
-//o x10 y70 w30 h30 bgreen my15
-//o x10 y10 w30 h30 bred mx-15
-//igos x50 y120 w80 t1:2
-//vtitanic x20 y5 w200 c695:720 t>
-//vtitanic s x20 y135 w200 c800:810 t>
+o x10 y70 w30 h30 bgreen

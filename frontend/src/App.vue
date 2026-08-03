@@ -12,7 +12,37 @@ import {
   type PropType,
 } from 'vue'
 import { marked } from 'marked'
+import { markedHighlight } from 'marked-highlight'
+import hljs from 'highlight.js/lib/core'
+import javascript from 'highlight.js/lib/languages/javascript'
+import typescript from 'highlight.js/lib/languages/typescript'
+import bash from 'highlight.js/lib/languages/bash'
+import sql from 'highlight.js/lib/languages/sql'
+import json from 'highlight.js/lib/languages/json'
+import ini from 'highlight.js/lib/languages/ini'
+import xml from 'highlight.js/lib/languages/xml'
+import css from 'highlight.js/lib/languages/css'
+import 'highlight.js/styles/github-dark.css'
 import AssetView from './AssetView.vue'
+
+hljs.registerLanguage('javascript', javascript)
+hljs.registerLanguage('typescript', typescript)
+hljs.registerLanguage('bash', bash)
+hljs.registerLanguage('sql', sql)
+hljs.registerLanguage('json', json)
+hljs.registerLanguage('ini', ini)
+hljs.registerLanguage('xml', xml)
+hljs.registerLanguage('css', css)
+
+marked.use(
+  markedHighlight({
+    langPrefix: 'hljs language-',
+    highlight(code, lang) {
+      const language = hljs.getLanguage(lang) ? lang : 'plaintext'
+      return hljs.highlight(code, { language }).value
+    },
+  }),
+)
 
 const vueModules = import.meta.glob<{ default: Component }>('../scripts/*.vue')
 const vanillaModules = import.meta.glob('../scripts/*.{js,ts}')
@@ -415,7 +445,7 @@ if (import.meta.hot) {
         ></textarea>
         <article v-else class="doc" @click="onContentClick" v-html="activeHtml"></article>
       </div>
-      <div v-else-if="activeComponent || activeMount" :key="'run:' + activeUrl" class="p-6">
+      <div v-else-if="activeComponent || activeMount" :key="'run:' + activeUrl" class="h-full p-6">
         <component :is="activeComponent" v-if="activeComponent" />
         <HostMount v-else :mount="activeMount!" />
       </div>
@@ -441,7 +471,10 @@ if (import.meta.hot) {
 }
 .doc h1,
 .doc h2,
-.doc h3 {
+.doc h3,
+.doc h4,
+.doc h5,
+.doc h6 {
   font-weight: 700;
   margin: 1.2em 0 0.5em;
 }
@@ -453,6 +486,15 @@ if (import.meta.hot) {
 }
 .doc h3 {
   font-size: 1.1rem;
+}
+.doc h4 {
+  font-size: 1rem;
+}
+.doc h5 {
+  font-size: 0.95rem;
+}
+.doc h6 {
+  font-size: 0.9rem;
 }
 .doc p {
   margin: 0.6em 0;
@@ -486,6 +528,17 @@ if (import.meta.hot) {
   border-radius: 6px;
   overflow-x: auto;
   margin: 0.8em 0;
+}
+/* highlighted fences: let the hljs theme own the box (bg/color); .txt <pre> keeps the styling above */
+.doc pre:has(code.hljs) {
+  background: transparent;
+  padding: 0;
+}
+.doc pre code.hljs {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 6px;
+  overflow-x: auto;
 }
 /* a whole .txt doc renders as one <pre>; wrap long lines instead of scrolling the page. */
 .doc pre.doc-txt {

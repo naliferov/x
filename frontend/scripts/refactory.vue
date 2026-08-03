@@ -28,10 +28,11 @@ const localNames = Object.keys(localSources).map((p) => ({
   name: p.split('/').pop()!.replace(/\.txt$/, ''),
 }))
 
-const createStage = (host: HTMLElement, src: string) => {
+const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) => {
   let canvas: HTMLCanvasElement | null = null
   let ctx: CanvasRenderingContext2D = null as any
   let p: any = null // the page { w, h, bg, d } — set by the p instruction
+  let fitObserver: ResizeObserver | null = null
   const items: any[] = [] // draw list, in program order
 
   const defaults = () => ({
@@ -123,10 +124,11 @@ const createStage = (host: HTMLElement, src: string) => {
 
   const place = (kind: string, el: any, opts: any) => {
     if (!canvas) throw new Error('p w<N> h<N> must come first')
-    if (!opts.w) throw new Error('w<N> required')
+    if (!opts.w && !el) throw new Error('w<N> required')
+    const autoW = !opts.w // media falls back to the source's natural width once loaded (see draw)
     const autoH = !opts.h // media resolves it from the source aspect once loaded (see draw)
     if (autoH) opts.h = opts.w
-    items.push({ kind, el, autoH, ...opts })
+    items.push({ kind, el, autoW, autoH, ...opts })
   }
 
   const page = (opts: any) => {
@@ -138,10 +140,24 @@ const createStage = (host: HTMLElement, src: string) => {
     const dpr = window.devicePixelRatio || 1
     canvas.width = p.w * dpr
     canvas.height = p.h * dpr
-    canvas.style.cssText = `width:${p.w}px;height:${p.h}px`
     ctx = canvas.getContext('2d')!
     ctx.scale(dpr, dpr)
     host.append(canvas)
+
+    // The stage box owns the height; the canvas is scaled down to fit it (never up past the
+    // page's own logical size) and its width follows, so the column claims no more than it draws.
+    const el = canvas
+    const fit = () => {
+      const scale = Math.min(host.clientHeight / p.h, 1)
+      const width = `${Math.round(p.w * scale)}px`
+      if (el.style.width !== width) {
+        el.style.width = width
+        el.style.height = `${Math.round(p.h * scale)}px`
+      }
+    }
+    fit()
+    fitObserver = new ResizeObserver(fit)
+    fitObserver.observe(host)
   }
 
   const object = (opts: any) => {
@@ -206,10 +222,13 @@ const createStage = (host: HTMLElement, src: string) => {
       if (it.t && (elapsed < it.t.start || (it.t.end !== null && elapsed >= it.t.end))) {
         continue
       }
-      if (it.autoH && it.el) {
+      if ((it.autoW || it.autoH) && it.el) {
         const srcW = it.el.videoWidth || it.el.naturalWidth
         const srcH = it.el.videoHeight || it.el.naturalHeight
-        if (srcW) it.h = (it.w * srcH) / srcW
+        if (srcW) {
+          if (it.autoW) it.w = srcW
+          if (it.autoH) it.h = (it.w * srcH) / srcW
+        }
       }
       if (it.kind === 'text') {
         ctx.font = `${it.size}px sans-serif`
@@ -315,9 +334,9 @@ const createStage = (host: HTMLElement, src: string) => {
     const button = (label: string, onClick: () => void) => {
       const btn = document.createElement('button')
       btn.textContent = label
-      btn.className = 'btn btn-sm self-end'
+      btn.className = 'btn btn-sm'
       btn.onclick = onClick
-      host.append(btn)
+      controlsHost.append(btn)
       return btn
     }
 
@@ -334,7 +353,7 @@ const createStage = (host: HTMLElement, src: string) => {
     const seekField = document.createElement('input')
     seekField.placeholder = 'seconds'
     seekField.title = 'jump to second'
-    seekField.className = 'input input-sm input-bordered w-20 self-end'
+    seekField.className = 'input input-sm input-bordered w-20'
     seekField.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         const T = Number(seekField.value)
@@ -343,7 +362,7 @@ const createStage = (host: HTMLElement, src: string) => {
         }
       }
     })
-    host.append(seekField)
+    controlsHost.append(seekField)
 
     if (p.d) {
       const renderBtn = button('render', () => {
@@ -371,6 +390,7 @@ const createStage = (host: HTMLElement, src: string) => {
     play()
     return () => {
       cancelAnimationFrame(raf!)
+      fitObserver?.disconnect()
       pause()
       for (const it of videos) {
         // abort the network request too — a stalled load otherwise holds a connection
@@ -400,6 +420,7 @@ const createStage = (host: HTMLElement, src: string) => {
   for (const line of src.split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('//'))) {
     exec(line)
   }
+  if (!p) throw new Error('no page — start with p w<N> h<N>')
   resolveSchedule()
   return clock()
 }
@@ -416,6 +437,7 @@ const nameField = ref('')
 const source = ref('')
 const status = ref('')
 const stageEl = ref<HTMLElement>()
+const controlsEl = ref<HTMLElement>()
 
 let stopStage: (() => void) | null = null
 
@@ -425,8 +447,9 @@ const rebuild = () => {
     stopStage = null
   }
   stageEl.value!.replaceChildren()
+  controlsEl.value!.replaceChildren()
   try {
-    stopStage = createStage(stageEl.value!, source.value)
+    stopStage = createStage(stageEl.value!, controlsEl.value!, source.value)
   } catch (err: any) {
     status.value = err.message
   }
@@ -494,8 +517,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-3">
-    <div class="flex items-center gap-2">
+  <div class="flex h-full flex-col gap-3">
+    <div class="flex flex-wrap items-center gap-2">
       <input
         v-model="nameField"
         name="vlang-source-name"
@@ -511,18 +534,23 @@ onUnmounted(() => {
         {{ l.name }}
       </button>
     </div>
-    <div class="flex items-start gap-3">
-      <div ref="stageEl" class="flex items-start gap-2"></div>
-      <div class="flex min-w-[220px] flex-1 flex-col gap-2">
+    <div class="flex min-h-0 flex-1 gap-3">
+      <!-- no canvas (no p, or the program threw) = no stage: the column drops out and the editor takes the row -->
+      <div class="flex min-h-0 shrink-0 flex-col gap-2 not-has-[canvas]:hidden">
+        <div ref="stageEl" class="flex min-h-0 flex-1 items-stretch"></div>
+        <div ref="controlsEl" class="flex shrink-0 items-center gap-2"></div>
+      </div>
+      <div class="flex min-h-0 min-w-[220px] flex-1 flex-col gap-2">
         <textarea
           v-model="source"
           name="vlang-source"
           spellcheck="false"
-          class="textarea textarea-bordered min-h-[520px] flex-1 resize-y font-mono text-[13.5px] leading-relaxed whitespace-pre"
+          class="textarea textarea-bordered min-h-0 w-full flex-1 resize-none font-mono text-[13.5px] leading-relaxed whitespace-pre"
           placeholder="load a source…"
-          @keydown.enter.exact.prevent="rebuild"
+          @keydown.ctrl.enter.prevent="rebuild"
+          @keydown.meta.enter.prevent="rebuild"
         ></textarea>
-        <div class="flex items-center gap-2">
+        <div class="flex shrink-0 items-center gap-2">
           <button class="btn btn-sm btn-primary" @click="rebuild">run</button>
           <button v-if="canSave" class="btn btn-sm" @click="save">save</button>
           <button class="btn btn-sm" @click="clear">clear</button>

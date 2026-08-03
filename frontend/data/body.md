@@ -12,22 +12,16 @@
 - видеть усталость
 - ловить зажимы
 
+**скраб + тоник**
+
+https://www.ubrand-ua.com/product-page/scalp-tonic-scalp-scrub
+
 **головной убор:**
 
 - https://prof1group.ua/shapka-formennaya-amerikanskaya-navy-us-sailor-hat-010-white
 - https://without.com.ua/ru/cholovicha-panamka-transformer-z-shnurkom-without-shadow-gray
 
-**шорты:**
-
-- https://7mntns.com/trykotazhni-shorty-shyrokoho-kroiu/9641/
-- https://www.staff-clothes.com/product/9qn0367/
-- https://prof1group.ua/sorty-airborne-vintage-shorts-07-3598-42
-
-**майка:**
-
-- https://7mntns.com/man/t-shirt/6153/
-
-**поясна сумка:**
+**рюкзак:**
 
 - https://rozetka.com.ua/ua/391998084/p391998084/
 
@@ -60,6 +54,7 @@
 **рубашка:**
 
 - https://dom-online.com.ua/p2322680059-rubashka-morskaya-mil.html
+- https://out.com.ua/index.php?route=product/product&path=92_114_145&product_id=42490
 
 **обувь:**
 

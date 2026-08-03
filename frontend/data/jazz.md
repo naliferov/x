@@ -1,1 +1,0 @@
-1890s – 1910s Ragtime 1910s – 1920s Traditional Jazz / Dixieland 1930s – 1940s Swing 1940s - Bebop 1940s – 1950s - Cool Jazz 1950s - Hard Bop 1950s – 1960s - Modal Jazz 1960s Free Jazz 1970s Jazz Fusion 1950s – present - Latin Jazz 1980s – present - Smooth Jazz 1960s – present - Avant-Garde Jazz 1990s – present - Nu Jazz
