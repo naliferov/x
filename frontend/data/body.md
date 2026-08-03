@@ -19,7 +19,6 @@ https://www.ubrand-ua.com/product-page/scalp-tonic-scalp-scrub
 **головной убор:**
 
 - https://prof1group.ua/shapka-formennaya-amerikanskaya-navy-us-sailor-hat-010-white
-- https://without.com.ua/ru/cholovicha-panamka-transformer-z-shnurkom-without-shadow-gray
 
 **рюкзак:**
 
