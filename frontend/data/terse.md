@@ -52,4 +52,4 @@ TurboScript is a TypeScript-like language that **compiles to WebAssembly** and h
 
 - **Compile-to-WASM path** — once terse has fixed-width types, a backend that emits WebAssembly gives near-native speed for hot paths. terse stays the _expressive/safe interpreter_ end; this is the _typed/compiled_ end.
 
-Related: turboscript · [programming languages](/doc/programming-languages)
+Related: turboscript · [programming languages](/doc/programming-languages) · [live-runtime](/doc/live-runtime)
