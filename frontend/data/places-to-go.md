@@ -12,3 +12,5 @@ drawing
 photography  
 piano  
 yoga
+
+[meetup formats](/doc/meetup-formats) - придумані формати зустрічей

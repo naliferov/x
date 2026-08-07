@@ -72,3 +72,23 @@ Relationships - channels, not a foundation There is the resource “work,” and
 high interest, imdb youtube, notepad, variable constellation of method, category, the topology of clean streets electricity, short circuit, on a short circuit) connection, short, tight, compression
 
 [words](/node/109) words trip like imaginary trip
+
+ДРУГОЕ
+
+The Backward Law - Как реактивное движение к цели отдаляет тебя от цели.
+
+усилие во времени
+
+акт акта
+
+плотина
+
+что бы там ни было, ты можешь
+
+большой взрыв
+
+маневры su-57
+
+умеренный образ + работа над собой
+
+присутствие в качестве присутствия?

@@ -114,6 +114,9 @@ teatr-studiya 11 — 4.7, theater company, 099 774 5203
 teatr-studiya beat — 5.0, theater company, 050 380 7654  
 often find there: rehearsals, showcases, hanging out afterward  
   
+**фільмо ідеї**  
+Їдуть в автое
+
 [concept db](/doc/vlang) — collects not references, but language  
   
 [top 500 movies](/doc/top-500-movies)  

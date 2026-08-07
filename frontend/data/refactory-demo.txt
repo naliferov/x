@@ -1,3 +1,9 @@
 p w540 h960 b#eaeaea
 
 o x10 y70 w30 h30 bgreen
+
+//o x10 y70 w30 h30 bgreen my10
+//igos x50 y120 w80 t0:4
+//vtitanic x50 y200 w400 c695:720 t>
+//vtitanic s x20 y135 w200 c800:810 t>
+//tx x60 y550 s60 cblack "це потяг?" t1:3
