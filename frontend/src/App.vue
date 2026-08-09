@@ -47,10 +47,6 @@ marked.use(
 const vueModules = import.meta.glob<{ default: Component }>('../scripts/*.vue')
 const vanillaModules = import.meta.glob('../scripts/*.{js,ts}')
 const solidModules = import.meta.glob('../scripts/*.{jsx,tsx}')
-// Docs come in three source formats: hand-authored .html fragments, .md, and plain .txt. All render
-// through the same doc pane — md is compiled to html on load, txt is escaped into a <pre> (see
-// renderDoc) — so styling and the edit/save path are shared. (.txt.gzip stays a bin: the gzip layer,
-// not the .txt, decides that.)
 const docHtmlModules = import.meta.glob('../data/*.html', { query: '?raw', import: 'default' })
 const docMdModules = import.meta.glob('../data/*.md', { query: '?raw', import: 'default' })
 const docTxtModules = import.meta.glob('../data/*.txt', { query: '?raw', import: 'default' })
@@ -95,8 +91,7 @@ const docs: Doc[] = [
 
 const escapeHtml = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-// md compiles to html; txt is escaped into a <pre> (whitespace preserved, long lines wrap); html
-// passes through untouched. All three render through the same doc pane.
+
 const renderDoc = (source: string, format: DocFormat) =>
   format === 'md'
     ? (marked.parse(source) as string)
@@ -109,19 +104,11 @@ const matches = (name: string) => name.toLowerCase().includes(filter.value.trim(
 const visibleScripts = computed(() => scripts.filter((s) => matches(s.name)))
 const visibleDocs = computed(() => docs.filter((d) => matches(d.name)))
 
-// bins share the flat data/ dir with docs — import.meta.glob imports each as a URL (?url), giving us
-// the list + fingerprinted URLs at build time (no manifest). Type is inferred from the content
-// extension; the type-aware viewer (AssetView) renders it (csv/log/json as text, fb2 as a book,
-// images/media as elements, else a download link). The extensions are enumerated (not a bare data/*)
-// so the .md/.html/.txt docs living in the same dir aren't emitted as dead url assets or listed as
-// bins. Plain .txt is a DOC, but a gzipped .txt.gzip is a bin — matched here via the gz/gzip entries
-// and typed 'txt' by binType (which strips the .gzip layer first).
 const binModules = import.meta.glob(
   '../data/*.{csv,log,json,fb2,png,jpg,jpeg,gif,webp,avif,svg,opus,mp3,ogg,wav,m4a,flac,aac,mp4,webm,mov,mkv,gz,gzip}',
   { query: '?url', import: 'default', eager: true },
 ) as Record<string, string>
-// Type by CONTENT. A trailing .gz/.gzip is a transparent compression layer — stripped here, inflated
-// on load (see AssetView) — NOT part of the type. So foo.txt.gzip is 'txt', foo.fb2.gzip is 'fb2'.
+
 const binType = (path: string) => {
   const name = path.toLowerCase().replace(/\.(gz|gzip)$/, '')
   if (/\.(txt|md|csv|log|json)$/.test(name)) return 'txt'
@@ -143,7 +130,6 @@ const bins: Bin[] = Object.entries(binModules)
   .sort((a, b) => a.name.localeCompare(b.name))
 const visibleBins = computed(() => bins.filter((a) => matches(a.name)))
 
-// --- script mounting (non-Vue kinds get a host <div> + cleanup lifecycle) ---
 type MountFn = (host: HTMLElement) => Promise<(() => void) | undefined>
 
 const HostMount = defineComponent({
@@ -174,7 +160,6 @@ const mountSolid =
     return render((mod as { default: () => any }).default, host)
   }
 
-// --- selection: /script/<name> or /doc/<name> ---
 const activeUrl = ref<string | null>(null) // '/script/x' | '/doc/x'
 const activeComponent = shallowRef<Component | null>(null)
 const activeMount = shallowRef<MountFn | null>(null)
@@ -184,7 +169,6 @@ const activeDocFormat = ref<DocFormat>('html')
 const activeBin = shallowRef<Bin | null>(null)
 const missing = ref<string | null>(null)
 
-// --- doc editing (dev only: backed by the /__save-doc vite middleware) ---
 const canEdit = import.meta.env.DEV
 const editing = ref(false)
 const draft = ref('')
@@ -349,12 +333,14 @@ if (import.meta.hot) {
 <template>
   <div class="flex h-screen bg-base-100 text-base-content">
     <aside class="flex w-72 shrink-0 flex-col border-r border-base-300">
+
       <div class="flex items-center justify-between border-b border-base-300 p-4">
         <span class="text-lg font-bold">ocraft</span>
         <button class="btn btn-ghost btn-xs" @click="toggleTheme">
           {{ theme === 'dark' ? '☀' : '☾' }}
         </button>
       </div>
+
       <div class="border-b border-base-300 p-2">
         <input
           v-model="filter"
@@ -363,6 +349,7 @@ if (import.meta.hot) {
           placeholder="filter…"
         />
       </div>
+
       <div class="flex-1 overflow-y-auto">
         <div class="px-4 pt-3 pb-1 text-xs font-semibold uppercase opacity-50">
           scripts ({{ visibleScripts.length }})
@@ -414,6 +401,7 @@ if (import.meta.hot) {
       </div>
     </aside>
 
+
     <main class="flex-1 overflow-auto">
       <div v-if="missing" class="grid h-full place-items-center opacity-40">
         <p>nothing at {{ missing }}</p>
@@ -436,6 +424,7 @@ if (import.meta.hot) {
           </template>
           <button v-else class="btn btn-primary btn-xs" @click="startEdit">edit</button>
         </div>
+
         <textarea
           v-if="editing"
           v-model="draft"
@@ -444,7 +433,9 @@ if (import.meta.hot) {
           class="textarea textarea-bordered min-h-0 w-full flex-1 font-mono text-sm leading-normal"
         ></textarea>
         <article v-else class="doc" @click="onContentClick" v-html="activeHtml"></article>
+
       </div>
+      
       <div v-else-if="activeComponent || activeMount" :key="'run:' + activeUrl" class="h-full p-6">
         <component :is="activeComponent" v-if="activeComponent" />
         <HostMount v-else :mount="activeMount!" />
@@ -465,7 +456,6 @@ if (import.meta.hot) {
 </template>
 
 <style>
-/* Readable defaults for the raw doc html (rendered via v-html, so not scoped). */
 .doc {
   line-height: 1.65;
 }

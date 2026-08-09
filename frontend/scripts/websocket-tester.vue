@@ -6,8 +6,6 @@ const url = ref(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.h
 const message = ref('')
 const status = ref('idle')
 const panel = ref<InstanceType<typeof LogPanel>>()
-// socket callbacks can fire after unmount (onUnmounted closes the socket → onclose arrives
-// when the panel ref is already gone) — log through this null-safe helper, never panel.value!
 const logLine = (text: string, dir = 'sys') => panel.value?.push(text, dir)
 
 let socket: WebSocket | null = null
@@ -22,7 +20,7 @@ const disconnect = () => {
 }
 
 const connect = () => {
-  disconnect() // drop any existing socket first
+  disconnect()
   status.value = 'connecting'
   logLine(`connecting → ${url.value}`, 'sys')
   try {
