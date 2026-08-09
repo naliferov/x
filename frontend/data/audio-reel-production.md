@@ -1,4 +1,0 @@
-kick, snare, clap, hats, perc, noise layer  
-**Achopped/stuttered vocals:** vocal chop, vocal stutter, glitch vocal, chopped vox, granular vocal glitch textures
-
-**micro-edits:** glitch, granular, clicks, stutter, buffer, idm texture broken/abstract beats: broken beat, idm drums, wonky, abstract hip hop, and dusty boom bap for the hip-hop bones warm jazz layers (your teplo side): rhodes, vibraphone, jazz keys, dusty keys, jazz guitar, soul chops the grit: lo-fi, tape, dusty, vinyl, cassette

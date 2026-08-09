@@ -5,9 +5,6 @@ Max - керування, події, числа, MIDI, тайминг (базо
 Jitter - матриці, відео, графіка, 3D (об'єкти з префіксом jit.).
 
 [music](/doc/music)  
-[ableton instruments](/doc/ableton-instruments)  
-[ableton audio effects](/doc/ableton-audio-effects)  
-[ableton midi effects](/doc/ableton-midi-effects)  
+[ableton devices](/doc/ableton-devices)  
 [vst plugins](/doc/audio-vst-plugins)  
-[hydra](/doc/hydra)  
 [generative art](/doc/gen-art)

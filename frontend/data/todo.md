@@ -12,5 +12,5 @@
 
 - observable API instead of RxJS?
 - php 8.1 > 8.4 update
-- sync local, dev, prod env
+- sync local, dev, prod env (diff dev, stage, prod)
 - custom review skill — add a more abstract check

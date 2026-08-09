@@ -5,12 +5,51 @@ minimax
 
 pi.dev
 
+## infrastructure as code
+
+Terraform remains the most popular tool for describing infrastructure (cloud resources, VMs, networks, etc.) declaratively  
   
+**Pulumi** lets you describe resources in Python, TypeScript, Go, or C# – that is, using an ordinary programming language instead of declarative HCL. OpenTofu
+
+## libs
+
+effect.js rxjs quokkajs prototype and testing tool for js, ts  
   
-[infrastructure as code](/doc/infrastructure-as-code)  
+**animation** [https://gsap.com](https://gsap.com)  
   
-[other libs](/doc/other-libs)  
+**processing.js** [https://processing.org](https://processing.org)  
   
+**state** [reatom](https://www.reatom.dev) [xstate](https://stately.ai/docs/xstate)  
+  
+**web worker** [https://partytown.qwik.dev](https://partytown.qwik.dev)
+
+## js frameworks
+
+angular react solid svelte alpinejs  
+  
+astro elysiajs encore hono htmx qwik
+
+## css
+
+**flex - wrap to next line**
+
+```css
+flex: 1 0 100%;
+```
+
+## web
+
+**supabase** - db pull / migrate → session pooler (5432) runtime → transaction pooler (6543)  
+  
+bestofjs [https://github.com/sindresorhus/awesome](https://github.com/sindresorhus/awesome)  
+  
+[https://posthog.com](https://posthog.com/)  
+[https://boosteroid.com](https://boosteroid.com)  
+[http://plaintext.ing](http://plaintext.ing)  
+[https://pixeliconlibrary.com](https://pixeliconlibrary.com)
+
+## infra & services
+
 **proxy** [https://www.envoyproxy.io](https://www.envoyproxy.io) **Ambient Mesh** splits functions between an L4 proxy (ztunnel, written in Rust) and an L7 proxy, removing the unnecessary sidecars  
   
 Cloudflare Workers  

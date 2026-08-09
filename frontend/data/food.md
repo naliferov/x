@@ -71,3 +71,29 @@ personal kitchen
 обід: курячий суп з рисом і морквою; парові тефтелі з індички  
 перекус: яблучне пюре  
 вечеря: запечена риба; пюре гарбуз / картопля
+
+## напої
+
+**Kabusecha** — my top pick. Partially shaded green tea: almost as much theanine as gyokuro, but milder, easier to brew, and cheaper. The best "calm + antioxidants" balance for everyday.  
+**Gyokuro** — the absolute champion for theanine and umami. Pricier, and fairly high in caffeine too — so brewing technique especially matters here.  
+**White tea** (e.g. Silver Needles / Bai Hao Yinzhen) — the lowest caffeine of all, minimally processed, lots of antioxidants. Less theanine than shaded green, but as a "quiet" cup — ideal.  
+**Hojicha** (roasted green) — for the evening and for gentleness: roasting naturally lowers caffeine and makes the tea delicate and low-acid. Slightly less theanine/catechins, but the gentlest on the stomach.
+
+### St. Mark's Market
+
+-   2 oz vodka
+-   2 oz peach schnapps
+-   2 oz guava juice
+-   5 oz cranberry juice
+
+Shake with ice; garnish with lime.
+
+## supplements
+
+examine.com
+
+glycine, CBD, omega, magnesium, sedatives, psyllium, enzymes, amino acids, slippery elm bark, aloe, curcumin, ashwagandha, rosehip
+
+## продукти
+
+eggs, buckwheat, oatmeal, veal, olives, stewed vegetables, nuts, baked pear, yogurt, cheese, a liter and a half of water, honey, flax seeds, rusks, parsley, dill, broccoli, protein, omelet, hard-boiled eggs, chicken, turkey, salad (spinach), vinaigrette, bulgur, rice, millet, butter, zucchini, carrot, apple, fruit, pineapple, dates, cookies, tea, chamomile, berries, tuna, rosehip decoction, fish, puree, quinoa

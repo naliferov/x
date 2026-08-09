@@ -2,7 +2,7 @@ bret victor, ted nelson
 
 #### 1\. Structure and Modularity
 
-[glossary](/doc/glossary) [glossary](/doc/glossary) [GOF design patterns](/doc/gof-design-patterns)
+[glossary](/doc/glossary)
 
 ##### Paradigm
 
@@ -14,20 +14,18 @@ procedural oop [functional](/doc/functional) [reactive](/doc/reactive)
 
 ## architecture
 
-[architecture !main](/doc/architecture-main) [glossary](/doc/glossary) [glossary](/doc/glossary) [IoC inversion of control](/doc/ioc-inversion-of-control) [law of demeter](/doc/law-of-demeter) [glossary](/doc/glossary) methodology [glossary](/doc/glossary) [heap and stack](/doc/heap-and-stack)
+[architecture !main](/doc/architecture-main) [glossary](/doc/glossary) methodology
 
 ## data
 
-[data structures](/doc/data-structures) algorithms [https://en.wikipedia.org/wiki/List\_of\_algorithms](https://en.wikipedia.org/wiki/List_of_algorithms) [db index](/doc/db-index)
-
-[glossary](/doc/glossary) [glossary](/doc/glossary)
+algorithms [https://en.wikipedia.org/wiki/List\_of\_algorithms](https://en.wikipedia.org/wiki/List_of_algorithms) [db index](/doc/db-index)
 
 [authentication and authorization](/doc/authentication-and-authorization) XSS  
 virtualization  
 [RabbitMQ](/doc/rabbitmq) [Ubuntu](/doc/ubuntu)
 
 encoding [encoding unicode](/doc/encoding-unicode)  
-[glossary](/doc/glossary) [UAV](/doc/uav) [scp](/doc/scp)  
+[UAV](/doc/uav)  
 [machine learning](/doc/machine-learning)
 
 ## reprogrammable software / ocraft lineage
@@ -58,14 +56,11 @@ takeaway: each popular repo owns ONE axis; the ocraft combo (folder-per-node on 
 
 [programming languages](/doc/programming-languages)  
 [javascript](/doc/javascript)  
-[javascript contents](/doc/javascript-contents)  
 [javascript history](/doc/javascript-history)  
 [javascript types](/doc/javascript-types)  
 [javascript features](/doc/javascript-features)  
 [javascript changelog](/doc/javascript-changelog)  
 [javascript snippets](/doc/javascript-snippets)  
-[javascript frameworks](/doc/javascript-frameworks)  
-[javascript modules](/doc/javascript-modules)  
 [vlang](/doc/vlang)  
 [terse](/doc/terse)  
 [live-runtime](/doc/live-runtime)  
@@ -79,15 +74,12 @@ takeaway: each popular repo owns ONE axis; the ocraft combo (folder-per-node on 
 [node.js event loop](/doc/node-js-event-loop)  
 [browser event loop](/doc/browser-event-loop)  
 [javascript engines & runtimes](/doc/javascript-engines-and-runtimes)  
-[promise](/doc/promise)  
-[streams](/doc/streams-controller)
+[promise](/doc/promise)
 
 ## web / frontend
 
-[web](/doc/web)  
 [frontend](/doc/frontend)  
-[vue 3](/doc/vue-3)  
-[other libs](/doc/other-libs)
+[vue 3](/doc/vue-3)
 
 ## databases
 
@@ -98,8 +90,7 @@ takeaway: each popular repo owns ONE axis; the ocraft combo (folder-per-node on 
 
 [dev](/doc/dev)  
 [developer growth](/doc/developer-growth)  
-[infrastructure as code](/doc/infrastructure-as-code)  
 [object analytics](/doc/object-analytics)  
 [it books](/doc/it-books)  
-[harness](/script/harness)  
-[ai](/doc/ai)
+[harness](/doc/harness) · [script](/script/harness)  
+[ai](/doc/ai) [ai improve](/doc/ai-improve)

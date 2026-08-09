@@ -90,3 +90,51 @@ Introspection (schemas and query autocomplete)
 ## SOAP
 
 **SOAP (Simple Object Access Protocol)** : SOAP is another protocol for exchanging structured information messages in a distributed computing system. SOAP uses XML to describe the messages that are included in HTTP requests or responses.
+
+## Interpretation vs compilation
+
+Parsing → AST → (Bytecode | JIT | Threaded code). Threaded code is a way of implementing an intermediate VM alongside bytecode.
+
+## Heap and stack
+
+**heap** - managed by the GC (GC'd runtimes) or by the programmer (manual runtimes).
+
+**Why the stack is faster:**
+
+- contiguous, fixed size, not chunks of pages
+- allocated at program start, lives till process end - no tracking/cleaning/load/unload (the OS process manager handles it)
+- sequential push/pop, not random access
+- top-of-stack address always in a CPU register
+- almost always cached (accessed most)
+
+**Stack size** - 1-10MB on modern OS; tunable at OS/process level but don't (a 1GB stack never fits cache). Ignore it unless you write systems code.
+
+## Data structures
+
+boolean integer char string  
+  
+list map graph stack queue distributed hash table
+
+## GoF design patterns
+
+[https://refactoring.guru/design-patterns](https://refactoring.guru/design-patterns)  
+  
+**creational** factory method abstract factory builder prototype singleton  
+  
+**structural** adapter bridge composite decorator facade flyweight proxy  
+  
+**behavioral** chain of responsibility command iterator mediator memento observer state strategy temlate method visitor  
+  
+**other** reactor transaction script
+
+## IoC — inversion of control
+
+Lets you reduce coupling. To take control away from the client code.
+
+## Law of Demeter
+
+every software module:
+
+-   should have limited knowledge about other modules: it should only know about modules that have a "direct" relationship to it.
+-   should interact only with the modules it knows — its "friends" — and not interact with strangers.
+-   should call only its immediate "friends".

@@ -26,5 +26,4 @@
 [ocraft strategy](/doc/ocraft-strategy)  
 [random notes](/doc/random-notes)  
 [todo](/doc/todo)  
-[job interview](/doc/job-interview)  
-[job productivity](/doc/job-productivity)
+[job](/doc/job)

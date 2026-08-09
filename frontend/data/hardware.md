@@ -51,9 +51,8 @@ shoes [https://vans.org.ua/nizkie-vans-old-skool-model-vn0005ufy611-ru](https://
 watch [https://rozetka.com.ua/ua/casio-309578/p359601027/](https://rozetka.com.ua/ua/casio-309578/p359601027/)  
   
 [robotics](/doc/robotics)  
-[raspberry pi](/doc/raspberry-pi)  
+[raspberry pi](/doc/ubuntu)  
 [uav](/doc/uav)  
-[aerodynamics](/doc/aerodynamics)  
-[flight dynamics](/doc/flight-dynamics)  
+[flight](/doc/flight)  
 [desktop assemble](/doc/desktop-assemble)  
-[ableton instruments](/doc/ableton-instruments)
+[ableton devices](/doc/ableton-devices)

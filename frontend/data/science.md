@@ -13,5 +13,4 @@
 
 ##### flight
 
-[aerodynamics](/doc/aerodynamics)  
-[flight dynamics](/doc/flight-dynamics)
+[flight](/doc/flight)

@@ -1,6 +1,6 @@
 # terse
 
-A tiny, async-only toy language. Keywords are `@`-mentions. Pipeline: source → tokens (lexer) → AST (parser) → **JavaScript** (code generator). Lives in ocraft as the [`terse`](/script/terse) script — it transpiles to JS and runs the emitted code (no AST interpretation). See also [super-terse-code](/doc/super-terse-code).
+A tiny, async-only toy language. Keywords are `@`-mentions. Pipeline: source → tokens (lexer) → AST (parser) → **JavaScript** (code generator). Lives in ocraft as the [`terse`](/script/terse) script — it transpiles to JS and runs the emitted code (no AST interpretation). It is the code sibling of [super-terse](/doc/super-terse): where super-terse squeezes _prose_ to a telegraphic skeleton, terse squeezes _code_ — each keyword becomes a 1-char **sigil**, the boilerplate punctuation goes, the semantic structure stays. You trade legibility-at-a-glance for density, so it needs a **legend** (or, here, the compiler) to read back.
 
 Current features:
 
@@ -13,6 +13,53 @@ Current features:
 - numbers, `+ - * /`, `( )`
 
 Intended direction: an embeddable, **sandboxed** scripting medium — capability-by-builtin, so a script can only do what its injected builtins expose.
+
+## Sigils
+
+| terse         | JS              | meaning  |
+| ------------- | --------------- | -------- |
+| `name = e`    | `let name = e`  | bind     |
+| `@ -> …`      | `async () => …` | fn                 |
+| `f(x)`        | `(await f(x))`  | call (auto-awaited) |
+| `@p f(x)`     | `f(x)`          | promise (no await) |
+| `@r e`        | `return e`      | return             |
+| `@l(e)`       | `log(e)`        | print              |
+
+Keywords become `@`-mentions; `=`, `+ - * /`, `( )`, `{ }` stay. Every `@` fn is `async` and **calls auto-`await`** (`@p` keeps the raw promise), so nothing is faked. Params go in `@(a, b) -> …`.
+
+## Worked example
+
+terse:
+
+```
+onePlusOne = @ -> {
+    sum = 1 + 1
+    @r sum
+}
+result = onePlusOne()
+@l(result)
+```
+
+compiles to JS:
+
+```js
+let onePlusOne = async () => {
+  let sum = (1 + 1)
+  return sum
+}
+let result = (await onePlusOne())
+log(result)
+```
+
+## The principle
+
+- **keyword → sigil** — `async`/`await`/`return`/`function` collapse to one glyph each.
+- **drop ceremony** — no `function`, no `const`/`let` (binding is just `=`), no statement terminators.
+- **keep structure** — expressions, blocks, call/args, and the async shape survive unchanged.
+
+## Tradeoff
+
+Dense and fast to _write_, slow to _read cold_ — the glyphs carry no mnemonic, so a newcomer needs the legend. Same bet as super-terse prose: worth it when the author re-reads often and the compiler (or a fixed legend) guarantees it round-trips. Not worth it for code others must read without the key.
 
 ## Future implementation ideas (merged from turboscript)
 

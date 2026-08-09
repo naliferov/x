@@ -15,5 +15,5 @@ Red Riding 2009 The Body (El cuerpo)
 2007 Stonehearst Asylum  
 2014 Incendies 2010  
 Three Days of the Condor 1975  
-[mr robot](/doc/mr-robot) twin peaks
+[mr robot](/doc/english-phrases) twin peaks
 Ted Lasso

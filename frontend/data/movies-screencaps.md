@@ -1,5 +1,0 @@
-shotDeck  
-  
-FilmGrab  
-  
-shot.cafe

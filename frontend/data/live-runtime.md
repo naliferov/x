@@ -56,7 +56,7 @@ So "pseudo-JS with types that exist at runtime" needs no new language: **Deepkit
 
 ## Why terse is the right starting point
 
-terse already owns the piece that is missing everywhere else: it **compiles** source → tokens → AST → JS ([super-terse-code](/doc/super-terse-code) has the sigil table, [/script/terse](/script/terse) runs it). Owning the AST is exactly what function-level invalidation requires — the thing no JS tool can do because it only ever sees modules.
+terse already owns the piece that is missing everywhere else: it **compiles** source → tokens → AST → JS ([terse](/doc/terse) has the sigil table, [/script/terse](/script/terse) runs it). Owning the AST is exactly what function-level invalidation requires — the thing no JS tool can do because it only ever sees modules.
 
 Three additions, in the order that keeps each step useful on its own:
 
@@ -68,4 +68,4 @@ The typed direction recorded in [terse](/doc/terse) (bounded fixed-width integer
 
 Search terms to go deeper: **contract programming**, **executable specification**, **continuous testing**, **incremental computation**, **live programming**.
 
-Related: [terse](/doc/terse) · [super-terse-code](/doc/super-terse-code) · [programming languages](/doc/programming-languages) · [javascript types](/doc/javascript-types) · [interpretation & compilation](/doc/cs-interpretation-compilation)
+Related: [terse](/doc/terse) · [programming languages](/doc/programming-languages) · [javascript types](/doc/javascript-types) · [glossary](/doc/glossary)

@@ -1,6 +1,6 @@
 # super-terse
 
-A lossy text-compression style: squeeze prose down to a **telegraphic skeleton** — keep the load-bearing meaning, throw away everything else. (Linguistically it's the _telegraphic register_ — the way telegrams and notes drop function words.) For the code equivalent, see [super-terse-code](/doc/super-terse-code).
+A lossy text-compression style: squeeze prose down to a **telegraphic skeleton** — keep the load-bearing meaning, throw away everything else. (Linguistically it's the _telegraphic register_ — the way telegrams and notes drop function words.) For the code equivalent, see [terse](/doc/terse).
 
 ## The operations
 
@@ -11,7 +11,7 @@ A lossy text-compression style: squeeze prose down to a **telegraphic skeleton**
 5. **Drop qualifiers and dead hedges** — "DB invariants" → "invariants"; cut "probably / it seems / note that / arguably" _unless the caveat actually carries information_.
 6. **Compress connective filler** — "One source of truth for this repo:" → "read this:"; "Read it first; follow the rules." → "follow the rules."
 7. **Telegraphic register** — imperative voice; no articles, connectives, or inserted clauses: "a pointer to it" → "pointer to README".
-8. **Notation over words** — `→ = ≥ ≠ · ≈ +` replace "leads to / is / at least / not / and / about" — the prose bridge to [super-terse-code](/doc/super-terse-code).
+8. **Notation over words** — `→ = ≥ ≠ · ≈ +` replace "leads to / is / at least / not / and / about" — the prose bridge to [terse](/doc/terse).
 
 Punctuation: short dash `-`, not the long `—`.
 

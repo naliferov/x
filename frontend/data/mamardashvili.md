@@ -228,7 +228,7 @@ We want to build a happy state that would mechanically produce happiness. But th
 
 -   Proust — the main subject of the lectures
 -   [heidegger](/doc/heidegger)
--   [derrida](/doc/derrida)
+-   [derrida](/doc/philosophy-fragments)
 -   Valéry — "Psychology is like the geometry of time"
 -   Fourier — the utopia of the maximal realization of the human, composite desire
 -   Freud — "the labor of mourning"

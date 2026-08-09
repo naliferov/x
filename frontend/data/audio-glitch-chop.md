@@ -2,6 +2,36 @@
 
 The aesthetic = **MPC-style sample chopping + micro-edits + stutter/ratchet retriggers + granular clouds + bitcrush/downsample + gated rhythmic gating + probability-driven variation**. Every tool below is just a different way to get those primitives.
 
+i am working in: **min techno + glitch parts** + prefuse-style sample chopping.
+
+### The reference shelf
+
+**prefuse 73** — glitch-hop, chopped vocals, micro-edits, stutter; **blockhead** — lush, sample-based instrumental hip-hop.
+
+Boom Bip, Dabrye, Flying Lotus, Daedelus — eccentric chopped LA beats.
+
+- **Clark** (Warp) — harder, glitchy IDM edge
+- **Telefon Tel Aviv** — glitch + lush vocal processing
+- also: Jneiro Jarel, Take, Free The Robots
+
+RJD2, DJ Shadow, Nujabes (jazzy), DJ Krush, Bonobo, Wax Tailor, Emancipator.
+
+anticon (Boom Bip, Odd Nosdam, cLOUDDEAD), Warp (Clark, Bibio), Brainfeeder (FlyLo, Teebs), Ghostly (Dabrye).
+
+### The search palette (reel / sample hunting)
+
+kick, snare, clap, hats, perc, noise layer
+
+**chopped/stuttered vocals:** vocal chop, vocal stutter, glitch vocal, chopped vox, granular vocal glitch textures
+
+**micro-edits:** glitch, granular, clicks, stutter, buffer, idm texture
+
+**broken/abstract beats:** broken beat, idm drums, wonky, abstract hip hop, dusty boom bap for the hip-hop bones
+
+**warm jazz layers** (the teplo side): rhodes, vibraphone, jazz keys, dusty keys, jazz guitar, soul chops
+
+**the grit:** lo-fi, tape, dusty, vinyl, cassette
+
 ### The core moves
 
 - **Chop & rearrange** slices off a vocal/break

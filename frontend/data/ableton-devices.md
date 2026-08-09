@@ -1,3 +1,24 @@
+## Instruments
+
+-   **Analog** — virtual-analog (subtractive) synth: 2 oscillators + 2 filters, warm classic tones.
+-   **Bass** — dedicated bass synth with sub oscillator, drive and filter; fast, focused low end.
+-   **Collision** — physical-modelling mallet/percussion (marimba, bells, metallic bodies).
+-   **Drift** — compact, hands-on subtractive synth; MPE-ready, simple modulation matrix.
+-   **Drum Rack** — container mapping samples/instruments to 16 pads to build drum kits.
+-   **Electric** — physical-modelling electric piano (Rhodes/Wurlitzer-style tines & reeds).
+-   **External Instrument** — plays an outboard hardware synth or another plug-in inside a track.
+-   **Instrument Rack** — layer / split / stack instruments under Macro knobs and chains.
+-   **Meld** — bi-timbral, MPE-first synth with twin macro-oscillator engines _(new in Live 12)_ .
+-   **Operator** — FM + subtractive hybrid: 4 multi-mode oscillators, rich and CPU-light.
+-   **Sampler** — full multisample instrument: key/velocity zones, deep modulation.
+-   **Simpler** — streamlined one-sample player (Classic / One-Shot / Slice modes).
+-   **Tension** — physical-modelling string synth (bowed, plucked, hammered).
+-   **Wavetable** — wavetable synth: 2 tables + sub oscillator, broad modulation matrix.
+
+Suite also bundles Max for Live instruments (e.g. Poli, Granulator III, the CV Tools set) that appear in the same group.
+
+## Audio effects
+
 -   **Amp** — guitar-amplifier emulation, 7 classic models.
 -   **Auto Filter** — filter driven by envelope follower, LFO or sidechain.
 -   **Auto Pan** — LFO panning, tremolo and rhythmic chopping.
@@ -39,3 +60,19 @@
 -   **Utility** — gain, width, mono, DC filter — the essential mixing tool.
 -   **Vinyl Distortion** — vinyl crackle and harmonic distortion.
 -   **Vocoder** — classic vocoder (carrier + modulator).
+
+## MIDI effects
+
+-   **Arpeggiator** — turns held notes/chords into rhythmic arpeggios and patterns.
+-   **CC Control** — generates and sends MIDI CC from a knob or modulation _(new in Live 12)_ .
+-   **Chord** — stacks up to 6 user-set intervals onto each incoming note.
+-   **Note Echo** — MIDI note echo/delay with pitch and velocity feedback.
+-   **Note Length** — sets/forces note duration; can re-trigger from note-off.
+-   **Pitch** — transposes notes within a low/high range gate.
+-   **Random** — randomly alters pitch by a set amount and probability.
+-   **Scale** — remaps incoming notes to a chosen scale/key.
+-   **Velocity** — scales, compresses, ranges or randomises note velocity.
+
+Suite also adds Max for Live MIDI devices, e.g. Expression Control and MPE Control.
+
+Separate from these devices, Live 12 added in-clip **MIDI Tools** for the clip editor: _Generators_ (Euclidean, Rhythm, Seed, Stacks, Shape…) and _Transformations_ (Arpeggiate, Connect, Ornament, Recombine, Strum, Time Warp…).

@@ -35,7 +35,7 @@ Instagram Reels + TikTok + YouTube Shorts + Twitter
 
 **рилсы**
 
-Хочу показати як я як інженер можу бавитись з аішкою — а аішка буде опрацьовувати ці команди і малювати анімацію. Для початку нам потрібен canvas. (Робочий прототип мови команд — [refactory demo](/doc/refactory-demo), скрипт [/script/refactory](/script/refactory).)
+Хочу показати як я як інженер можу бавитись з аішкою — а аішка буде опрацьовувати ці команди і малювати анімацію. Для початку нам потрібен canvas. (Робочий прототип мови команд — [vlang](/doc/vlang) / [refactory demo](/doc/refactory-demo), скрипт [/script/refactory](/script/refactory).)
 
 Час настав! Усі показують
 

@@ -2,6 +2,8 @@
 **video - Hydra**  
 `osc(150, -0.1).rotate(1.57).out(o0)`  
 `osc(20, 0.1, 0.8).kaleid(5).modulate(noise(3)).out()`  
+`shape(3, 0.1, 0.01).rotate(0, 0.1).scale(1, 1, () => window.innerWidth / window.innerHeight).out(o0)`  
+`shape(2, 0.05, 0.01).scale(1, 1, () => window.innerWidth / window.innerHeight).out(o0)`  
 **gen image** (prompt, {{Name}}): high-contrast b&w stencil portrait — white face + thin black outlines (not filled), black ONLY for hair/clothing, no heavy black on face, pure white bg, strictly 2 tones (no grey/shading, not a silhouette); keep {{Name}} likeness + pose; bold solid black, smooth vector curves, clean white negative space, no gradients, screen-print, minimalist, front-facing symmetrical, head & shoulders.  
   
 **ai sound gen**: ElevenLabs SFX api · Meta AudioCraft (AudioGen = environmental, MusicGen = music). claude skills wrap these: "Sound Effects Expert", "AudioCraft".  

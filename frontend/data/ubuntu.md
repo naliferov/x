@@ -33,3 +33,30 @@ sudo systemctl enable myapp.service  # autostart after reboot
 ```sh
 ./node s.js &> s.log & disown
 ```
+
+## rsync
+
+```bash
+rsync -azP --rsync-path="sudo -u netplov -H rsync" index.php chat:/home/netplov
+rsync -azP --rsync-path="sudo -n -u netplov -H rsync" "$FilePath$" chat:/home/netplov/"$FileName$"
+rsync -azP --rsync-path="sudo -u rel-uassist -H rsync" app/customer/controller/Customer.php rel:/home/rel-uassist/htdocs/chat/app/customer/controller/Customer.php
+```
+
+## scp — copying files
+
+```sh
+# To the server
+scp -r s.js user@64.227.125.21:/home/user
+
+# From the server
+scp -r user@ssh.example.com:/path/to/remote /path/to/local
+
+# ocraft droplet
+scp root@209.38.206.72:ocraft/index.html ./
+```
+
+## raspberry pi
+
+```sh
+ssh x8core@192.168.0.120
+```
