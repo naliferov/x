@@ -74,7 +74,6 @@ takeaway: each popular repo owns ONE axis; the x combo (folder-per-node on disk 
 [node.js event loop](/doc/node-js-event-loop)  
 [browser event loop](/doc/browser-event-loop)  
 [javascript engines & runtimes](/doc/javascript-engines-and-runtimes)  
-[promise](/doc/promise)
 
 ## web / frontend
 

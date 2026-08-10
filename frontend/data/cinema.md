@@ -119,8 +119,9 @@ often find there: rehearsals, showcases, hanging out afterward
 
 [concept db](/doc/vlang) — collects not references, but language  
   
-[top 500 movies](/doc/top-500-movies)  
-[movies: marvel](/doc/movies-marvel)  
+**external lists** — pointers, not copies. The list is maintained there and stays current; a copy here only rots:
+imdb top-500 — `imdb.com/list/ls050782187` · MCU in release order — wikipedia, "List of Marvel Cinematic Universe films"
+
 [series](/doc/series)  
 [english phrases](/doc/english-phrases)  
 [fiction](/doc/fiction)  

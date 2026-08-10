@@ -5,7 +5,6 @@
 [jazz](/doc/audio-jazz)  
 [radio](/doc/audio-radio)  
 [sound strand](/doc/audio-sound-strand)  
-[theory](/doc/audio-theory)  
 [vst plugins](/doc/audio-vst-plugins)  
 [generative art](/doc/gen-art)  
-[artists list](/doc/music-artists-list)
+[artists list](/bin/music-artists)

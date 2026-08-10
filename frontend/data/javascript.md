@@ -17,7 +17,7 @@ var, let, const control flow loop function
 
 ##### async programming
 
-callback [promise](/doc/promise) async await
+callback promise async await — combinator semantics (`all` / `allSettled` / `any` / `race`) live in MDN, `developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise`
 
 setTimeout setInterval
 

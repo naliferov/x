@@ -1,11 +1,6 @@
 ## science
 
-[chemistry](/doc/chemistry)  
 [math](/doc/math)
-
-##### earth
-
-[geo](/doc/geo)  
 
 ##### life
 
