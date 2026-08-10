@@ -50,6 +50,17 @@ const solidModules = import.meta.glob('../scripts/*.{jsx,tsx}')
 const docHtmlModules = import.meta.glob('../data/*.html', { query: '?raw', import: 'default' })
 const docMdModules = import.meta.glob('../data/*.md', { query: '?raw', import: 'default' })
 const docTxtModules = import.meta.glob('../data/*.txt', { query: '?raw', import: 'default' })
+// A doc may also be stored gzipped (`foo.md.gzip`): same doc, same /doc/<name>, same rendering —
+// only the source arrives as an asset url that the browser inflates instead of being inlined at
+// build time. Read-only: the editor writes plain files, so a compressed doc has no edit button.
+// .txt.gzip deliberately stays a BIN — that viewer has the line filter and the 1000-line cap the
+// large corpora (ukrainian-words, disco elysium dialogs) need.
+const docGzipModules = import.meta.glob('../data/*.{html,md}.{gz,gzip}', {
+  query: '?url',
+  import: 'default',
+  eager: true,
+}) as Record<string, string>
+const isCompressedDoc = (path: string) => /\.(html|md)\.(gz|gzip)$/i.test(path)
 
 const toName = (path: string) =>
   path
@@ -67,26 +78,58 @@ const scripts = [
   .sort((a, b) => a.name.localeCompare(b.name))
 
 type DocFormat = 'html' | 'md' | 'txt'
-type Doc = { path: string; name: string; format: DocFormat; load: () => Promise<unknown> }
+type Doc = {
+  path: string
+  name: string
+  format: DocFormat
+  compressed: boolean
+  load: () => Promise<unknown>
+}
+
+// Inflate a gzipped doc source in the browser. `as any`: lib.dom types DecompressionStream's
+// stream pair too strictly for pipeThrough (the runtime pairing is fine).
+const gunzipText = async (url: string) => {
+  const res = await fetch(url)
+  if (!res.ok || !res.body) {
+    throw new Error(`fetch ${res.status}`)
+  }
+  return new Response(res.body.pipeThrough(new DecompressionStream('gzip') as any)).text()
+}
+
+const compressedDocs: Doc[] = Object.entries(docGzipModules).map(([path, url]) => {
+  const inner = path.replace(/\.(gz|gzip)$/i, '') // '../data/foo.md.gzip' -> '../data/foo.md'
+  return {
+    path,
+    name: toName(inner),
+    format: inner.split('.').pop() as DocFormat,
+    compressed: true,
+    load: () => gunzipText(url),
+  }
+})
+
 const docs: Doc[] = [
   ...Object.keys(docHtmlModules).map((path) => ({
     path,
     name: toName(path),
     format: 'html' as DocFormat,
+    compressed: false,
     load: docHtmlModules[path],
   })),
   ...Object.keys(docMdModules).map((path) => ({
     path,
     name: toName(path),
     format: 'md' as DocFormat,
+    compressed: false,
     load: docMdModules[path],
   })),
   ...Object.keys(docTxtModules).map((path) => ({
     path,
     name: toName(path),
     format: 'txt' as DocFormat,
+    compressed: false,
     load: docTxtModules[path],
   })),
+  ...compressedDocs,
 ].sort((a, b) => a.name.localeCompare(b.name))
 
 const escapeHtml = (s: string) =>
@@ -126,6 +169,7 @@ const binName = (path: string) =>
     .replace(/\.[^.]+$/, '')
 type Bin = { name: string; url: string; type: string }
 const bins: Bin[] = Object.entries(binModules)
+  .filter(([path]) => !isCompressedDoc(path)) // those are docs, listed above — not bins
   .map(([path, url]) => ({ name: binName(path), url, type: binType(path) }))
   .sort((a, b) => a.name.localeCompare(b.name))
 const visibleBins = computed(() => bins.filter((a) => matches(a.name)))
@@ -166,6 +210,7 @@ const activeMount = shallowRef<MountFn | null>(null)
 const activeHtml = ref('') // compiled html for v-html
 const activeSource = ref('') // raw file source (what the editor edits + saves)
 const activeDocFormat = ref<DocFormat>('html')
+const activeDocCompressed = ref(false) // gzipped docs are read-only: the save writer emits plain files
 const activeBin = shallowRef<Bin | null>(null)
 const missing = ref<string | null>(null)
 
@@ -185,6 +230,7 @@ const show = async (url: string | null) => {
   activeBin.value = null
   missing.value = null
   editing.value = false
+  activeDocCompressed.value = false
   document.title = 'x'
   if (!url) {
     return
@@ -215,6 +261,7 @@ const show = async (url: string | null) => {
     document.title = `x · ${doc.name}`
     const source = docEdits.get(name) ?? ((await doc.load()) as string)
     activeDocFormat.value = doc.format
+    activeDocCompressed.value = doc.compressed
     activeSource.value = source
     activeHtml.value = renderDoc(source, doc.format)
     return
@@ -333,7 +380,6 @@ if (import.meta.hot) {
 <template>
   <div class="flex h-screen bg-base-100 text-base-content">
     <aside class="flex w-72 shrink-0 flex-col border-r border-base-300">
-
       <div class="flex items-center justify-between border-b border-base-300 p-4">
         <span class="text-lg font-bold">x</span>
         <button class="btn btn-ghost btn-xs" @click="toggleTheme">
@@ -401,7 +447,6 @@ if (import.meta.hot) {
       </div>
     </aside>
 
-
     <main class="flex-1 overflow-auto">
       <div v-if="missing" class="grid h-full place-items-center opacity-40">
         <p>nothing at {{ missing }}</p>
@@ -412,7 +457,7 @@ if (import.meta.hot) {
         class="max-w-3xl p-8"
         :class="{ 'flex h-full flex-col': editing }"
       >
-        <div v-if="canEdit" class="mb-3 flex shrink-0 items-center gap-2">
+        <div v-if="canEdit && !activeDocCompressed" class="mb-3 flex shrink-0 items-center gap-2">
           <template v-if="editing">
             <button class="btn btn-primary btn-xs" :disabled="saving" @click="saveEdit">
               {{ saving ? 'saving…' : 'save' }}
@@ -433,9 +478,8 @@ if (import.meta.hot) {
           class="textarea textarea-bordered min-h-0 w-full flex-1 font-mono text-sm leading-normal"
         ></textarea>
         <article v-else class="doc" @click="onContentClick" v-html="activeHtml"></article>
-
       </div>
-      
+
       <div v-else-if="activeComponent || activeMount" :key="'run:' + activeUrl" class="h-full p-6">
         <component :is="activeComponent" v-if="activeComponent" />
         <HostMount v-else :mount="activeMount!" />
