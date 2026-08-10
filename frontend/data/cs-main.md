@@ -28,7 +28,7 @@ encoding [encoding unicode](/doc/encoding-unicode)
 [UAV](/doc/uav)  
 [machine learning](/doc/machine-learning)
 
-## reprogrammable software / ocraft lineage
+## reprogrammable software / x lineage
 
 self-extending "reprogram from within" (closest prior art): [Codestrates](https://dl.acm.org/doi/10.1145/3126594.3126642) [Varv](https://www.researchgate.net/publication/360331741_Varv_Reprogrammable_Interactive_Software_as_a_Declarative_Data_Structure) [Webstrates](https://dl.acm.org/doi/10.1145/2807442.2807446) [(all pubs)](https://webstrates.net/project/publications/)
 
@@ -40,7 +40,7 @@ local-first: [local-first software](https://www.inkandswitch.com/essay/local-fir
 
 ancestry: engelbart NLS, bush memex, smalltalk/self, lisp homoiconicity, plan 9 "everything is a file"
 
-## ocraft-like repos on github (by axis; stars ~2026-06)
+## x-like repos on github (by axis; stars ~2026-06)
 
 closest — self-extend from within: [TiddlyWiki5 (8.6k)](https://github.com/TiddlyWiki/TiddlyWiki5) [Glamorous Toolkit (1.5k)](https://github.com/feenkcom/gtoolkit) [Pharo (1.5k)](https://github.com/pharo-project/pharo)
 
@@ -50,7 +50,7 @@ nodes that run + compose: [n8n (194k)](https://github.com/n8n-io/n8n) [Node-RED 
 
 exact concept, niche (research): [Webstrates (272)](https://github.com/Webstrates/Webstrates) + Codestrates + Varv. also: emacs org-mode + org-babel (data+code in one tree), jupyter (linear notebooks)
 
-takeaway: each popular repo owns ONE axis; the ocraft combo (folder-per-node on disk + data & code in one addressable tree + call-by-id composition + self-extending types + single-user local-first) is unoccupied by anything popular
+takeaway: each popular repo owns ONE axis; the x combo (folder-per-node on disk + data & code in one addressable tree + call-by-id composition + self-extending types + single-user local-first) is unoccupied by anything popular
 
 ## languages
 

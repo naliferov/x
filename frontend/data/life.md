@@ -23,7 +23,7 @@
 [ideas](/doc/ideas)  
 [production ideas](/doc/production-ideas)  
 [research](/doc/research)  
-[ocraft strategy](/doc/ocraft-strategy)  
+[x strategy](/doc/x-strategy)  
 [random notes](/doc/random-notes)  
 [todo](/doc/todo)  
 [job](/doc/job)

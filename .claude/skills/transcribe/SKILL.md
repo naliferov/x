@@ -59,7 +59,7 @@ bash .claude/skills/transcribe/transcribe.sh /path/to/voice.ogg note.txt ru
 - **Long audio takes a while** — transcription time scales with length. If the source is long (a multi-hour stream/recording), say so up front before kicking it off.
 - The script runs whisper with `-mc 0` (no context carry-over) to prevent runaway **repeat-loops** (a phrase repeated 100+ times) and language-flips on long / music-heavy audio. If you still see loops, the next lever is a Silero **VAD** model (`--vad`) to skip non-speech.
 - On intro/outro music, whisper may hallucinate **fansub credits** (`Субтитры создавал …`, `Продолжение следует…`, `ПОДПИШИСЬ/КАНАЛ`, music cues in CAPS). Strip these in post (perl needs `-Mutf8` with `-CSD` or Cyrillic literals won't match).
-- If the user wants the transcript stored somewhere specific rather than a loose `.txt` (e.g. an **ocraft node** under `notes`), ask and route it there.
+- If the user wants the transcript stored somewhere specific rather than a loose `.txt` (e.g. an **x node** under `notes`), ask and route it there.
 
 ## Notes / failure modes
 

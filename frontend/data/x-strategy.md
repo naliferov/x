@@ -2,7 +2,7 @@
 
 ## 
 
--   ocraft зараз — елегантне **рішення в пошуках проблеми** . він платить за зняття конкретного болю (painkiller).
+-   x зараз — елегантне **рішення в пошуках проблеми** . він платить за зняття конкретного болю (painkiller).
 -   естетичний перфекціонізм проти відвантаження
 -   **Дослідження — протиотрута:** воно витягує в контакт із реальністю до того, як втопиш місяці в коді, якого ніхто не просив.
 
@@ -24,7 +24,7 @@
 -   **Консалтинг / фриланс на дефіцитному скілі** (Vue 2→3, модернізація legacy, full-stack гібриди) — реальні гроші зараз, низький ризик, валідація вбудована. Продаж часу, але міст, що купує час будувати решту.
 -   **Productized service** — повторюваний експертний таск у фікс-ціну («аудит міграції Vue 2→3, фікс-прайс»). Більше важеля за погодинку, грає на твою силу.
 -   **Продукт / SaaS** — найбільший важіль і ризик. Тільки після валідації проблеми+demand. Фільтр: **вузький інструмент для конкретної ніші** , яку розумієш і до якої дістаєшся — не широка «платформа, що вирішує проблеми» (найчастіша могила).
--   **ocraft напряму** — радше не бізнес як є (аудиторія з однієї людини). Але це R&D-полігон, а шматки (MCP-сервери, оркестрація) можуть стати продуктом, якщо спливе реальна проблема. NLnet / open-source — реальний не-клієнтський шлях отримати гроші за ocraft.
+-   **x напряму** — радше не бізнес як є (аудиторія з однієї людини). Але це R&D-полігон, а шматки (MCP-сервери, оркестрація) можуть стати продуктом, якщо спливе реальна проблема. NLnet / open-source — реальний не-клієнтський шлях отримати гроші за x.
 
 ### 4 · Дистрибуція — green zone (white-hat) трафік
 
@@ -70,26 +70,26 @@ White-hat = легальне, комплаєнсне, стале: реальна
 
 -   **Арбітраж на чужі афіліейт-офери — поганий фіт:** конкурентно, капіталомістко, commoditized, часто дрейфує в сіре. Це не твоя перевага.
 -   **Платний трафік на ТВІЙ власний productized/SaaS — легітимно й корисно:** особливо **LinkedIn + Google Search** (high-intent B2B) та content/SEO. Тут дистрибуція = «як дешево дістатися людей із проблемою для МОЄЇ штуки».
--   **Твоя перевага програміста в дистрибуції:** будувати лендінги, автоматизувати воронки, кастомна аналітика й атрибуція. Саме тут **ocraft-style автоматизація** може стати реальним інструментом — і навіть продуктом, якщо біль інших із цим підтвердиться.
+-   **Твоя перевага програміста в дистрибуції:** будувати лендінги, автоматизувати воронки, кастомна аналітика й атрибуція. Саме тут **x-style автоматизація** може стати реальним інструментом — і навіть продуктом, якщо біль інших із цим підтвердиться.
 
 ### 5 · Перший конкретний крок
 
 ## 
 
-Не «йди будуй». Обери **одну** групу людей + **одну** гіпотезу болю → поговори з 15–20 із них за Mom Test → із наперед заданим kill-критерієм → чесно спробуй спростувати, що цей біль вартий грошей. Виживе — тоді інструмент (і твої скіли/ocraft стануть у пригоді). Не виживе — ти зекономив три місяці життя.
+Не «йди будуй». Обери **одну** групу людей + **одну** гіпотезу болю → поговори з 15–20 із них за Mom Test → із наперед заданим kill-критерієм → чесно спробуй спростувати, що цей біль вартий грошей. Виживе — тоді інструмент (і твої скіли/x стануть у пригоді). Не виживе — ти зекономив три місяці життя.
 
 _Це не фінансова/бізнес-порада — робочий орієнтир. Рішення й ризик твої._
 
   
-ocraft → фінансування (NLnet / NGI Zero)
+x → фінансування (NLnet / NGI Zero)
 
 -   **NLnet / NGI Zero** (фінансує ЄС), для індивід-розробників/малих команд. €5k–50k, rolling раз на 2 міс, масштабовано.
--   Дві жорсткі умови: (1) **open-source** (вхідний квиток); (2) **цифрові спільні блага** (перевикористовуване іншими), не персональні проєкти. Напруга: тягне ocraft від персональної чистоти → публічне/узагальнене/підзвітне = той самий перфекціонізм vs шипінг.
--   Стратегія: не «фінансуй ocraft», а **виокрем open-source зріз як R&D** . On-theme: local-first/суверенність даних; відкритий MCP-шар; keystone (handler-as-node / самозбагачувані типи) = справжнє R&D + чистий autonomy-сторі.
+-   Дві жорсткі умови: (1) **open-source** (вхідний квиток); (2) **цифрові спільні блага** (перевикористовуване іншими), не персональні проєкти. Напруга: тягне x від персональної чистоти → публічне/узагальнене/підзвітне = той самий перфекціонізм vs шипінг.
+-   Стратегія: не «фінансуй x», а **виокрем open-source зріз як R&D** . On-theme: local-first/суверенність даних; відкритий MCP-шар; keystone (handler-as-node / самозбагачувані типи) = справжнє R&D + чистий autonomy-сторі.
 -   Тайминг: Commons Fund фінальний закрито, Core закрито; **Restack відкритий** (rolling, для фізосіб, €5–50k) → nlnet.nl/funding.
 -   Контрапункт: публічні гранти завжди зі стрінгом суспільної користі; персональний крафт → GitHub Sponsors/Open Collective; продукт → твоя ж monetization-дисципліна.
 
-### позиціювання ocraft
+### позиціювання x
 
 **Прорідня, яку NLnet уже профінансував:**
 
@@ -97,19 +97,19 @@ ocraft → фінансування (NLnet / NGI Zero)
 -   **Atomic Data** (Joep M.) — кожен датум адресується URL, типізований, local-first сервер = «/node/:id» для даних.
 -   Також: Earthstar, ERIS, Condensation, Solid-adjacent, «Dataspaces в системному шарі».
 
-**Ширша сімʼя:** TiddlyWiki ( **найближчий структурний двійник** — tiddler = адресована нода з даними+поведінкою+рендером, однокористувацька, локальна, хакабельна); Anytype (local-first типізований граф нод, P2P, шифр); Logseq; предки — HyperCard (картка = дані+скрипт+UI, духовний дід), Glamorous Toolkit/Pharo (усе — жива моделювана нода), Webstrates (веб-док як обчислювальний субстрат). Парасоля: **malleable software** (Ink & Switch, маніфест 2025) = повернути агентність = на-тему NLnet і описує ocraft.
+**Ширша сімʼя:** TiddlyWiki ( **найближчий структурний двійник** — tiddler = адресована нода з даними+поведінкою+рендером, однокористувацька, локальна, хакабельна); Anytype (local-first типізований граф нод, P2P, шифр); Logseq; предки — HyperCard (картка = дані+скрипт+UI, духовний дід), Glamorous Toolkit/Pharo (усе — жива моделювана нода), Webstrates (веб-док як обчислювальний субстрат). Парасоля: **malleable software** (Ink & Switch, маніфест 2025) = повернути агентність = на-тему NLnet і описує x.
 
-**Діра (payload):** local-first/linked-data когорта бере адресовані **ДАНІ** + суверенність, але поведінка там не першокласна адресована нода в тому ж дереві. Moldable-предки єднають дані+поведінку, але без модерного local-first/CRDT-стека + id-композиції. Перетин — **одне адресоване дерево, де дані І поведінка першокласні ноди, поведінка компонується по id (x.x), тип сам є нодою** — майже порожній. Це рівно ocraft.
+**Діра (payload):** local-first/linked-data когорта бере адресовані **ДАНІ** + суверенність, але поведінка там не першокласна адресована нода в тому ж дереві. Moldable-предки єднають дані+поведінку, але без модерного local-first/CRDT-стека + id-композиції. Перетин — **одне адресоване дерево, де дані І поведінка першокласні ноди, поведінка компонується по id (x.x), тип сам є нодою** — майже порожній. Це рівно x.
 
-**Висновок:** ocraft-для- **даних** існує й профінансований (NextGraph); ocraft-для- **поведінки** — ні. Keystone = незаповнена ніша = одночасно фінансоване NLnet R&D-питання («local-first дає суверенні дані; що таке суверенна, адресована, композована **поведінка** в тому ж субстраті?») І те, що ти й так будуєш.
+**Висновок:** x-для- **даних** існує й профінансований (NextGraph); x-для- **поведінки** — ні. Keystone = незаповнена ніша = одночасно фінансоване NLnet R&D-питання («local-first дає суверенні дані; що таке суверенна, адресована, композована **поведінка** в тому ж субстраті?») І те, що ти й так будуєш.
 
 **Інтеграційні ходи:** взяти URL-адресацію Atomic Data для інтеропу; додати CRDT-синк (Automerge / підхід NextGraph) → попутно закриває питання **Deno vs DO** (local-first знімає потребу в централізованому брокері); площину поведінки-як-нод лишити унікальним відкритим внеском.
 
-## who ocraft is for
+## who x is for
 
-Who ocraft is for, what problem it uniquely solves, how it compares to the leaders, what those leaders _lack_, what the core node types should be, and a plan to investigate usage. This is the "why anyone would use this" doc — keep it current.
+Who x is for, what problem it uniquely solves, how it compares to the leaders, what those leaders _lack_, what the core node types should be, and a plan to investigate usage. This is the "why anyone would use this" doc — keep it current.
 
-**The one-line wedge:** ocraft = node OS where data and behavior live in one tree - a note can also **run**.
+**The one-line wedge:** x = node OS where data and behavior live in one tree - a note can also **run**.
 
 Across every popular tool the same pains recur:
 
@@ -127,9 +127,9 @@ Across every popular tool the same pains recur:
 
 **The pattern:** the leaders split into "own your data but notes are passive" (Obsidian/Logseq/Anytype) and "programmable-ish but locked-in + can't run real code" (Notion/Tana/Roam). Nobody offers first-class, local-first, note-that-is-a-program.
 
-### Where ocraft fits (the bet)
+### Where x fits (the bet)
 
-ocraft's one thing none of them have first-class: **a note that is a program**, in a tree you own, driven by a command terminal, with a scheduler + AI built in. The differentiators that fall out: scripts as first-class nodes that `x.x`-compose, render (a canvas "collage"), and automate; the keystone (a node **type** is itself a node/handler); and — the strength already felt — **links navigate across every type** (`[[id]]` / `/node/:id`): a markdown note links to an html doc links to a runnable script links to a table. The tree + links are the universal namespace; the type is just the renderer.
+x's one thing none of them have first-class: **a note that is a program**, in a tree you own, driven by a command terminal, with a scheduler + AI built in. The differentiators that fall out: scripts as first-class nodes that `x.x`-compose, render (a canvas "collage"), and automate; the keystone (a node **type** is itself a node/handler); and — the strength already felt — **links navigate across every type** (`[[id]]` / `/node/:id`): a markdown note links to an html doc links to a runnable script links to a table. The tree + links are the universal namespace; the type is just the renderer.
 
 ### Core node types — research (what beyond html/md?)
 
@@ -137,7 +137,7 @@ The "typographical document" core to settle:
 
 -   **markdown** — the PKM lingua franca (Obsidian/Logseq); portable, diff-able, plain-text. Strongest candidate for the _default_ doc type.
 -   **html** — richer rendering (current); less portable. Keep for rich docs.
--   **mdx / markdownx** — markdown + embedded components/interactivity: a doc that runs inline. Uniquely fits ocraft's "doc that runs" thesis — a differentiator, not a me-too.
+-   **mdx / markdownx** — markdown + embedded components/interactivity: a doc that runs inline. Uniquely fits x's "doc that runs" thesis — a differentiator, not a me-too.
 -   **txt** — plainest, most portable; the base for append-only capture.
 -   **outliner** — nested blocks (the Logseq/Tana/Roam shape); a different doc geometry.
 -   **table** — structured rows (Notion's core).
@@ -145,28 +145,28 @@ The "typographical document" core to settle:
 
 Likely core set: **md** (default doc) · **html** (rich) · **txt** (capture) · **script** (behavior) · **category** (folder) — with **outliner** / **table** later. Decide the default text type deliberately: md wins on portability + the PKM standard; html on richness. Everything beyond the core is a script.
 
-### Plan — investigate how ocraft helps users
+### Plan — investigate how x helps users
 
--   **Dogfood (you first).** Run your real producer workflow in ocraft for 2–4 weeks; log every friction and every "I wish ocraft could…" right here in this doc.
--   **Name the wedge user.** Who has the problem ocraft _uniquely_ solves? A producer / builder / PKM power-user who wants programmable, local-first notes + automation + code in one owned tree. A worked example of finding that user: [research](/doc/research).
+-   **Dogfood (you first).** Run your real producer workflow in x for 2–4 weeks; log every friction and every "I wish x could…" right here in this doc.
+-   **Name the wedge user.** Who has the problem x _uniquely_ solves? A producer / builder / PKM power-user who wants programmable, local-first notes + automation + code in one owned tree. A worked example of finding that user: [research](/doc/research).
 -   **State the job-to-be-done.** "I want my notes, my files, my automations, and my code in ONE tree I own, driven by command." Validate it's a real, recurring pain (not just yours).
--   **Ask what people escape FOR.** Interview ~5 people in the wedge: what do they leave Obsidian/Notion/Tana to do? Those exits are ocraft's build list.
+-   **Ask what people escape FOR.** Interview ~5 people in the wedge: what do they leave Obsidian/Notion/Tana to do? Those exits are x's build list.
 -   **Demo the un-copyable.** The most demoable wedges — note-that-runs, the terminal driving the whole OS, a script mixing media — become clips → Show HN / X / a devlog.
 -   **Settle the core types** (md/html/txt/script + category) and the link-navigation story; ship the keystone (type = node) so "create any node type" becomes literally true.
 -   **Re-check the field** quarterly — the programmable-notes space is heating up; keep this competitive section current.
 
 ### The thesis to test
 
-The underserved desire is **programmable, local-first knowledge + automation in one place**. Obsidian owns local-first but notes are passive (plugins are the hack). Notion/Tana are programmable-ish but lock you in and can't run real code. ocraft's bet: **notes that ARE programs, in a tree you own, driven by command** — the "programmable notes" dream shipped as the product, not bolted on.
+The underserved desire is **programmable, local-first knowledge + automation in one place**. Obsidian owns local-first but notes are passive (plugins are the hack). Notion/Tana are programmable-ish but lock you in and can't run real code. x's bet: **notes that ARE programs, in a tree you own, driven by command** — the "programmable notes" dream shipped as the product, not bolted on.
 
 ### Environments — dev / staging / prod
 
 A tool that asks people to trust it with their own data has to be trustworthy in _operation_, not just design — a real **dev → staging → prod** split, not "push to the box and hope." How they differ:
 
 -   **dev** — your laptop. Throwaway data, no real users. `NODE_ENV` unset, plain `http://localhost`, the session cookie rides over http (no `Secure`), `API_TOKEN` optional, file-backed store under `data/`. Break things freely.
--   **staging** — a prod-shaped clone with _fake_ data: same build, `NODE_ENV=production`, HTTPS, `COOKIE_SECURE=true`, a _separate_ database + secrets, seeded/disposable content. Where you catch what only shows under prod settings (Secure-cookie auth, HSTS, the single-process static+API serving, a migration) _before_ it touches real nodes. ocraft has **no staging today** — dev is the only non-prod, so prod _is_ the test. Closing that gap is a precondition for the multi-user pivot.
+-   **staging** — a prod-shaped clone with _fake_ data: same build, `NODE_ENV=production`, HTTPS, `COOKIE_SECURE=true`, a _separate_ database + secrets, seeded/disposable content. Where you catch what only shows under prod settings (Secure-cookie auth, HSTS, the single-process static+API serving, a migration) _before_ it touches real nodes. x has **no staging today** — dev is the only non-prod, so prod _is_ the test. Closing that gap is a precondition for the multi-user pivot.
 -   **prod** — real users, real data; mustn't lose or leak it. Locked-down env (`API_TOKEN` required or the server refuses to boot, `COOKIE_SECURE`, localhost-bound behind a TLS proxy), its own database + backups, deploys gated on staging passing.
 
-Why this lives in a _usage_ doc: the moment ocraft holds someone else's tree (the multi-user pivot), "own your data" stops being only a design claim and becomes a promise about _ops_ — backups, no dev code touching prod data, no test runs against the live store. Concretely: per-environment `.env` + database, a staging target distinct from the (currently dead) prod droplet, and migrations rehearsed on staging first. Mechanics live in `plans/production-readiness-plan.txt` and `plans/prod-security-hardening-plan.txt`; this note just fixes the **three-tier separation** as a requirement, not an afterthought.
+Why this lives in a _usage_ doc: the moment x holds someone else's tree (the multi-user pivot), "own your data" stops being only a design claim and becomes a promise about _ops_ — backups, no dev code touching prod data, no test runs against the live store. Concretely: per-environment `.env` + database, a staging target distinct from the (currently dead) prod droplet, and migrations rehearsed on staging first. Mechanics live in `plans/production-readiness-plan.txt` and `plans/prod-security-hardening-plan.txt`; this note just fixes the **three-tier separation** as a requirement, not an afterthought.
 
 Sources for the competitive gaps: practicalpkm.com (Obsidian report card), medium.com (Obsidian problems; "Why users abandon Notion"), unstar.app (power-user complaints 2026), dev.to (Notion database walls), xda-developers.com (Notion falling behind), producthunt.com + thebusinessdive.com (Anytype reviews), toolfinder.com (PKM/Logseq), maggieappleton.com ("Programmable Notes"). Refresh periodically.

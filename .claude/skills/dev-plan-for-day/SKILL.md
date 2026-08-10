@@ -1,12 +1,12 @@
 ---
 name: dev-plan-for-day
-description: Analyze the ocraft repo and produce a sequenced ONE-DAY (~24h) plan for autonomous AI development — what to build next, in what order, and why — broken into work sessions of small PR-able tasks the dev loop can execute hands-off. The plan is proposed and discussed with the user FIRST; once approved, the day runs autonomously without further questions. Use when the user asks to "plan a day of ocraft dev", "what should I build today", "make a daily dev plan", or to feed an autonomous coding day.
+description: Analyze the x repo and produce a sequenced ONE-DAY (~24h) plan for autonomous AI development — what to build next, in what order, and why — broken into work sessions of small PR-able tasks the dev loop can execute hands-off. The plan is proposed and discussed with the user FIRST; once approved, the day runs autonomously without further questions. Use when the user asks to "plan a day of x dev", "what should I build today", "make a daily dev plan", or to feed an autonomous coding day.
 ---
 
-# ocraft one-day autonomous dev plan
+# x one-day autonomous dev plan
 
 Produce a bounded, sequenced **one-day (~24 hours)** plan for **autonomous (AI-driven)
-development** of ocraft: the model decides where the project should move next *today*, then
+development** of x: the model decides where the project should move next *today*, then
 turns that into small, independently shippable, verifiable tasks grouped into a few **work
 sessions**. The plan is the *input* to the execution half of the loop (a per-task agent run
 on a branch → checks → PR).
@@ -25,7 +25,7 @@ The contract is two phases:
 1. **The Roadmap** — the *Roadmap* section at the bottom of `README.md` (the parking lot:
    titles + why-interesting, grouped into Project ideas / Infrastructure / Generative art).
    Infer build order from it — foundations before the leaves that depend on them (e.g.
-   daily-briefing needs the ocraft self-MCP; mobile needs the WS exchange). Also skim
+   daily-briefing needs the x self-MCP; mobile needs the WS exchange). Also skim
    `plans/` for any longer-form design notes.
 2. **`git log --oneline -20`** — what actually shipped recently (don't re-plan done work).
 3. **Current code state** — node types (`frontend/src/components/NodeItem/NODE_TYPES`),
@@ -36,7 +36,7 @@ The contract is two phases:
 
 ## Method
 
-1. **Direction (judgment first).** In 2–4 sentences, state what ocraft should move on *today*
+1. **Direction (judgment first).** In 2–4 sentences, state what x should move on *today*
    and *why now* — grounded in the build-order and what just shipped. **Select and sequence
    within the README Roadmap**; that's the human-authored intent. If you
    think something genuinely new belongs, add it under a separate **"Proposed new direction
@@ -69,7 +69,7 @@ durable and the execution loop can consume it — then **present a short summary
 stop for discussion**. Do not begin executing until the user approves. Shape:
 
 ```md
-# ocraft dev plan — day of <date>
+# x dev plan — day of <date>
 
 ## Direction
 <2–4 sentences: what to move on today, and why now>
@@ -97,7 +97,7 @@ After the user approves, this plan feeds the autonomous cycle, repeated per task
 day: **execute one task → verify → PR → next task**. Two honest preconditions, or the loop
 produces plausible-looking breakage:
 
-1. **A real verification gate is the keystone, and it doesn't fully exist yet.** Today ocraft
+1. **A real verification gate is the keystone, and it doesn't fully exist yet.** Today x
    has only `node --check` and `npm run build` (syntax/compile) plus manual screenshots — none
    of which proves *behavior*. So until there's an actual test/check harness, **every PR still
    needs a human to confirm it works**; the acceptance check is a smoke test, not a correctness

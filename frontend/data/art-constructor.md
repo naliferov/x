@@ -131,7 +131,7 @@ _build possibility space (signal-driven node graph)_
 -   **system** = the engine: dirty-flag propagation, topo sort per space, pull-from-sinks scheduler, rate bridges, cycle/feedback legalization (delay nodes), transport/clock.
 -   **runtime** = per-frame tick (lustre "reaction"): clock advances → scheduled events fire → render loop pulls active space's sinks → dirty subgraphs cook → frame shown. = your "HTML as runtime" instinct (space = DOM canvas, nodes = DOM elements w/ behavior, graph = file-like node model).
 
-**node-with-behavior schema** (echo of the ocraft DOM-node model):
+**node-with-behavior schema** (echo of the x DOM-node model):
 
 ```ts
 type PortDir = 'in' | 'out';

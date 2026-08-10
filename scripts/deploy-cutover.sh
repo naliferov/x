@@ -6,13 +6,13 @@
 # We pre-flight the new backend on a spare port (:3002). Only if it boots and serves do we swap the
 # bundle + restart :80. A broken deploy never takes :80 down, and we roll the code back.
 set -u
-cd /root/ocraft || exit 1
+cd /root/x || exit 1
 
 # The runtime is TypeScript, run via Node's native type stripping (no build step). Requires
 # Node >= 22.6 on the box. The service configs (runtime/services/*.ts) spawn with these same flags.
 NODE_TS="node --experimental-strip-types --disable-warning=ExperimentalWarning"
 
-OLD_SHA="$(cat /tmp/ocraft_prev_sha 2>/dev/null || git rev-parse HEAD)"
+OLD_SHA="$(cat /tmp/x_prev_sha 2>/dev/null || git rev-parse HEAD)"
 NEW_SHA="$(git rev-parse --short HEAD)"
 
 rollback_code() {
@@ -22,7 +22,7 @@ rollback_code() {
 
 # 1. Pre-flight the NEW backend on :3002 — :80 stays on the old code the whole time.
 echo "pre-flighting $NEW_SHA on :3002 ..."
-PORT=3002 BIND_HOST=127.0.0.1 NODE_ENV=production $NODE_TS runtime/api.ts > /tmp/ocraft-preflight.log 2>&1 &
+PORT=3002 BIND_HOST=127.0.0.1 NODE_ENV=production $NODE_TS runtime/api.ts > /tmp/x-preflight.log 2>&1 &
 PRE=$!
 ok=0
 for _ in $(seq 1 12); do
@@ -36,7 +36,7 @@ kill "$PRE" 2>/dev/null
 
 if [ "$ok" != 1 ]; then
   echo "PRE-FLIGHT FAILED: $NEW_SHA did not boot on :3002 — prod :80 untouched"
-  tail -n 25 /tmp/ocraft-preflight.log
+  tail -n 25 /tmp/x-preflight.log
   rollback_code
   rm -rf frontend/dist.new
   exit 1

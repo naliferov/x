@@ -50,14 +50,14 @@ jobs:
           #    step is invisible to users. Record the current sha first (the rollback target).
           #    NODE_ENV=production -> HSTS; served HTTPS by Cloudflare -> origin :80 (BIND_HOST=0.0.0.0).
           ssh $KEY $HOST \
-            "cd /root/ocraft && \
-             git rev-parse HEAD > /tmp/ocraft_prev_sha && \
+            "cd /root/x && \
+             git rev-parse HEAD > /tmp/x_prev_sha && \
              printf 'TELEGRAM_BOT_TOKEN=%s\nNODE_ENV=production\nPORT=80\nBIND_HOST=0.0.0.0\n' '$TELEGRAM_BOT_TOKEN' > .env && \
              git fetch origin && git reset --hard origin/main && \
              npm install"
           # 2) Stage the runner-built bundle at dist.new (NOT live yet — swapped in at cutover).
-          rsync -az --delete -e "ssh $KEY" frontend/dist/ $HOST:/root/ocraft/frontend/dist.new/
+          rsync -az --delete -e "ssh $KEY" frontend/dist/ $HOST:/root/x/frontend/dist.new/
           # 3) Tier-1 blue/green-lite cutover: pre-flight the new backend on :3002, and only
           #    if it boots+serves swap the bundle + restart :80 — else roll back. A bad deploy never
           #    takes :80 down. Logic in scripts/deploy-cutover.sh (brought over by the reset above).
-          ssh $KEY $HOST "cd /root/ocraft && bash scripts/deploy-cutover.sh"
+          ssh $KEY $HOST "cd /root/x && bash scripts/deploy-cutover.sh"

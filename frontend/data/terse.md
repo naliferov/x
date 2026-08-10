@@ -1,6 +1,6 @@
 # terse
 
-A tiny, async-only toy language. Keywords are `@`-mentions. Pipeline: source → tokens (lexer) → AST (parser) → **JavaScript** (code generator). Lives in ocraft as the [`terse`](/script/terse) script — it transpiles to JS and runs the emitted code (no AST interpretation). It is the code sibling of [super-terse](/doc/super-terse): where super-terse squeezes _prose_ to a telegraphic skeleton, terse squeezes _code_ — each keyword becomes a 1-char **sigil**, the boilerplate punctuation goes, the semantic structure stays. You trade legibility-at-a-glance for density, so it needs a **legend** (or, here, the compiler) to read back.
+A tiny, async-only toy language. Keywords are `@`-mentions. Pipeline: source → tokens (lexer) → AST (parser) → **JavaScript** (code generator). Lives in x as the [`terse`](/script/terse) script — it transpiles to JS and runs the emitted code (no AST interpretation). It is the code sibling of [super-terse](/doc/super-terse): where super-terse squeezes _prose_ to a telegraphic skeleton, terse squeezes _code_ — each keyword becomes a 1-char **sigil**, the boilerplate punctuation goes, the semantic structure stays. You trade legibility-at-a-glance for density, so it needs a **legend** (or, here, the compiler) to read back.
 
 Current features:
 

@@ -12,7 +12,7 @@ navigate in-app without a reload and work as deep links).
 
 Cross-script reuse = plain ES `import`. Styling = Tailwind v4 + daisyUI v5 classes.
 
-**Docs** (`docs/`): plain html files copied read-only from the prod ocraft DB, one file per
+**Docs** (`docs/`): plain html files copied read-only from the prod x DB, one file per
 doc, named by doc name; links between them were rewritten `/node/<id>` → `/doc/<name>` at
 import time. No manifest, no ids — `import.meta.glob` discovers everything.
 
@@ -27,5 +27,5 @@ npm run typecheck
 
 Managed service: `npm run cli -- service start backroom` (from the repo root).
 
-The `/api` + `/ws` dev proxies exist only for scripts that talk to a live ocraft api
+The `/api` + `/ws` dev proxies exist only for scripts that talk to a live x api
 (harness, refactory media, the ws testers); everything else is fully offline.

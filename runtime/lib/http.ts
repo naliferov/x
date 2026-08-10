@@ -1,6 +1,6 @@
 // http.js — a tiny, framework-free HTTP transport kit (domain-agnostic).
 //
-// Everything here is about moving bytes over HTTP, not about ocraft: request-body reading
+// Everything here is about moving bytes over HTTP, not about x: request-body reading
 // (with a size cap), gzipped responses, a `:param` route matcher, static-file/SPA serving
 // with traversal guards, and a hardened `createServer` that turns handler throws and dropped
 // connections into responses instead of crashes. The app (runtime/api.js) supplies the

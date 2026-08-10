@@ -14,7 +14,7 @@ const dataDir = resolve(fileURLToPath(new URL('./data', import.meta.url)))
 const docFormatOf = (file: string) =>
   file.endsWith('.md') ? 'md' : file.endsWith('.html') ? 'html' : file.endsWith('.txt') ? 'txt' : null
 const saveDoc = (): Plugin => ({
-  name: 'ocraft-save-doc',
+  name: 'x-save-doc',
   apply: 'serve',
   // A doc file is a dep of App.vue via import.meta.glob, so its change hot-updates the whole
   // component and the UI blinks. Instead, push the raw source over a custom event (the client
@@ -25,7 +25,7 @@ const saveDoc = (): Plugin => ({
     const source = await read()
     server.ws.send({
       type: 'custom',
-      event: 'ocraft:doc',
+      event: 'x:doc',
       data: { name: basename(file, `.${format}`), source, format },
     })
     return []
@@ -61,7 +61,7 @@ const saveDoc = (): Plugin => ({
 
 // Scripts are .vue files under ./scripts, compiled by Vite and discovered via import.meta.glob in
 // App.vue — no runtime engine. Devlab itself is offline; the /api and /ws proxies below exist only
-// for the handful of ported scripts that talk to a LIVE ocraft api service (harness → /api/claude,
+// for the handful of ported scripts that talk to a LIVE x api service (harness → /api/claude,
 // refactory loading vlang sources by node id, the ws testers → the /ws hub). With the api service
 // down those scripts degrade to their own error handling; everything else runs fully offline.
 export default defineConfig({

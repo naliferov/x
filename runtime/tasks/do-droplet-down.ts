@@ -1,12 +1,12 @@
-// do-droplet-down — destroy the ocraft VPS to stop billing (counterpart to do-droplet-up).
+// do-droplet-down — destroy the x VPS to stop billing (counterpart to do-droplet-up).
 //
 //   node runtime/cli.js run do-droplet-down
 //
-// Finds the droplet(s) named ocraft-vps and deletes them. Logs each key moment.
+// Finds the droplet(s) named x-vps and deletes them. Logs each key moment.
 // Auth: the DigitalOcean token in mcp-servers/digitalocean-mcp/.env (via do-api.js).
 import { listDroplets, deleteDroplet } from '../../mcp-servers/digitalocean-mcp/do-api.js'
 
-const NAME = 'ocraft-vps'
+const NAME = 'x-vps'
 
 export const run = async (ctx) => {
   ctx.log(`looking for droplet "${NAME}"…`)

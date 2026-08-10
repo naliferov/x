@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-// System prompt lives in the harness doc, loaded offline at build time (no ocraft api needed).
+// System prompt lives in the harness doc, loaded offline at build time (no x api needed).
 import systemPrompt from '../data/harness.md?raw'
 
 const blocks = ref<{ kind: 'user' | 'model' | 'tool' | 'error'; text: string }[]>([])

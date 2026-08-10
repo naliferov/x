@@ -11,7 +11,7 @@ plan/PR/idea, not as an afterthought — two angles:
 
 - Marketing — how would it reach people? The "show, don't tell" artifact (demo clip,
   screenshot, before/after), the channel (YouTube, X, Reddit, HN, Telegram), the
-  hook/headline, and the target user. Many ocraft features are visual/demoable — favor a
+  hook/headline, and the target user. Many x features are visual/demoable — favor a
   recordable demo. See the YouTube content plan in plans/youtube-content-plan.txt.
 
 Park concrete monetization/marketing ideas in the Roadmap (README) next to the feature they

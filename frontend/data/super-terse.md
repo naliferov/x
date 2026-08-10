@@ -29,8 +29,8 @@ Punctuation: short dash `-`, not the long `—`.
 
 Before (`CLAUDE.md`):
 
-> One source of truth for this repo: **[README.md](README.md)** — what ocraft _is_ (project overview, setup, the node model, tasks/scheduler & services) plus, in its _Working in this repo_ section, the working rules: conventions, coding rules, DB invariants, and agent behaviour. Read it first; follow the rules when editing. (AGENTS.md is just a pointer to it.)
+> One source of truth for this repo: **[README.md](README.md)** — what x _is_ (project overview, setup, the node model, tasks/scheduler & services) plus, in its _Working in this repo_ section, the working rules: conventions, coding rules, DB invariants, and agent behaviour. Read it first; follow the rules when editing. (AGENTS.md is just a pointer to it.)
 
 After (super-terse):
 
-> read this: README.md what ocraft _is_ plus, working rules: conventions, coding rules, invariants, agent behaviour. follow the rules. AGENTS.md is pointer to README.md
+> read this: README.md what x _is_ plus, working rules: conventions, coding rules, invariants, agent behaviour. follow the rules. AGENTS.md is pointer to README.md

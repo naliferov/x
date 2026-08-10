@@ -185,7 +185,7 @@ const show = async (url: string | null) => {
   activeBin.value = null
   missing.value = null
   editing.value = false
-  document.title = 'ocraft'
+  document.title = 'x'
   if (!url) {
     return
   }
@@ -200,7 +200,7 @@ const show = async (url: string | null) => {
       return
     }
     activeUrl.value = url
-    document.title = `ocraft · ${asset.name}`
+    document.title = `x · ${asset.name}`
     activeBin.value = asset
     return
   }
@@ -212,7 +212,7 @@ const show = async (url: string | null) => {
       return
     }
     activeUrl.value = url
-    document.title = `ocraft · ${doc.name}`
+    document.title = `x · ${doc.name}`
     const source = docEdits.get(name) ?? ((await doc.load()) as string)
     activeDocFormat.value = doc.format
     activeSource.value = source
@@ -226,7 +226,7 @@ const show = async (url: string | null) => {
     return
   }
   activeUrl.value = url
-  document.title = `ocraft · ${script.name}`
+  document.title = `x · ${script.name}`
   if (script.kind === 'vue') {
     activeComponent.value = defineAsyncComponent(vueModules[script.path])
   }
@@ -305,12 +305,12 @@ window.addEventListener('popstate', () => show(urlFromLocation()))
 show(urlFromLocation())
 
 const theme = ref<'dark' | 'light'>(
-  (localStorage.getItem('ocraft.theme') as 'dark' | 'light') ?? 'light',
+  (localStorage.getItem('x.theme') as 'dark' | 'light') ?? 'light',
 )
 const applyTheme = () => (document.documentElement.dataset.theme = theme.value)
 const toggleTheme = () => {
   theme.value = theme.value === 'dark' ? 'light' : 'dark'
-  localStorage.setItem('ocraft.theme', theme.value)
+  localStorage.setItem('x.theme', theme.value)
   applyTheme()
 }
 applyTheme()
@@ -318,7 +318,7 @@ applyTheme()
 // A changed doc file arrives here (not as a full App re-render) — patch the open doc in place.
 if (import.meta.hot) {
   import.meta.hot.on(
-    'ocraft:doc',
+    'x:doc',
     ({ name, source, format }: { name: string; source: string; format: DocFormat }) => {
       docEdits.set(name, source)
       if (!editing.value && activeDocName.value === name) {
@@ -335,7 +335,7 @@ if (import.meta.hot) {
     <aside class="flex w-72 shrink-0 flex-col border-r border-base-300">
 
       <div class="flex items-center justify-between border-b border-base-300 p-4">
-        <span class="text-lg font-bold">ocraft</span>
+        <span class="text-lg font-bold">x</span>
         <button class="btn btn-ghost btn-xs" @click="toggleTheme">
           {{ theme === 'dark' ? '☀' : '☾' }}
         </button>

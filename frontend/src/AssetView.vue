@@ -18,7 +18,7 @@ const isGzipped = () => /\.(gz|gzip)(\?|$)/i.test(props.asset.url)
 
 // --- reading position: persist a reader's scrollTop per file, restore on reopen ---
 const reader = ref<HTMLElement>()
-const scrollKey = () => `ocraft.read:${props.asset.name}`
+const scrollKey = () => `x.read:${props.asset.name}`
 let scrollSaveTimer: ReturnType<typeof setTimeout> | undefined
 const onScroll = () => {
   const el = reader.value

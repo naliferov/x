@@ -3,12 +3,12 @@
     "telegram": {
       "command": "node",
       "args": ["mcp-servers/telegram-mcp/server.js"],
-      "cwd": "/Users/varcraft/projects/ocraft"
+      "cwd": "/Users/varcraft/projects/x"
     },
     "digitalocean": {
       "command": "node",
       "args": ["mcp-servers/digitalocean-mcp/server.js"],
-      "cwd": "/Users/varcraft/projects/ocraft"
+      "cwd": "/Users/varcraft/projects/x"
     }
   }
 }

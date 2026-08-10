@@ -1,4 +1,4 @@
-// do-droplet-up — provision the ocraft VPS from scratch, end to end.
+// do-droplet-up — provision the x VPS from scratch, end to end.
 //
 //   node runtime/cli.js run do-droplet-up [region] [size]
 //
@@ -9,7 +9,7 @@
 //   4. wait until sshd answers
 //   5. let DO's base cloud-init finish (avoids apt-lock contention)
 //   6. install latest Node.js (NodeSource "current") + git
-//   7. clone the repo into /root/ocraft (repo keeps its real name — not "clone")
+//   7. clone the repo into /root/x (repo keeps its real name — not "clone")
 //   8. verify node -v and the clone, save state
 //
 // Auth: the DigitalOcean token in mcp-servers/digitalocean-mcp/.env (loaded by do-api.js).
@@ -25,9 +25,9 @@ import {
 const execFileAsync = promisify(execFile)
 const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds))
 
-const NAME = 'ocraft-vps'
+const NAME = 'x-vps'
 const SSH_KEY_ID = 53064860 // DO key "macbook air"
-const REPO = 'https://github.com/naliferov/ocraft'
+const REPO = 'https://github.com/naliferov/x'
 
 // Disposable boxes get a fresh host key each rebuild, so skip host-key checking
 // rather than fight known_hosts collisions.
@@ -112,9 +112,9 @@ export const run = async (ctx) => {
   const nodeVersion = await ssh(ip, 'node -v')
   ctx.log(`node installed: ${nodeVersion}`)
 
-  ctx.log(`cloning ${REPO} into /root/ocraft…`)
-  await ssh(ip, `cd /root && rm -rf ocraft && git clone ${REPO}`)
-  ctx.log(`clone done (/root/ocraft)`)
+  ctx.log(`cloning ${REPO} into /root/x…`)
+  await ssh(ip, `cd /root && rm -rf x && git clone ${REPO}`)
+  ctx.log(`clone done (/root/x)`)
 
   const result = {
     id: droplet.id,
@@ -124,7 +124,7 @@ export const run = async (ctx) => {
     image,
     ip,
     node: nodeVersion,
-    repoDir: '/root/ocraft',
+    repoDir: '/root/x',
     provisionedAt: ctx.time.now(),
   }
   ctx.state.save(result)

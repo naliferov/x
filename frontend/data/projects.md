@@ -1,6 +1,6 @@
 ## projects
 
-[ocraft](/doc/ocraft-strategy)  
+[x](/doc/x-strategy)  
 [photo club](/doc/club-photo)  
 [sound strand](/doc/audio-sound-strand)  
 [reelmaker](/doc/reelmaker)  

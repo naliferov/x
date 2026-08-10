@@ -12,7 +12,7 @@
 // - t> — start when the previous window ends; duration = the element's own cut length (c695:720 → 25s)
 // - t>5 — after previous, explicit 5s (needed for images/rects, or to override)
 // - absolute t5:8 still works and also advances the time cursor
-// - i<id>/v<id> pull media from ocraft nodes via the /api proxy; i<name>/v<name> from /api/bin
+// - i<id>/v<id> pull media from x nodes via the /api proxy; i<name>/v<name> from /api/bin
 //
 // Sources: plain files in frontend/data/*.txt, loaded by NAME (refactory-demo lives there).
 // No node ids. Media inside a program (i<id>/v<name>) still resolves via the /api proxy.

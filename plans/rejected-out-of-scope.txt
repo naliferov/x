@@ -15,12 +15,12 @@ move an item back up to the Roadmap (README) only if its stated reason no longer
 
 - World mirror — real-world objects as nodes (digital twins / "GTA5 for real life") —
   rejected (off-identity). Mirroring external things (a Telegram chat, a game, a wearable) as
-  nodes is the opposite of ocraft's point: a mirror node is passive data with no behavior — it
+  nodes is the opposite of x's point: a mirror node is passive data with no behavior — it
   doesn't get crafted, composed (x.x), or run, and it contradicts "data and behavior share one
   tree." It also drags the project onto a connector treadmill (one bespoke, breakable
   integration per source — PSN unofficial, Apple has no API), competing on integrations instead
   of craft. And it's the *less* novel angle — Plan 9 + FUSE already did "mount the world as
-  objects" decades ago, whereas ocraft's distinctive lineage is "everything is a live object you
+  objects" decades ago, whereas x's distinctive lineage is "everything is a live object you
   craft and run" (Lisp/Smalltalk/Emacs). The first slice (a tg-chat node + /api/telegram/* bridge
   + tg-* terminal commands) was built and removed — the endpoints were also an unauthenticated
   user-account read/send hole on localhost. The only salvageable kernel: external data as input
