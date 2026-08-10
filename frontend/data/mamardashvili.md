@@ -227,7 +227,12 @@ We want to build a happy state that would mechanically produce happiness. But th
 ## Related authors
 
 -   Proust — the main subject of the lectures
--   [heidegger](/doc/heidegger)
+-   [heidegger](/doc/heidegger) — resoluteness is the structural twin of effort in time
+-   [sartre](/doc/philosophy-fragments) — bad faith as the antipode: freedom refused by playing a thing
+-   [levinas](/doc/philosophy-fragments) — the counter-case: effort here is solitary, there nothing is saved alone
+-   [simone weil](/doc/philosophy-fragments) — attention as the same intonation aimed at emptying
+-   [pyatigorsky](/doc/philosophy-fragments) — co-author of "Symbol and Consciousness"; thinking as a rare event
+-   [merleau-ponty](/doc/philosophy-fragments) — the body, against an over-intellectual reading of effort
 -   [derrida](/doc/philosophy-fragments)
 -   Valéry — "Psychology is like the geometry of time"
 -   Fourier — the utopia of the maximal realization of the human, composite desire

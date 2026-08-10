@@ -2,11 +2,7 @@
 
 ## Theory (architecture, patterns, etc.)
 
-### CI/CD
-
-**Continuous Integration (CI):** При каждом коммите в репозиторий CI-сервер автоматически собирает и тестирует код. Если тесты проходят успешно, код (пул-реквест) сливается в основную ветку.
-
-**Continuous Delivery (CD):** автоматическое разворачивание в тестовую или продакшен среду.
+Term definitions - CI/CD, SOLID, GRASP, OOP, CAP, ACID, GoF patterns - live in [glossary](/doc/glossary).
 
 ### 119\. У чому різниця між blue/green розгортанням і rolling розгортанням?
 

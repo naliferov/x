@@ -1,4 +1,4 @@
-Continuous Integration (CI) - integrating and testing code in a shared repository.  
+Continuous Integration (CI) - on every commit the CI server builds and tests the code in a shared repository; if the tests pass, the pull request merges into the main branch.  
 Continuous Delivery (CD) - automatic delivery of code to test and pre-production environments.  
 Continuous Deployment (CD) - automatic delivery of code to the production environment.
 

@@ -6,9 +6,15 @@
   
 Malevich's belief in the perfection of existence through industrial progress differs little from the Christian belief in the perfection of the human soul  
   
-Bergson, Dilthey, Cassirer, Cioran, Kierkegaard, Sartre, Jaspers, Ilyenkov, Zinoviev, Vygotsky, Husserl, Quine, Rorty, Bakhtin, Saussure, Wittgenstein  
+to read: Bergson, Dilthey, Cassirer, Cioran, Jaspers, Ilyenkov, Zinoviev, Vygotsky, Quine, Rorty, Bakhtin, Saussure, Wittgenstein  
+  
+topics to dig into: theory of knowledge, ontology, metaphysics, ethics, aesthetics, space and time, pataphysics, mental causation, Marx's Capital, Laruelle's non-philosophy, fideism, mode (a way of existence or action of something; also a variety of syllogism), empirio-criticism  
+  
+open question: how [Husserl's](/doc/philosophy-fragments) transcendental consciousness differs from [Sartre's](/doc/philosophy-fragments) pre-reflective cogito  
   
 [chinese philosophy](/doc/chinese-philosophy) [derrida](/doc/philosophy-fragments) [heidegger](/doc/heidegger) [mamardashvili](/doc/mamardashvili) [baudrillard](/doc/philosophy-fragments) Gorgias (Sophist) [protagoras (sophist)](/doc/philosophy-fragments) [structure of philosophy](/doc/structure-of-philosophy) [dzogchen](/doc/dzogchen)  
+  
+existential-phenomenological line, around [effort](/doc/mamardashvili): [husserl](/doc/philosophy-fragments) [kierkegaard](/doc/philosophy-fragments) [sartre](/doc/philosophy-fragments) [merleau-ponty](/doc/philosophy-fragments) [levinas](/doc/philosophy-fragments) [simone weil](/doc/philosophy-fragments) [pyatigorsky](/doc/philosophy-fragments)  
   
 "Rebel Ideas" by Matthew Syed, "Elastic" by Leonard Mlodinow, and "Range" by David Epstein Anders Indset - Wild Knowledge: Outthink the Revolution Anders Indset - The Quantum Economy  
   

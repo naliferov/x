@@ -2,7 +2,7 @@ in ableton you can move from sound to the mathematics of philosophy. with the pr
   
 myst the detection of absence, twin peaks, non-action, closure, security, doubles/takes, the desire of the other, the beyond, field recording, photo  
   
-theory of knowledge, ontology, metaphysics, ethics, aesthetics, space time, pataphysics, mental causation, Marx's capital, Laruelle's non-philosophy, fideism, mode (a way of existence or action of something, as well as a variety of syllogism), empirio-criticism, bergson, dilthey, cassirer, cioran, kierkegaard, Heidegger, sartre, jaspers, ilyenkov, Mamardashvili, zinoviev, vygotsky, how Husserl's transcendental consciousness differs from Sartre's pre-reflective cogito, quine, rorty, bakhtin, saussure, Derrida, wittgenstein  
+philosophy reading list, topics and open questions moved to [philosophy](/doc/philosophy)  
   
 the browser is a synthesizer of logic, the refraction of the receptors of the logical world, methods of building composition, electro-graveyard, cleaning is a method of order, little man with big plan, methods of entering productive thinking  
   
