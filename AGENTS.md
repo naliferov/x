@@ -1,3 +1,3 @@
 # AGENTS.md
 
-Everything lives in **[README.md](README.md)** — the working rules (conventions, coding rules, DB invariants, and agent behaviour) are its [Working in this repo](README.md#working-in-this-repo) section. Follow those when editing.
+Правила и описание системы: **[CLAUDE.md](CLAUDE.md)** - что такое x, качества системы, чем руководствоваться при работе. Следовать им при любой правке.

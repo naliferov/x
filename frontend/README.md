@@ -1,4 +1,4 @@
-# backroom
+# x frontend
 
 Scripts (runnable experiments) + docs (the knowledge base) in one offline app. Sidebar has
 two sections — scripts and docs — with one filter; the right pane runs/renders the selection.
@@ -12,9 +12,12 @@ navigate in-app without a reload and work as deep links).
 
 Cross-script reuse = plain ES `import`. Styling = Tailwind v4 + daisyUI v5 classes.
 
-**Docs** (`docs/`): plain html files copied read-only from the prod x DB, one file per
-doc, named by doc name; links between them were rewritten `/node/<id>` → `/doc/<name>` at
-import time. No manifest, no ids — `import.meta.glob` discovers everything.
+**Docs** (`data/`), one file per doc, named by doc name — the name IS the route
+(`/doc/<name>`). Told apart by extension: `.md` (112, the default), `.html` (6), `.txt` (1);
+`.md.gz`/`.html.gz` are unpacked in the browser. Anything else in the same dir is a **bin**
+(binary asset: audio, images, archives). Originally imported from the prod x DB with
+`/node/<id>` links rewritten to `/doc/<name>`; edited in place since. No manifest, no ids —
+`import.meta.glob` over `data/` discovers everything (`src/App.vue:50-58`, `:150`).
 
 ## Run
 
@@ -25,7 +28,7 @@ npm run build      # -> dist/ (fully static, docs bundled as lazy chunks)
 npm run typecheck
 ```
 
-Managed service: `npm run cli -- service start backroom` (from the repo root).
+Managed service: `npm run service -- start frontend` (from the repo root).
 
 The `/api` + `/ws` dev proxies exist only for scripts that talk to a live x api
 (harness, refactory media, the ws testers); everything else is fully offline.
