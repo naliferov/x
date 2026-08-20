@@ -1,5 +1,6 @@
 ## index
 
+[strategy](/doc/strategy)  
 [projects](/doc/projects)  
 [cs / dev](/doc/cs-main)  
 [philosophy / mind](/doc/philosophy)  

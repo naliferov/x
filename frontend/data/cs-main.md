@@ -65,6 +65,7 @@ takeaway: each popular repo owns ONE axis; the x combo (folder-per-node on disk 
 [terse](/doc/terse)  
 [live-runtime](/doc/live-runtime)  
 [yhelper](/doc/yhelper)  
+[support systems](/doc/support-systems)  
 [php upgrade audit](/doc/php-upgrade-audit)
 
 ## runtime
@@ -89,7 +90,7 @@ takeaway: each popular repo owns ONE axis; the x combo (folder-per-node on disk 
 
 [dev](/doc/dev)  
 [developer growth](/doc/developer-growth)  
-[object analytics](/doc/object-analytics)  
+[analytics](/doc/analytics)  
 [it books](/doc/it-books)  
 [harness](/doc/harness) · [script](/script/harness)  
-[ai](/doc/ai) [ai improve](/doc/ai-improve)
+[ai](/doc/ai)

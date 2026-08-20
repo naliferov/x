@@ -1,7 +1,15 @@
--   **Vibe coding" vs. "vibe engineering"/"agentic engineering" is the foundational axis.** Simon Willison's definition is the operative one: vibe coding is "building software with an LLM without reviewing the code it writes." The moment you read, test, and can explain the code, it stops being vibe coding
--   **Spec-driven development (SDD) is the highest-momentum methodology but has near-null independent evidence.** GitHub Spec Kit has surpassed 117k GitHub stars and 10.3k forks (github/spec-kit repo, June 2026), having attracted 50k stars "in just a couple of months" per Thoughtworks (Nov 2025) and 16,000+ within its first week (Visual Studio Magazine, Sept 2025). Yet the one controlled study shows the spec ritual alone barely moves quality; benefits come from context grounding and validation gates layered on top.  
-    
--   **Context engineering has emerged as the discipline the industry actually converged on**
--   **Eval-driven development (EDD) is the most rigorously-grounded methodology — but mainly for AI _products_ , not AI- _assisted coding_ generally**
--   **Multi-agent orchestration works for breadth-first, parallelizable tasks but is explicitly bad for coding**
--   **The rigorous evidence is sobering and points to system-level factors, not tools**
+- **Домен-паки біля коду** - на кожен контекст: словник + інваріанти (як контрактні тести) + context map. Відібрані, мінімальні, не автоген. ≈ CLAUDE.md на зону.
+- **Рев'ю спеки > рев'ю коду** - спека дорога, код перегенерується; дивись намір, не імплементацію.
+- **Окремі агенти на тести й код** - імплементатору не чіпати тести (зелено ≠ правильно).
+- **Свій рев'ю-агент** - підсвічує high-impact файли + впевненість/критичність; авто-апрув лише докам/перекладам.
+- **Малі PR** - ≤500 рядків, атомарні + постачабельні, за feature flag.
+- **Самопокращуване рев'ю** - бот пиляє за неопрацьовані AI-коментарі; щотижня агент переписує правила з фідбеку.
+- **Топ-агент = розслідування прод-інцидентів** по логах. Потім: доки уві сні + заплановані workflow.
+- **Eval-и на скіли/харнес** - скіли як код з тестами (Skill Creator v2).
+- **Дешеві сабагенти** - пошук/валідація на Haiku, не Opus на все.
+- **Метрики що важать** - DORA (deploy freq + change-failure), TruePut (PR зважені складністю), інциденти/1000 PR. Не токени/рядки.
+- **Adoption** - один discovery-інженер з карт-бланшем + чемпіони + м'які воркшопи. Ніколи примусом.
+- **OpenSpec (легкий) vs Superpowers (важкий: гейти, worktree, TDD, порівняння варіантів)** - обирай за ціною/часом/якістю. Не будуй свій SDD.
+- **Вайб-кодинг-пісочниці** - не-інженерам ізольовані sandbox + захищені конектори, не уроки програмування; прототип без прод-даних.
+- **Агент усередині інструмента, не навколо** - лійку будуй _в_ Amplitude; не «експорт → питай агента → віриш неперевіреному».
+- **Команда за AI-архетипом** (Хастлер / харнес-будівник / Свіпер), не фронт/бек; цінуй широкі фундаменти + end-to-end, топ-10% плати значно більше.

@@ -25,5 +25,6 @@
 [research](/doc/research)  
 [x strategy](/doc/x-strategy)  
 [random notes](/doc/random-notes)  
+[morning](/doc/morning)  
 [todo](/doc/todo)  
 [job](/doc/job)

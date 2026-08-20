@@ -5,6 +5,8 @@ minimax
 
 pi.dev
 
+[context7](https://context7.com) - MCP server by Upstash: pulls version-specific library docs into the model's context, so it stops inventing APIs that never existed. Two tools - `resolve-library-id`, `query-docs`; run as `npx @upstash/context7-mcp`. Free without a key, the key only raises rate limits.
+
 ## infrastructure as code
 
 Terraform remains the most popular tool for describing infrastructure (cloud resources, VMs, networks, etc.) declaratively  
