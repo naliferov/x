@@ -1,3 +1,7 @@
+# english phrases
+
+Сырые выписки из сериалов. Разобранные слова переезжают в [english](/doc/english).
+
 ## Mr. Robot
 
 -   **slippery slope** — a slippery slope
@@ -30,12 +34,7 @@
 -   **fidgeting** — to fuss, to fidget
 -   **encumbered** — burdened
 -   **disillusionment** — disillusionment, loss of illusions
--   **pettiness** — pettiness
--   **astounding** — astounding
--   **upheaval** — upheaval, turmoil
--   **deeply entrenched** — deeply entrenched
 -   **repercussions** — consequences, repercussions
--   **severance package** — severance package
 -   **beyond me** — beyond my comprehension, it doesn't get through to me
 -   **sustained** — prolonged, continuous
 
@@ -59,7 +58,7 @@ take surveillance detection stops - Make stops to check whether you're being fol
 
 To pony up the cash - to fork over, to pay up We’ve already given you our burst of cash on hand - We've already handed you our entire one-time cash reserve
 
-The public is hoarding cash - The public is hoarding cash
+The public is hoarding cash - придерживают наличные, см. [english](/doc/english)
 
 You've got to resign - You have to step down go to Congress with a bailout right now - turn to Congress for help
 
@@ -79,7 +78,6 @@ take surveillance detection stops - Make stops to check whether you're being fol
 
 To pony up the cash - to fork over, to pay up We’ve already given you our burst of cash on hand - We've already handed you our entire one-time cash reserve
 
-The public is hoarding cash - The public is hoarding cash
 
 You've got to resign - You have to step down go to Congress with a bailout right now - turn to Congress for help
 
@@ -92,12 +90,6 @@ at the seams between order and chaos - the seams between order and chaos the str
 perked up - to perk up loquacious type - a talkative type to spoil - to spoil
 
 patsy - a puppet, a scapegoat
-
-## Episode 2 eps2.1\_k3rnel-pan1c.ksd
-
-adversary - adversary stumbling from - to stumble because of
-
-## Episode 2 eps2.2\_init\_1.asec
 
 * * *
 
@@ -122,8 +114,6 @@ When I say "represents", I mean "pleads (enters a plea of guilt)
 retainer - in a legal context  
 A retainer fee (an advance payment to a lawyer for their services)  
   
-Attorney - attorney  
-thugs - thugs  
 Concerned - concerned  
 somebody's squeezing off shots (somebody is firing (shooting))  
 same hood - the same neighborhood  
@@ -144,3 +134,41 @@ Warrant — a warrant for a search or arrest
 Subpoena — a summons, a court order requiring testimony or documents to be provided.  
   
 sheet, rap sheet means a record of police arrests
+
+## окремі фрази
+
+daunting - intimidating,  
+difficult i really struggled in the first few previews - well,  
+suit yourself - well,  
+as you wish viciousness - malice,  
+depravity doesn't remotely resemble - bears not the slightest resemblance to  
+don't you dare throw bunny out of bed for (out of) curiosity sake — out of pure curiosity best prank i pulled as a child
+
+## слова зі стрічки
+
+annex (wing of a building),  
+cheviot,  
+coherence,  
+connotation,  
+dilation,  
+droshky,  
+equilibristics,  
+felt,  
+heap,  
+heliotrope,  
+homunculus,  
+kaymak,  
+pauperism,  
+postmodernism,  
+prestidigitation,  
+scraps flying loose,  
+stochastic,  
+taedium vitae (latin — weariness of life),  
+vital,  
+winding shadow
+
+## titles
+
+ataman,  
+baron,  
+boyar, caliph, chevalier, count, deacon, duke, emperor, hetman, kazoku (japanese), khan, king, knyaz, marquis, prince, shah, tsesarevich, viscount

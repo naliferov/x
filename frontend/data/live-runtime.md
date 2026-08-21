@@ -68,4 +68,4 @@ The typed direction recorded in [terse](/doc/terse) (bounded fixed-width integer
 
 Search terms to go deeper: **contract programming**, **executable specification**, **continuous testing**, **incremental computation**, **live programming**.
 
-Related: [terse](/doc/terse) · [programming languages](/doc/programming-languages) · [javascript types](/doc/javascript-types) · [glossary](/doc/glossary)
+Related: [terse](/doc/terse) · [glossary](/doc/glossary)

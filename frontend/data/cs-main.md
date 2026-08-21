@@ -6,11 +6,11 @@ bret victor, ted nelson
 
 ##### Paradigm
 
-procedural oop [functional](/doc/functional) [reactive](/doc/reactive)
+procedural oop [reactive](/doc/reactive)
 
 [localfirstweb](https://localfirstweb.dev/) [CRDT](/doc/crdt) ACID and isolation levels
 
-[machine learning](/doc/machine-learning) client-server communications
+client-server communications
 
 ## architecture
 
@@ -18,15 +18,13 @@ procedural oop [functional](/doc/functional) [reactive](/doc/reactive)
 
 ## data
 
-algorithms [https://en.wikipedia.org/wiki/List\_of\_algorithms](https://en.wikipedia.org/wiki/List_of_algorithms) [db index](/doc/db-index)
+algorithms [https://en.wikipedia.org/wiki/List\_of\_algorithms](https://en.wikipedia.org/wiki/List_of_algorithms)
 
-[authentication and authorization](/doc/authentication-and-authorization) XSS  
+XSS  
 virtualization  
-[RabbitMQ](/doc/rabbitmq) [Ubuntu](/doc/ubuntu)
+[Ubuntu](/doc/ubuntu)
 
-encoding [encoding unicode](/doc/encoding-unicode)  
-[UAV](/doc/uav)  
-[machine learning](/doc/machine-learning)
+
 
 ## reprogrammable software / x lineage
 
@@ -54,12 +52,7 @@ takeaway: each popular repo owns ONE axis; the x combo (folder-per-node on disk 
 
 ## languages
 
-[programming languages](/doc/programming-languages)  
-[javascript](/doc/javascript)  
-[javascript history](/doc/javascript-history)  
-[javascript types](/doc/javascript-types)  
-[javascript features](/doc/javascript-features)  
-[javascript changelog](/doc/javascript-changelog)  
+typescript rescript [civet](https://civet.dev) rust go coq agda idris  
 [javascript snippets](/doc/javascript-snippets)  
 [vlang](/doc/vlang)  
 [terse](/doc/terse)  
@@ -72,25 +65,27 @@ takeaway: each popular repo owns ONE axis; the x combo (folder-per-node on disk 
 
 [node.js](/doc/node-js)  
 [node.js job interview (Q&A)](/doc/nodejs-interview)  
-[node.js event loop](/doc/node-js-event-loop)  
-[browser event loop](/doc/browser-event-loop)  
-[javascript engines & runtimes](/doc/javascript-engines-and-runtimes)  
-
-## web / frontend
-
-[frontend](/doc/frontend)  
-[vue 3](/doc/vue-3)
+[event loop](/doc/event-loop)  
 
 ## databases
 
 [postgresql](/doc/postgresql)  
-[queue on linked list](/doc/queue-on-linked-list)
+
+## books on little languages
+
+Ни одна книга не ставит «G-code family vs expression family» напрямую, но пространство между ними закрыто четырьмя:
+
+- **Martin Fowler - Domain-Specific Languages**
+- **Jon Bentley, "Little Languages"** (эссе в More Programming Pearls) - основополагающий текст традиции «крошечная нотация под одну задачу», к которой относится vlang
+- **Kernighan & Pike, The Practice of Programming, ch. 9 "Notation"** - little languages от авторов awk/pic; ближе всего по духу
+- **Michael Scott, Programming Language Pragmatics** - полное родословное дерево, если нужен тяжёлый обзор
+
+[nature of code](https://natureofcode.com) · Ted Nelson - [Computer Lib / Dream Machines](https://worrydream.com/refs/Nelson_T_1974_-_Computer_Lib,_Dream_Machines.pdf)
 
 ## practice
 
 [dev](/doc/dev)  
 [developer growth](/doc/developer-growth)  
 [analytics](/doc/analytics)  
-[it books](/doc/it-books)  
 [harness](/doc/harness) · [script](/script/harness)  
 [ai](/doc/ai)

@@ -40,4 +40,4 @@
 
 ---
 
-Суміжне: [фотоклуб](/doc/club-photo) · [місця](/doc/places-to-go) · [ігри](/doc/games)
+Суміжне: [фотоклуб](/doc/club-photo) · [ігри](/doc/games)

@@ -160,4 +160,4 @@
 
 Это личный ориентир, не финансовый и не психологический совет. Разбор поведения - не диагноз.
 
-Related: [strategy](/doc/strategy) · [x strategy](/doc/x-strategy) · [sense](/doc/sense) · [glossary](/doc/glossary)
+Related: [grammars](/doc/grammars) · [strategy](/doc/strategy) · [x strategy](/doc/x-strategy) · [sense](/doc/sense) · [glossary](/doc/glossary)

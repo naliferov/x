@@ -1,3 +1,7 @@
+# x strategy
+
+> **Історична частина видалена.** Node OS - нода, що виконується, хендлери, термінал, `/api/nodes` - **зникла з коду 2026-07-10** (коміт `d921d56`, «pivot to the offline ocraft app»). Конкурентний аналіз проти Obsidian/Notion/Tana, позиціювання під NLnet і план keystone описували саме її, тому зрізані. Те, що лишилось нижче, від продукту не залежить: як робити ресьорч, рейтинг варіантів заробітку, дистрибуція.
+
 ## від **чийогось болю, за який платять** , до інструмента, що цей біль лікує.
 
 ## 
@@ -89,84 +93,3 @@ x → фінансування (NLnet / NGI Zero)
 -   Тайминг: Commons Fund фінальний закрито, Core закрито; **Restack відкритий** (rolling, для фізосіб, €5–50k) → nlnet.nl/funding.
 -   Контрапункт: публічні гранти завжди зі стрінгом суспільної користі; персональний крафт → GitHub Sponsors/Open Collective; продукт → твоя ж monetization-дисципліна.
 
-### позиціювання x
-
-**Прорідня, яку NLnet уже профінансував:**
-
--   **NextGraph** — власні взаємоповʼязані графи даних, local-first, CRDT, SPARQL, підписано/шарено; NGI Zero Commons + Assure; консорціум ELFA будує local-first воркспейс поверх. Найближчий оплачений родич.
--   **Atomic Data** (Joep M.) — кожен датум адресується URL, типізований, local-first сервер = «/node/:id» для даних.
--   Також: Earthstar, ERIS, Condensation, Solid-adjacent, «Dataspaces в системному шарі».
-
-**Ширша сімʼя:** TiddlyWiki ( **найближчий структурний двійник** — tiddler = адресована нода з даними+поведінкою+рендером, однокористувацька, локальна, хакабельна); Anytype (local-first типізований граф нод, P2P, шифр); Logseq; предки — HyperCard (картка = дані+скрипт+UI, духовний дід), Glamorous Toolkit/Pharo (усе — жива моделювана нода), Webstrates (веб-док як обчислювальний субстрат). Парасоля: **malleable software** (Ink & Switch, маніфест 2025) = повернути агентність = на-тему NLnet і описує x.
-
-**Діра (payload):** local-first/linked-data когорта бере адресовані **ДАНІ** + суверенність, але поведінка там не першокласна адресована нода в тому ж дереві. Moldable-предки єднають дані+поведінку, але без модерного local-first/CRDT-стека + id-композиції. Перетин — **одне адресоване дерево, де дані І поведінка першокласні ноди, поведінка компонується по id (x.x), тип сам є нодою** — майже порожній. Це рівно x.
-
-**Висновок:** x-для- **даних** існує й профінансований (NextGraph); x-для- **поведінки** — ні. Keystone = незаповнена ніша = одночасно фінансоване NLnet R&D-питання («local-first дає суверенні дані; що таке суверенна, адресована, композована **поведінка** в тому ж субстраті?») І те, що ти й так будуєш.
-
-**Інтеграційні ходи:** взяти URL-адресацію Atomic Data для інтеропу; додати CRDT-синк (Automerge / підхід NextGraph) → попутно закриває питання **Deno vs DO** (local-first знімає потребу в централізованому брокері); площину поведінки-як-нод лишити унікальним відкритим внеском.
-
-## who x is for
-
-Who x is for, what problem it uniquely solves, how it compares to the leaders, what those leaders _lack_, what the core node types should be, and a plan to investigate usage. This is the "why anyone would use this" doc — keep it current.
-
-**The one-line wedge:** x = node OS where data and behavior live in one tree - a note can also **run**.
-
-Across every popular tool the same pains recur:
-
--   **Notes are passive data.** To _do_ anything (transform, fetch, automate, compute) you escape to plugins, formulas, or external scripts. The note can't act.
--   **The "programmable notes" desire is real and underserved** — given agency, people enthusiastically write programs over their own notes (Maggie Appleton's thesis). Today that means brittle plugins, not first-class code.
-
-### Competitive landscape — and what users LACK in each
-
--   **Obsidian** (local-first markdown + plugins). Loved for ownership + links. Gaps users hit: weak **mobile**; **performance** degrades on big vaults; native **search** lacks boolean/queries; **no native tasks**; no real-time **collaboration**; a **plugin-maintenance treadmill**; no enforced structure → "chaos at scale". Programmability = JS plugins: powerful but heavy, fragile, sandbox-less.
--   **Notion** (block DB, SaaS). Powerful databases. Gaps: **slow** (~1,000-block wall), **no true offline**, file-size limits, **vendor lock-in** (proprietary), steep learning curve, mobile is a "read-only viewer", relations confined to one workspace, formulas can't reference formulas.
--   **Anytype** (local-first object DB). Clean, P2P-sync. Gaps: brutal learning curve (reportedly loses ~90% of new users early), limited **search/export**, missing calendar/templates/reminders/**formulas**, weak mobile parity + collaboration.
--   **Logseq** (local-first outliner, markdown/org). Block outliner + queries + local ownership. Gaps: niche outline-only model, dev velocity/performance complaints.
--   **Tana** (outliner + DB + AI, SaaS). The closest to "programmable": supertags, fields, computed values, AI automation. Gaps: **SaaS lock-in**, complexity, cost — and it still isn't "run arbitrary code".
--   **Roam** (graph outliner, SaaS). Pioneered bidirectional links. Gaps: SaaS, stagnation, price.
-
-**The pattern:** the leaders split into "own your data but notes are passive" (Obsidian/Logseq/Anytype) and "programmable-ish but locked-in + can't run real code" (Notion/Tana/Roam). Nobody offers first-class, local-first, note-that-is-a-program.
-
-### Where x fits (the bet)
-
-x's one thing none of them have first-class: **a note that is a program**, in a tree you own, driven by a command terminal, with a scheduler + AI built in. The differentiators that fall out: scripts as first-class nodes that `x.x`-compose, render (a canvas "collage"), and automate; the keystone (a node **type** is itself a node/handler); and — the strength already felt — **links navigate across every type** (`[[id]]` / `/node/:id`): a markdown note links to an html doc links to a runnable script links to a table. The tree + links are the universal namespace; the type is just the renderer.
-
-### Core node types — research (what beyond html/md?)
-
-The "typographical document" core to settle:
-
--   **markdown** — the PKM lingua franca (Obsidian/Logseq); portable, diff-able, plain-text. Strongest candidate for the _default_ doc type.
--   **html** — richer rendering (current); less portable. Keep for rich docs.
--   **mdx / markdownx** — markdown + embedded components/interactivity: a doc that runs inline. Uniquely fits x's "doc that runs" thesis — a differentiator, not a me-too.
--   **txt** — plainest, most portable; the base for append-only capture.
--   **outliner** — nested blocks (the Logseq/Tana/Roam shape); a different doc geometry.
--   **table** — structured rows (Notion's core).
--   **script** — the behavior type (the differentiator); creative things are scripts too.
-
-Likely core set: **md** (default doc) · **html** (rich) · **txt** (capture) · **script** (behavior) · **category** (folder) — with **outliner** / **table** later. Decide the default text type deliberately: md wins on portability + the PKM standard; html on richness. Everything beyond the core is a script.
-
-### Plan — investigate how x helps users
-
--   **Dogfood (you first).** Run your real producer workflow in x for 2–4 weeks; log every friction and every "I wish x could…" right here in this doc.
--   **Name the wedge user.** Who has the problem x _uniquely_ solves? A producer / builder / PKM power-user who wants programmable, local-first notes + automation + code in one owned tree. A worked example of finding that user: [research](/doc/research).
--   **State the job-to-be-done.** "I want my notes, my files, my automations, and my code in ONE tree I own, driven by command." Validate it's a real, recurring pain (not just yours).
--   **Ask what people escape FOR.** Interview ~5 people in the wedge: what do they leave Obsidian/Notion/Tana to do? Those exits are x's build list.
--   **Demo the un-copyable.** The most demoable wedges — note-that-runs, the terminal driving the whole OS, a script mixing media — become clips → Show HN / X / a devlog.
--   **Settle the core types** (md/html/txt/script + category) and the link-navigation story; ship the keystone (type = node) so "create any node type" becomes literally true.
--   **Re-check the field** quarterly — the programmable-notes space is heating up; keep this competitive section current.
-
-### The thesis to test
-
-The underserved desire is **programmable, local-first knowledge + automation in one place**. Obsidian owns local-first but notes are passive (plugins are the hack). Notion/Tana are programmable-ish but lock you in and can't run real code. x's bet: **notes that ARE programs, in a tree you own, driven by command** — the "programmable notes" dream shipped as the product, not bolted on.
-
-### Environments — dev / staging / prod
-
-A tool that asks people to trust it with their own data has to be trustworthy in _operation_, not just design — a real **dev → staging → prod** split, not "push to the box and hope." How they differ:
-
--   **dev** — your laptop. Throwaway data, no real users. `NODE_ENV` unset, plain `http://localhost`, the session cookie rides over http (no `Secure`), `API_TOKEN` optional, file-backed store under `data/`. Break things freely.
--   **staging** — a prod-shaped clone with _fake_ data: same build, `NODE_ENV=production`, HTTPS, `COOKIE_SECURE=true`, a _separate_ database + secrets, seeded/disposable content. Where you catch what only shows under prod settings (Secure-cookie auth, HSTS, the single-process static+API serving, a migration) _before_ it touches real nodes. x has **no staging today** — dev is the only non-prod, so prod _is_ the test. Closing that gap is a precondition for the multi-user pivot.
--   **prod** — real users, real data; mustn't lose or leak it. Locked-down env (`API_TOKEN` required or the server refuses to boot, `COOKIE_SECURE`, localhost-bound behind a TLS proxy), its own database + backups, deploys gated on staging passing.
-
-Why this lives in a _usage_ doc: the moment x holds someone else's tree (the multi-user pivot), "own your data" stops being only a design claim and becomes a promise about _ops_ — backups, no dev code touching prod data, no test runs against the live store. Concretely: per-environment `.env` + database, a staging target distinct from the (currently dead) prod droplet, and migrations rehearsed on staging first. Mechanics live in `plans/production-readiness-plan.txt` and `plans/prod-security-hardening-plan.txt`; this note just fixes the **three-tier separation** as a requirement, not an afterthought.
-
-Sources for the competitive gaps: practicalpkm.com (Obsidian report card), medium.com (Obsidian problems; "Why users abandon Notion"), unstar.app (power-user complaints 2026), dev.to (Notion database walls), xda-developers.com (Notion falling behind), producthunt.com + thebusinessdive.com (Anytype reviews), toolfinder.com (PKM/Logseq), maggieappleton.com ("Programmable Notes"). Refresh periodically.

@@ -131,7 +131,7 @@ V8; libuv (event loop, асинхронний I/O з ОС — fs, socket); core-
 
 ### EVENT LOOP
 
-Кожен повний оберт event loop — це **tick** . Фази: **timers** (setTimeout / setInterval), pending callbacks, idle/prepare, **poll** , **check** (setImmediate), close callbacks. Див. [understanding process.nextTick](https://nodejs.org/en/learn/asynchronous-work/understanding-processnexttick) .
+Повна модель - фази, мікро/макро, пул libuv, браузерна частина - в окремій нотатці: **[event loop](/doc/event-loop)**.
 
 ### 5\. Як один thread обробляє багато паралельних запитів?
 
@@ -151,7 +151,7 @@ V8 спочатку інтерпретує, потім компілює (JIT). �
 
 ### 10\. Різниця між microtasks і macrotasks?
 
-Мікро виконуються раніше. **Microtasks** — Promises, process.nextTick(), MutationObserver (у браузері). **Macrotasks** — setTimeout, setInterval, setImmediate, асинхронні I/O, обробники подій DOM.
+Мікро виконуються раніше. Деталі й порядок виводу - [event loop](/doc/event-loop).
 
 ### 11\. Що таке стрим (stream)?
 
@@ -167,7 +167,7 @@ V8 спочатку інтерпретує, потім компілює (JIT). �
 
 ### 13\. Що таке event loop? З яких компонентів складається?
 
-У libuv 7 фаз: timers, pending callback, idle, prepare, poll, check, close callbacks (idle та prepare у Node.js не використовуються). Кожна фаза — FIFO-черга колбеків; увійшовши у фазу, event loop виконує пов'язані операції та колбеки, поки черга не спорожніє або не досягне ліміту, потім переходить до наступної.
+7 фаз libuv, кожна - FIFO-черга. Таблиця фаз - [event loop](/doc/event-loop).
 
 ### 67\. Для яких задач кілька процесів/потоків?
 

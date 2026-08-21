@@ -1,10 +1,10 @@
-PostgreSQL 15 (2022) added the long-awaited standard MERGE operator for upsert logic, a JSON-log format for logs, and improved logical replication (filtering by tables/columns)​ supabase.
+# postgresql
 
-Sorting and WAL compression also got faster (with zstd compression support)​, aws, which matters for high-load systems. PostgreSQL 16 (2023) continued the trend: it boosted the performance of parallel queries and made it possible to create statistics for expressions, which improves the planning of complex queries. The Postgres community keeps developing extensions – for example, _pgvector_ for storing embeddings (supporting the aforementioned AI trend) and _pg\_partman_ for convenient time-based data partitioning. Postgres's popularity has led to numerous cloud services built on top of it: _Amazon Aurora PostgreSQL, Google AlloyDB, Neon_ and others, offering scaling, serverless mode, and instant backups. The **Neon** project deserves a special mention – it is a cloud PostgreSQL that separates storage and compute, allowing you to quickly "freeze" and "resume" a database (it uses S3 as storage and compute nodes on demand). Also, in 2023 Amazon introduced **Babelfish for Postgres** – a compatibility layer that lets Postgres understand the T-SQL/MS-SQL protocol, easing migration from Microsoft SQL Server.
+CRDT живёт отдельно: [crdt](/doc/crdt).
 
 ## PostgreSQL Indexes
 
-Types: B-tree (default), hash, GiST, SP-GiST, GIN, BRIN. Also: BITMap, covering index. Full-text search: `SELECT * FROM articles WHERE MATCH(title, content) AGAINST('query');`
+Types: B-tree (default), hash, GiST, SP-GiST, GIN, BRIN. Also: BITMap, covering index. Full-text search: `SELECT * FROM articles WHERE to_tsvector('simple', title || ' ' || content) @@ plainto_tsquery('query');` (GIN-индекс по `to_tsvector`)
 
 `EXPLAIN` looks at statistics from `ANALYZE TABLE` , not the actual row count.
 
@@ -14,10 +14,6 @@ Types: B-tree (default), hash, GiST, SP-GiST, GIN, BRIN. Also: BITMap, covering 
 -   **Consistency** : after an operation the database moves into a valid state
 -   **Isolation** : parallel operations do not affect each other
 -   **Durability** : changes are preserved even in case of system failures
-
-## CRDT (Conflict-free Replicated Data Type)
-
-Data structures for distributed systems with no conflicts during replication. Types: counters, sets, maps, lists with timestamp, trees with ID+timestamp.
 
 ## SQL triggers
 
@@ -32,8 +28,6 @@ FOR EACH ROW EXECUTE FUNCTION my_function();
 
 ```sql
 -- UNION, subquery, HAVING, HAVING COUNT
--- Full-text search
-SELECT * FROM articles WHERE MATCH(title, content) AGAINST('search query');
 ```
 
 PGPASSWORD='pass' psql -h localhost -p 5432 -U sandbox -d js-box

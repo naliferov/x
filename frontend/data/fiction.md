@@ -1,5 +1,3 @@
-Goethe, Dante, William Faulkner, Patricia Highsmith, Ai Coda, Cervantes, Flaubert, Hesse, Nabokov, Latour, Aleida Assmann, Céline, Max Frei, Samuel Beckett, Hilary Putnam, Sloterdijk, Gurdjieff, Büchner's Lenz, Dmitry Gorchev, Minkowski (phenomenology of time), Bibikhin, Josef Pieper
-
 -   V. V. Bibikhin — "Word and Event"
 -   Minkowski — "Lived Time. Phenomenological and Psychopathological Studies"
 -   Josef Pieper — "Leisure, the Basis of Culture"

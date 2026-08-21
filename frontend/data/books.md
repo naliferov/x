@@ -1,13 +1,11 @@
-[it books](/doc/it-books)  
 [fiction](/doc/fiction)  
-[essay](/doc/essay)  
-[logic](/doc/logic)  
+есеїстика: Монтень — Essays · Robert Walser — The Walk · Virginia Woolf — A Room of One's Own  
 [philosophy](/doc/philosophy)  
   
 сайти: storygraph · librarything · whichbook · hardcover · open library  
   
 -   **Умберто Еко — «Трактат із загальної семіотики» (A Theory of Semiotics)** — найамбітніша спроба побудувати єдину теорію знакових систем. Якщо брати одну «велику» книгу — це вона.
--   **Юрій Лотман — «Всередині мислячих світів» / концепція семіосфери**
+-   **Юрій Лотман — «Всередині мислячих світів» / концепція семіосфери** — [книга тут](/bin/lotman semiosfera.fb2)
   
 хармс, вєдєнський, костянтин вагінов  
 андрій платонов — «вʼязкий, остранений» язик; другий полюс порівняння  

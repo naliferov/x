@@ -114,19 +114,15 @@ teatr-studiya 11 — 4.7, theater company, 099 774 5203
 teatr-studiya beat — 5.0, theater company, 050 380 7654  
 often find there: rehearsals, showcases, hanging out afterward  
   
-**фільмо ідеї**  
-Їдуть в автое
 
 [concept db](/doc/vlang) — collects not references, but language  
   
 **external lists** — pointers, not copies. The list is maintained there and stays current; a copy here only rots:
 imdb top-500 — `imdb.com/list/ls050782187` · MCU in release order — wikipedia, "List of Marvel Cinematic Universe films"
 
-[series](/doc/series)  
 [english phrases](/doc/english-phrases)  
 [fiction](/doc/fiction)  
-[vocabulary](/doc/vocabulary)  
 [media extract](/doc/media-extract)  
-[images](/node/51) [movies](/node/75)
+
 
 **screencaps:** shotDeck · FilmGrab · shot.cafe

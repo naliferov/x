@@ -1,8 +1,19 @@
-[phrases from mr robot & the night of](/doc/english-phrases)  
-  
-daunting - intimidating,  
-difficult i really struggled in the first few previews - well,  
-suit yourself - well,  
-as you wish viciousness - malice,  
-depravity doesn't remotely resemble - bears not the slightest resemblance to  
-don't you dare throw bunny out of bed for (out of) curiosity sake — out of pure curiosity best prank i pulled as a child
+# english
+
+Только то, чего **действительно не знал**. Правило записи: если в графе перевода стоит то же самое слово - это не запись, а пропуск; такую строку сюда не класть.
+
+Сырые выписки по сериям живут отдельно: [english phrases](/doc/english-phrases).
+
+| слово | значение |
+| --- | --- |
+| **pettiness** | мелочность, придирки по пустякам; от `petty` - мелкий, ничтожный |
+| **astounding** | ошеломляющий, поразительный. Сильнее `surprising`: не «неожиданно», а «не укладывается в голове» |
+| **upheaval** | переворот, резкая ломка порядка - социальная, политическая, личная. Буквально «вспучивание», геологический термин |
+| **deeply entrenched** | глубоко укоренившийся, окопавшийся. `entrench` - воен. «окапываться», отсюда: выбить почти невозможно |
+| **severance package** | выходное пособие при увольнении - деньги плюс условия. `severance` от `to sever`, отсечь |
+| **to hoard cash** | придерживать наличные, не пускать в оборот. `hoard` - копить впрок, часто с оттенком нездорового накопления |
+| **attorney** | юрист, уполномоченный представлять в суде. Не синоним `lawyer`: lawyer это профессия вообще, attorney - тот, кто действует **от имени** клиента (`power of attorney` - доверенность) |
+| **thug** | головорез, бандит. От хинди `ṭhag` - обманщик, по названию касты душителей |
+| **ancestors** | предки. Пара: `descendants` - потомки |
+
+Related: [english phrases](/doc/english-phrases) · [books](/doc/books)

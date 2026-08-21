@@ -2,8 +2,6 @@
 [ableton devices](/doc/ableton-devices)  
 [drone](/doc/audio-drone)  
 [glitch chop](/doc/audio-glitch-chop)  
-[jazz](/doc/audio-jazz)  
-[radio](/doc/audio-radio)  
 [sound strand](/doc/audio-sound-strand)  
 [vst plugins](/doc/audio-vst-plugins)  
 [generative art](/doc/gen-art)  
