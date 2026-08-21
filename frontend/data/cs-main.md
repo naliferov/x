@@ -8,7 +8,7 @@ bret victor, ted nelson
 
 procedural oop [reactive](/doc/reactive)
 
-[localfirstweb](https://localfirstweb.dev/) [CRDT](/doc/crdt) ACID and isolation levels
+[localfirstweb](https://localfirstweb.dev/) ACID and isolation levels
 
 client-server communications
 

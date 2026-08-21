@@ -38,16 +38,6 @@ const main = async () => {
 };
 ```
 
-Standarts implementation:
-
--   **Node.js 0.x – 4.x** → mainly **ECMAScript 5 (ES5)** , but some ES6 features could be enabled via `--harmony` .
--   **Node.js 6.x** → partial support for **ECMAScript 6 (ES6)** appeared, things like `let` , `const` , arrow functions, `Map` , `Set` , `Promise` .
--   **Node.js 8.x** → **async/await** (from ECMAScript 2017).
--   **Node.js 10.x** → almost full ES6+ and new features like **optional catch binding** (from ES2019).
--   **Node.js 12.x** → experimental support for **ESModules ( `import/export` )** .
--   **Node.js 14.x** → ESModules became **stable** , and support for **ECMAScript 2020** was added ( `?.` , `??` , `BigInt` ).
--   **Node.js 16.x** → new ES2021 capabilities ( `String.prototype.replaceAll` , `??=` , `||=` , `&&=` ).
--   **Node.js 18.x** → support for ES2022 ( `Array.prototype.at` , `Error.cause` ).
--   **Node.js 20.x+** → already includes ES2023 and partially ES2024.
+## debug
 
 **node debug** npx nodemon --watch ./node --ext ts,js,json --exec 'bash -lc "NODE\_PATH=./node ./node\_modules/.bin/ts-node -r ./node/localConfig.js ./node/api/index.ts"'

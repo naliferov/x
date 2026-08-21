@@ -1,9 +1,17 @@
-[https://en.m.wikipedia.org/wiki/Reactive\_programming#Glitches](https://en.m.wikipedia.org/wiki/Reactive_programming#Glitches)  
-  
-push & pull-based reactivity  
-  
-Ryan (the author of Solid) has a stream where he walks through the evolution of reactivity approaches [https://www.youtube.com/live/R5AcOtxIdMk?feature=shared](https://www.youtube.com/live/R5AcOtxIdMk?feature=shared)  
-  
-Open a regular playground and write something like {{ (() => { console.log(“test”)})() }} in the template, then trigger a change to the reactive variable a few times  
-  
-Reactivity - deferred recomputation (MeteorJS approach) Problem: atom A depends on B and C; when B and C change, A is recomputed twice. Solution: defer the recomputation of dependent atoms until the end of the current event handler. When linking atoms, record the maximum depth + 1. When iterating over the deferred ones, update atoms with the smaller depth first. That way, by the time of recomputation, all direct dependencies are already up to date.
+# reactive
+
+## Отложенный пересчёт - вся суть
+
+**Проблема:** атом A зависит от B и C. Меняются оба - A пересчитывается дважды.
+
+**Решение (подход MeteorJS):** отложить пересчёт зависимых атомов до конца текущего обработчика события. При связывании атомов записывать **максимальную глубину + 1**. Проходя отложенные, обновлять сначала атомы с меньшей глубиной - тогда к моменту пересчёта все прямые зависимости уже актуальны.
+
+Это же решает и **глитчи** - промежуточные несогласованные состояния, которые видит наблюдатель, пока граф не сошёлся.
+
+Push против pull - вторая ось: кто инициирует пересчёт, источник или потребитель.
+
+## Как посмотреть своими глазами
+
+В обычной песочнице вписать в шаблон `{{ (() => { console.log('test') })() }}` и несколько раз дёрнуть реактивную переменную - видно, сколько раз реально произошёл пересчёт.
+
+[эволюция подходов к реактивности](https://www.youtube.com/live/R5AcOtxIdMk?feature=shared) - разбор от автора Solid

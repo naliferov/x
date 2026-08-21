@@ -1,23 +1,23 @@
-**clean code** [rules (wojteklu)](https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29)  
-low coupling · high cohesion · modularity · IoC  
-  
-**arch types**: layered/onion · hexagonal (ports & adapters) · monolith/microservice · n-tier  
-[simonbrown](https://simonbrown.je/) · [graca chronicles](https://herbertograca.com/2017/07/03/the-software-architecture-chronicles/) · [gtoolkit](https://gtoolkit.com/)  
-CQRS · clean · layered · hexagonal  
-  
-hexagonal = ports & adapters (cockburn; freeman & pryce, «growing OO software with tests»)  
-DCI (coplien & reenskaug) · BCE (jacobson, «OO software engineering: use-case driven»)  
-usage interface = implementation detail  
-GoF · PoEAA · SOLID · GRASP · KISS · DRY · YAGNI · law of demeter  
-  
-**service** = loose coupling: must not depend on the app; exposes a concrete, stable interface; is versioned.  
-**domain = model** (not the DB-entity/schema). owns business processes; knows nothing of storage, source, or presentation.  
-always a **mediator** between model & view; the model knows neither — it only emits events (observers/listeners/message-passing).  
-templates: no imperative logic, no conditionals — only data-insertion points. VM/controller/view never do I/O directly (→ mediator services); no network from the view. carve layers, but no architecture-astronautics.  
-bind late & dynamically; controller sanitizes, model validates.  
+# architecture
 
-## system design — patterns
+## Правила, по которым режу слои
 
-slow down · circuit breaker · bulkhead · exponential backoff · adaptive throttling  
-  
-**systems theory**: bertalanffy «general system theory» · wiener «cybernetics» · forrester «principles of systems» · beer «brain of the firm» · simon «the sciences of the artificial»
+**service** = слабая связанность: не зависит от приложения, отдаёт конкретный стабильный интерфейс, версионируется.
+
+**domain = model**, а не сущность БД и не схема. Владеет бизнес-процессами, ничего не знает про хранение, источник и представление.
+
+Между моделью и представлением **всегда посредник**. Модель не знает ни того, ни другого - она только эмитит события (наблюдатели / слушатели / передача сообщений).
+
+**Шаблоны:** никакой императивной логики, никаких условий - только точки вставки данных.
+
+VM / контроллер / представление **никогда не делают I/O напрямую** - через сервисы-посредники; из представления в сеть не ходят.
+
+Связывать поздно и динамически. **Контроллер санирует, модель валидирует.**
+
+Слои нарезать, но без архитектурной астронавтики.
+
+## Что смотреть, когда упрёшься
+
+[clean code, правила wojteklu](https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29) · [simonbrown](https://simonbrown.je/) · [хроники архитектуры у Graça](https://herbertograca.com/2017/07/03/the-software-architecture-chronicles/) · [gtoolkit](https://gtoolkit.com/)
+
+Устойчивость под нагрузкой: slow down · circuit breaker · bulkhead · exponential backoff · adaptive throttling. Определения гуглятся, выбор между ними - нет.

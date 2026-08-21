@@ -1,6 +1,6 @@
 # postgresql
 
-CRDT живёт отдельно: [crdt](/doc/crdt).
+Правило доставки в op-based CRDT - в [glossary](/doc/glossary).
 
 ## PostgreSQL Indexes
 
