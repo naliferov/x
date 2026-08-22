@@ -9,13 +9,11 @@
 [games](/doc/games)  
 [home](/doc/home)  
 [bio-plants](/doc/bio-plants)  
-[ubuntu](/doc/ubuntu)  
 [desktop assemble](/doc/desktop-assemble)  
 
 ##### learning
 
 [books](/doc/books)  
-[english](/doc/english)  
 
 ##### meta & ideas
 
@@ -24,4 +22,4 @@
 [x strategy](/doc/x-strategy)  
 [morning](/doc/morning)  
 [todo](/doc/todo)  
-[job](/doc/job)
+[dev](/doc/dev)

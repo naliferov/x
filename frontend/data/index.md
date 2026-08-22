@@ -4,7 +4,6 @@
 
 [strategy](/doc/strategy)  
 [taste](/doc/taste)  
-[projects](/doc/projects)  
 [cs / dev](/doc/cs-main)  
 [philosophy / mind](/doc/philosophy)  
 [music / audio](/doc/music)  

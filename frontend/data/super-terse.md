@@ -1,6 +1,6 @@
 # super-terse
 
-A lossy text-compression style: squeeze prose down to a **telegraphic skeleton** — keep the load-bearing meaning, throw away everything else. (Linguistically it's the _telegraphic register_ — the way telegrams and notes drop function words.) For the code equivalent, see [terse](/doc/terse).
+A lossy text-compression style: squeeze prose down to a **telegraphic skeleton** - linguistically the _telegraphic register_, the way telegrams and notes drop function words. Правило - [sense](/doc/sense); код - [terse](/doc/terse).
 
 ## The operations
 

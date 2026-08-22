@@ -13,8 +13,4 @@
 ## Related authors
 
 -   heidegger — resoluteness (anticipatory resoluteness: taking over one's thrownness and choosing oneself in a concrete situation) is the structural twin of effort in time
--   [sartre](/doc/philosophy-fragments) — bad faith as the antipode: freedom refused by playing a thing
--   [levinas](/doc/philosophy-fragments) — the counter-case: effort here is solitary, there nothing is saved alone
--   [simone weil](/doc/philosophy-fragments) — attention as the same intonation aimed at emptying
--   [pyatigorsky](/doc/philosophy-fragments) — co-author of "Symbol and Consciousness"; thinking as a rare event
--   [merleau-ponty](/doc/philosophy-fragments) — the body, against an over-intellectual reading of effort
+-   Сверки с усилием - Сартр, Левинас, Вейль, Мерло-Понти, Пятигорский: [philosophy fragments](/doc/philosophy-fragments)
