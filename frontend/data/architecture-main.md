@@ -15,9 +15,3 @@ VM / контроллер / представление **никогда не д�
 Связывать поздно и динамически. **Контроллер санирует, модель валидирует.**
 
 Слои нарезать, но без архитектурной астронавтики.
-
-## Что смотреть, когда упрёшься
-
-[clean code, правила wojteklu](https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29) · [simonbrown](https://simonbrown.je/) · [хроники архитектуры у Graça](https://herbertograca.com/2017/07/03/the-software-architecture-chronicles/) · [gtoolkit](https://gtoolkit.com/)
-
-Устойчивость под нагрузкой: slow down · circuit breaker · bulkhead · exponential backoff · adaptive throttling. Определения гуглятся, выбор между ними - нет.

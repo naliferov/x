@@ -1,7 +1,4 @@
-[event loop](/doc/event-loop)
-
-[node.js job interview (Q&A)](/doc/nodejs-interview)
-
+**thread pool libuv** - 4 потока по умолчанию, и ими пользуются только **fs, crypto, zlib и DNS-резолв**. Всё остальное - в основном потоке.
 
 threads vs cluster `node:cluster` — a poor way to scale beyond > 6–8 processes: all connections go through the parent process via IPC, the master process is at 100% while the children are underloaded
 

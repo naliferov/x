@@ -1,8 +1,5 @@
-[ableton](/doc/ableton)  
-[ableton devices](/doc/ableton-devices)  
 [drone](/doc/audio-drone)  
 [glitch chop](/doc/audio-glitch-chop)  
-[sound strand](/doc/audio-sound-strand)  
-[vst plugins](/doc/audio-vst-plugins)  
-[generative art](/doc/gen-art)  
+[творческие идеи](/doc/creative-ideas)  
+вокальная цепь: Clarity Vx → Renaissance Vox → Vocal Rider → L2  
 [artists list](/bin/music-artists)

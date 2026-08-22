@@ -63,8 +63,6 @@ Dense and fast to _write_, slow to _read cold_ — the glyphs carry no mnemonic,
 
 ## Future implementation ideas (merged from turboscript)
 
-TurboScript is a TypeScript-like language that **compiles to WebAssembly** and has **native fixed-width integer types** (`uint8`, `int8`, `uint16`, `int16`, `int32`, `float32` …) — the thing plain JS/TS lacks (everything is float64). That's the reference point for taking terse from "expressive interpreter" toward "typed/fast":
-
 - **Typed, bounded fixed-width integers** — give terse real numeric types with range validation, instead of JS doubles. Prototype of the idea in plain TS (a factory that mints validated integer classes):
 
   ```typescript

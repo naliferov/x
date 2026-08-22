@@ -1,15 +1,7 @@
 ## questions to ask them
 
--   How does the work process happen and what technologies are used?
--   What is the review and mentoring process?
--   Bonuses, English courses, and others?
--   Why do you enjoy working here?
--   Remote, office? Relocation?
 -   Can I see the potential workplace and how everything is set up there? In particular, the air conditioning and zoning system?
--   The history of how the company was founded?
 
-## taking a task
+## рост
 
-Read the description slowly.  
-Who else has touched my task?  
-Search other MRs which can overlap with my files
+own 1-2 perimeters (background jobs/worker · backend-module architecture · observability/reliability · db correctness/migrations). Hold one perimeter, not everything.

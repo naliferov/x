@@ -2,8 +2,6 @@
 
 Distilled from a real 8.1→8.4 audit of a Yii2 REST service. Use this for any future PHP bump (8.4→8.5, etc.). The headline lesson: **no single tool is enough** — run 4 static methods that _converge_ , then 1 runtime method for what static can't see. Each catches what the others miss.
 
-All tools run in Docker (the `composer:2` image already bundles a recent PHP + composer), so you need no PHP on the host. Install tools into `COMPOSER_HOME=/tmp` (ephemeral) so the project's composer.json/vendor stay untouched. Mount the repo at `/app` and the scratch dir at `/out` .
-
 ## Step 0 — Recon first (facts before scanning)
 
 -   **composer.json:** `require.php` constraint AND `config.platform.php` . The platform pin fixes resolution to that version AND version-bonds Rector/tools → **bump it first** (to the target), else every tool under-reports (see gotcha #1).
@@ -23,48 +21,17 @@ Cheap but unreliable — in one run it missed `&$request=null` (under-counted nu
 
 Config (rector.php): `withPhpVersion(PhpVersion::PHP_84)` + `withSets([PHP_82, PHP_83, PHP_84])` . You MUST set `withPhpVersion` to the target or version-bonded rules silently skip (a false "0 changes").
 
-```
-docker run --rm -v "$REST":/app -v "$SCRATCH":/out -e COMPOSER_HOME=/tmp/composer composer:2 sh -c '
-  composer global require rector/rector --no-interaction >/dev/null 2>&1
-  php -d memory_limit=4G /tmp/composer/vendor/bin/rector process --config /out/rector.php \
-    --dry-run --no-progress-bar --clear-cache --autoload-file /app/vendor/autoload.php > /out/rector.txt 2>&1'
-```
-
-Read the histogram of applied rules:
-
-```
-grep -E '^ \* ' /out/rector.txt | sort | uniq -c | sort -rn
-```
-
 **Split the rules:** deprecation-fixes (required) vs modernization (optional — e.g. `#[\Override]` , new-without-parens). Don't blind-apply modernizations — they were 88% of a 646-file diff in one run. To fix, run WITHOUT `--dry-run` but with ONLY the deprecation rules.
 
 ### 3\. PHPCompatibility — the detect-everything tool
 
 Catches the non-auto-fixable too: removed constants, extension functions. Needs `dev-develop` for 8.4+ (the 2019 stable misses it).
 
-```
-docker run --rm -v "$REST":/app -v "$SCRATCH":/out -e COMPOSER_HOME=/tmp/composer composer:2 sh -c '
-  composer global config minimum-stability dev; composer global config prefer-stable true
-  composer global config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
-  composer global require squizlabs/php_codesniffer "phpcompatibility/php-compatibility:dev-develop" \
-    dealerdirect/phpcodesniffer-composer-installer --no-interaction
-  php -d memory_limit=3G /tmp/composer/vendor/bin/phpcs --standard=PHPCompatibility \
-    --runtime-set testVersion 8.4 --extensions=php \
-    --report-source=/out/phpcompat-src.txt --report-full=/out/phpcompat-full.txt \
-    /app/modules /app/components /app/commands'
-```
-
 Read `/out/phpcompat-src.txt` — the sniff histogram, your "everything" list. A single `testVersion 8.4` spans the whole chain (it caught 8.2 `${}` , 8.3 `get_class` , 8.4 items). Ignore "New … syntax found" sniffs — those are minimum-version flags, irrelevant to an upgrade.
 
 ### 4\. PHPStan — the only static way to catch dynamic properties
 
-Also a second nullable confirm. Config (phpstan.neon): `level: 2` , `phpVersion: 80400` , paths, `bootstrapFiles: [/app/vendor/autoload.php]` .
-
-```
-... composer global require phpstan/phpstan ...
-php -d memory_limit=4G /tmp/composer/vendor/bin/phpstan analyse -c /out/phpstan.neon \
-  --no-progress --error-format=raw > /out/phpstan.txt 2>&1
-```
+Also a second nullable confirm.
 
 On Yii2 WITHOUT the Yii2 extension it's ~95% noise ("unknown class Yii", AR DB-column "undefined property"). Filter for the signal:
 
@@ -89,15 +56,6 @@ Static tools cannot see value-dependent deprecations: runtime-conditional dynami
 6.  Implicit-nullable ( `Type $x = null` ) & CSV `$escape` are auto-fixable by Rector (CSV inserts `escape:'\\'` , behavior-preserving). CSV's other option ( `escape:""` for RFC CSV) is a semantic choice → manual.
 7.  Deprecations fire at compile time (once per file, not per call) and are masked by `~E_DEPRECATED` here → they will NOT spam prod logs. But `E_WARNING` (8.3 array\_sum non-numeric) is NOT masked.
 8.  CI builds ALL `Dockerfile.*` → a broken extension install fails the build loudly (good). Test the prod image explicitly ( `docker build -f Dockerfile.fpm …` ) — `make up` may only build the dev image.
-
-## Classify every finding into 5 buckets
-
--   **CRITICAL (build/fatal)** → extension unbundling, removed funcs/consts used. Blocks the bump.
--   **DEPRECATION (auto-fix)** → implicit-nullable, CSV $escape, `${}` , `get_class()` — Rector fixes.
--   **DYNAMIC-PROP (declare)** → plain-class undeclared-prop writes — PHPStan finds; just declare the prop.
--   **BEHAVIOR (eyeball)** → array\_sum non-numeric, locale case, DateTime exceptions — usually benign, verify.
--   **VENDOR (decision)** → abandoned/EOL deps (upgrade now vs ticket + accept deprecations).
--   **RUNTIME (staging only)** → conditional dyn-props, null-to-internal, float→int — staging run with deprecations on.
 
 ## Worked example — a real 8.1→8.4 audit (converged surface)
 

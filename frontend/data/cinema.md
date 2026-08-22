@@ -1,10 +1,3 @@
-pitch → annotation → synopsis → treatment → screenplay → film  
-desire, super-objective, objective, operations (actions); desire / resistance  
-screenwriter keeps one eye dry, one wet; from speculator to creator; hero embodies the era & its evolution  
-directors teach control of perception; we parameterize perception  
-not effects → states, not scenes → modes  
-lynch: can 70 ideas be edited into a film? reinforce hero & story, sharpen drama  
-  
 **etude 1** : 2 middle-aged people at a table in an apartment room  
 time: 1–2h; 2–3 takes  
 her objective: sincere desire to understand the other, which he conceals (matters to her: dig to the real person)  
@@ -14,14 +7,6 @@ him outwardly → control, pauses, confidence
 him inwardly → anxiety, freezing, fear of losing her, "something's going wrong"  
 tension, stillness, release, muted colors, denis villeneuve  
 **style** : negative space, slow dialogs w/ psychological tension, symbol accents, absurd humor  
-  
-**scene structure** : relationships (who they are to each other), objectives (what each wants), constraint (what blocks → tension), format (time, scripted/improvised)  
-  
-**annotation / synopsis** — 4 anchors:  
-protagonist — who carries the conflict  
-desire — what he wants (romance)  
-obstacle — what blocks (loneliness — but how exactly matters)  
-movement — what happens when he tries; form: recognition → limit → action  
   
 **ideas**  
 variability — actors speak my thoughts  
@@ -59,11 +44,6 @@ repetition in different forms → self-detection of shyness via psychoanalysis; 
 detectives looking for him? or films about a killer w/ no police?  
   
 **etude** : who i am, what i want (objective), what blocks (conflict), what i must not do (constraint), start (where we begin), event (what shifts the situation)  
-  
-**protagonist** : what does he want most in life? batman → justice; andy dufresne → freedom  
-**antagonist** : factor that creates resistance, conflict  
-truth of life — who are you & what is your life?  
-verity of life — use the screenplay to find in the hero a sense of what life is for, make it understandable to a whole generation  
   
 **phrases**  
 "how did we get here?"  
@@ -117,12 +97,5 @@ often find there: rehearsals, showcases, hanging out afterward
 
 [concept db](/doc/vlang) — collects not references, but language  
   
-**external lists** — pointers, not copies. The list is maintained there and stays current; a copy here only rots:
-imdb top-500 — `imdb.com/list/ls050782187` · MCU in release order — wikipedia, "List of Marvel Cinematic Universe films"
-
-[english phrases](/doc/english-phrases)  
 [fiction](/doc/fiction)  
-[media extract](/doc/media-extract)  
-
-
-**screencaps:** shotDeck · FilmGrab · shot.cafe
+[творческие идеи](/doc/creative-ideas)  

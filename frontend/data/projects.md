@@ -2,10 +2,8 @@
 
 [x](/doc/x-strategy)  
 [photo club](/doc/club-photo)  
-[sound strand](/doc/audio-sound-strand)  
-[reelmaker](/doc/reelmaker)  
+[творческие идеи](/doc/creative-ideas)  
 [unsystem-art](/doc/unsystem-art)  
 [art constructor](/doc/art-constructor)  
 [terse](/doc/terse)  
 [vlang](/doc/vlang)  
-[3д Березняки](/doc/bereznyaki-3d)
