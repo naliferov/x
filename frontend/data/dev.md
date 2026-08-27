@@ -13,6 +13,16 @@ flex: 1 0 100%;
 
 **реактивность, посмотреть своими глазами** - в песочнице вписать в шаблон `{{ (() => { console.log('test') })() }}` и несколько раз дёрнуть реактивную переменную: видно, сколько раз реально произошёл пересчёт. [разбор от автора Solid](https://www.youtube.com/live/R5AcOtxIdMk?feature=shared)
 
+**архитектура, два правила:** контроллер санирует, модель валидирует; между моделью и представлением всегда посредник. Слои нарезать, но без архитектурной астронавтики.
+
+**distributive conditional type** - `U` голым слева от `extends` раздаётся по членам союза:
+
+```ts
+type Distribute<U> = U extends unknown ? (arg: U) => void : never;
+type Result = Distribute<{ 'crm': 'crm' } | { 'crm.contacts': 'crm/contacts' }>;
+// = ((arg: { 'crm': 'crm' }) => void) | ((arg: { 'crm.contacts': 'crm/contacts' }) => void)
+```
+
 ## работа
 
 **вопросы им:**

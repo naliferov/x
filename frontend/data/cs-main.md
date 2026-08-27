@@ -1,12 +1,4 @@
-#### 1\. Structure and Modularity
-
 [glossary](/doc/glossary)
-
-[localfirstweb](https://localfirstweb.dev/) ACID and isolation levels
-
-## architecture
-
-[architecture !main](/doc/architecture-main) methodology
 
 ## reprogrammable software / x lineage
 
@@ -24,7 +16,6 @@ takeaway: each popular repo owns ONE axis; the x combo (folder-per-node on disk 
 
 ## languages
 
-[javascript snippets](/doc/javascript-snippets)  
 [vlang](/doc/vlang)  
 [terse](/doc/terse)  
 [live-runtime](/doc/live-runtime)  
@@ -33,13 +24,6 @@ takeaway: each popular repo owns ONE axis; the x combo (folder-per-node on disk 
 ## runtime
 
 [node.js](/doc/node-js)  
-
-## books on little languages
-
-Ни одна книга не ставит «G-code family vs expression family» напрямую; ближайшие две:
-
-- **Jon Bentley, "Little Languages"** (эссе в More Programming Pearls) - основополагающий текст традиции «крошечная нотация под одну задачу», к которой относится vlang
-- **Kernighan & Pike, The Practice of Programming, ch. 9 "Notation"** - little languages от авторов awk/pic; ближе всего по духу
 
 ## practice
 

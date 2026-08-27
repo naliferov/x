@@ -2,8 +2,6 @@
 
 > "Only that person is free who is ready and has the real strength for the labor of freedom"
 
-> "The impossible is not that which is possible without me — the impossible is that which holds by my faith, and only by faith in it"
-
 > "It is always already too late" — every minute is a minute of the end of history. There is always something that must be brought to an end rather than dragged along undone.
 
 > "I act — not because such is the law, not because there are empirical causes, but I act — because I act"

@@ -1,14 +1,6 @@
 ## Desire as the lack of being (Oles Manyuk, lecture No. 20)
 
-Desire points to an insurmountable lack of being (to being as nothing).
-
-Being is not a predicate but a mode, according to Lacan. The mode is being itself, which ascends to absolute lack, or to what may be called nothing.
-
-The emergence into the absolute as an act of thought (the continuity of thought). The act of thought uses being as a mode for generating other thoughts.
-
-That which binds different ontologies (different being) — this is precisely desire. A connection through lack, as a connection through emptiness. **Desire is the metonymy of being** . In Lacan, the part points to the absent center.
-
-Man is the one who has no essence but has desire. The call of the authentic transcendent. The desire for the other's desire.
+**Desire is the metonymy of being**: the part points to the absent center. Man is the one who has no essence but has desire - the desire for the other's desire.
 
 ## The innervation key — doors (Oles Manyuk)
 
