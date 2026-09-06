@@ -22,13 +22,17 @@ const scrollKey = () => `x.read:${props.asset.name}`
 let scrollSaveTimer: ReturnType<typeof setTimeout> | undefined
 const onScroll = () => {
   const el = reader.value
-  if (!el) return
+  if (!el) {
+    return
+  }
   clearTimeout(scrollSaveTimer)
   scrollSaveTimer = setTimeout(() => localStorage.setItem(scrollKey(), String(el.scrollTop)), 200)
 }
 const restoreScroll = () => {
   const saved = Number(localStorage.getItem(scrollKey()) || 0)
-  if (reader.value && saved) reader.value.scrollTop = saved
+  if (reader.value && saved) {
+    reader.value.scrollTop = saved
+  }
 }
 
 const loadFb2 = async () => {
@@ -36,9 +40,13 @@ const loadFb2 = async () => {
   bookHtml.value = ''
   try {
     const res = await fetch(src.value)
-    if (!res.ok || !res.body) throw new Error(`fetch ${res.status}`)
+    if (!res.ok || !res.body) {
+      throw new Error(`fetch ${res.status}`)
+    }
     const buffer = isGzipped()
-      ? await new Response(res.body.pipeThrough(new DecompressionStream('gzip') as any)).arrayBuffer()
+      ? await new Response(
+          res.body.pipeThrough(new DecompressionStream('gzip') as any),
+        ).arrayBuffer()
       : await res.arrayBuffer()
     bookHtml.value = fb2ToHtml(decodeFb2(buffer))
     status.value = `${Math.round(buffer.byteLength / 1024)} KB`
@@ -58,7 +66,9 @@ const loadText = async () => {
   text.value = ''
   try {
     const res = await fetch(src.value)
-    if (!res.ok || !res.body) throw new Error(`fetch ${res.status}`)
+    if (!res.ok || !res.body) {
+      throw new Error(`fetch ${res.status}`)
+    }
     text.value = isGzipped() ? await gunzip(res.body) : await res.text()
     status.value = `${text.value.length.toLocaleString()} chars`
   } catch (error) {
@@ -75,8 +85,11 @@ watch(
     bookHtml.value = ''
     status.value = ''
     filter.value = ''
-    if (asset.type === 'fb2') loadFb2()
-    else if (isText(asset.type)) loadText()
+    if (asset.type === 'fb2') {
+      loadFb2()
+    } else if (isText(asset.type)) {
+      loadText()
+    }
   },
   { immediate: true },
 )
@@ -85,13 +98,13 @@ const lines = computed(() => (text.value ? text.value.split('\n') : []))
 const CAP = 1000 // filter first, then cap what we paint
 const view = computed(() => {
   // prefix match: the query starts a word on the line, so "кав" hits "кава" but not "заковика"
-  const q = filter.value.trim().toLowerCase()
-  const hits = q
+  const query = filter.value.trim().toLowerCase()
+  const hits = query
     ? lines.value.filter((line) =>
         line
           .toLowerCase()
           .split(/[^\p{L}\p{N}'’-]+/u)
-          .some((word) => word.startsWith(q)),
+          .some((word) => word.startsWith(query)),
       )
     : lines.value
   return { total: hits.length, rows: hits.slice(0, CAP) }
@@ -106,13 +119,20 @@ const view = computed(() => {
     </div>
 
     <template v-if="isText(asset.type)">
-      <input v-model="filter" name="bin-filter" class="input input-sm input-bordered" placeholder="filter lines…" />
+      <input
+        v-model="filter"
+        name="bin-filter"
+        class="input input-sm input-bordered"
+        placeholder="filter lines…"
+      />
       <div v-if="lines.length" class="text-xs opacity-60">
         {{ view.total.toLocaleString() }} lines{{
           view.total > CAP ? ` · showing first ${CAP}` : ''
         }}
       </div>
-      <pre class="rounded bg-base-200 p-3 text-sm whitespace-pre-wrap">{{ view.rows.join('\n') }}</pre>
+      <pre class="rounded bg-base-200 p-3 text-sm whitespace-pre-wrap">{{
+        view.rows.join('\n')
+      }}</pre>
     </template>
 
     <div

@@ -8,7 +8,7 @@ import { withLock } from './lib/lock.ts'
 
 // Supervises SERVICES — long-running processes that should stay up (the API
 // server, the frontend dev server, the scheduler daemon, a ticker). The finite
-// counterpart is the task executor running TASKS (backend/tasks/ + taskExecutor.js).
+// counterpart is the task executor running TASKS (runtime/tasks/ + taskExecutor.ts).
 
 const currentDir = getDirname(import.meta.url)
 const ROOT_DIR = path.join(currentDir, '..')
@@ -20,7 +20,7 @@ const statePath = (id) => path.join(STATE_DIR, `${id}.json`)
 const logPath = (id) => path.join(STATE_DIR, `${id}.log`)
 const lockName = (id) => `service-${id}` // one lock per service, so services never block each other
 
-// --- config: discovered from the filesystem, like backend/tasks --------------
+// --- config: discovered from the filesystem, like runtime/tasks --------------
 
 const loadConfig = async (id) => {
   try {
@@ -43,7 +43,7 @@ const listConfigs = async () => {
   return configs.filter(Boolean)
 }
 
-// --- per-service runtime state, like backend/state/tasks/<name>.json ---------
+// --- per-service runtime state, like runtime/state/tasks/<name>.json ---------
 
 const loadServiceState = async (id) => {
   try {

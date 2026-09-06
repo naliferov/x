@@ -99,5 +99,3 @@ often find there: rehearsals, showcases, hanging out afterward
   
 [fiction](/doc/fiction)  
 [творческие идеи](/doc/creative-ideas)  
-
-[актёрка](/doc/acting) - две недели упражнений

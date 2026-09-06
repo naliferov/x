@@ -29,12 +29,14 @@ const loadHistory = (): string[] => {
 }
 const history = ref<string[]>(loadHistory())
 const rememberPrompt = (text: string) => {
-  history.value = [text, ...history.value.filter((p) => p !== text)].slice(0, 10)
+  history.value = [text, ...history.value.filter((prompt) => prompt !== text)].slice(0, 10)
   localStorage.setItem(HISTORY_KEY, JSON.stringify(history.value))
 }
 const recallPrompt = (event: Event) => {
   const select = event.target as HTMLSelectElement
-  if (select.value) prompt.value = select.value
+  if (select.value) {
+    prompt.value = select.value
+  }
   select.selectedIndex = 0
 }
 
@@ -61,7 +63,6 @@ const runToolCall = ({ name, body }: { name: string; body: string }) => {
     return `error: unknown tool "${name}"`
   }
   try {
-    // eslint-disable-next-line no-eval
     return JSON.stringify((window as any).eval(body))
   } catch (err: any) {
     return `error: ${err.message}`
@@ -85,10 +86,12 @@ const callModel = async () => {
     throw new Error(`HTTP ${res.status}: ${await res.text()}`)
   }
   const { text, usage, cost, model: usedModel } = await res.json()
-  const { input_tokens, cache_read_input_tokens, cache_creation_input_tokens, output_tokens } = usage
+  const { input_tokens, cache_read_input_tokens, cache_creation_input_tokens, output_tokens } =
+    usage
 
   totals.calls += 1
-  totals.tokens += input_tokens + cache_read_input_tokens + cache_creation_input_tokens + output_tokens
+  totals.tokens +=
+    input_tokens + cache_read_input_tokens + cache_creation_input_tokens + output_tokens
   totals.cost += cost ?? 0
 
   const modelTag = usedModel ? ` · ${usedModel}` : ''
@@ -102,7 +105,9 @@ const callModel = async () => {
 // model's reply has no tool call — that absence is our "done" signal.
 const send = async () => {
   const text = prompt.value.trim()
-  if (!text) return
+  if (!text) {
+    return
+  }
   rememberPrompt(text)
   prompt.value = ''
   addBlock('user').text = text
@@ -110,11 +115,13 @@ const send = async () => {
   messages.push({ role: 'user', text })
   running.value = true
   try {
-    while (1) {
+    while (true) {
       const reply = await callModel()
       messages.push({ role: 'assistant', text: reply })
       const calls = parseToolCalls(reply)
-      if (!calls.length) break
+      if (!calls.length) {
+        break
+      }
 
       const results = calls.map(runToolCall)
       addBlock('tool').text = calls.map((call, i) => `${call.name} ⇒ ${results[i]}`).join('\n')
@@ -148,17 +155,31 @@ const clearHistory = () => {
       placeholder="system prompt sent with every request (loaded from the harness doc)"
     ></textarea>
 
-    <div class="min-h-[120px] max-h-[420px] overflow-auto rounded border border-base-300 bg-base-200 p-3 font-mono text-[12.5px] leading-relaxed">
+    <div
+      class="min-h-[120px] max-h-[420px] overflow-auto rounded border border-base-300 bg-base-200 p-3 font-mono text-[12.5px] leading-relaxed"
+    >
       <div
         v-for="(b, i) in blocks"
         :key="i"
         class="mt-2 first:mt-0 whitespace-pre-wrap break-words"
         :class="BLOCK_COLOR[b.kind]"
-      >{{ b.text }}</div>
+      >
+        {{ b.text }}
+      </div>
     </div>
     <div class="flex gap-2">
-      <input v-model="model" name="model" class="input input-sm input-bordered w-56" placeholder="model (haiku / sonnet / opus / …)" />
-      <input v-model="effort" name="effort" class="input input-sm input-bordered w-36" placeholder="effort (low…max)" />
+      <input
+        v-model="model"
+        name="model"
+        class="input input-sm input-bordered w-56"
+        placeholder="model (haiku / sonnet / opus / …)"
+      />
+      <input
+        v-model="effort"
+        name="effort"
+        class="input input-sm input-bordered w-36"
+        placeholder="effort (low…max)"
+      />
       <select
         v-if="history.length"
         name="recent-prompts"

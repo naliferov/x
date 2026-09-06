@@ -29,5 +29,4 @@ takeaway: each popular repo owns ONE axis; the x combo (folder-per-node on disk 
 
 [dev](/doc/dev)  
 [analytics](/doc/analytics)  
-[harness](/doc/harness) · [script](/script/harness)  
-[ai](/doc/ai)
+[harness](/doc/harness) · [script](/script/harness)

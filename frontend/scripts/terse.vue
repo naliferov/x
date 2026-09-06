@@ -193,7 +193,9 @@ const parse = (tokens: any[]) => {
     if (peek().type === 'AT' && peek().name === 'p') {
       next()
       const expr = parseUnary()
-      if (expr.type === 'Call') expr.promise = true
+      if (expr.type === 'Call') {
+        expr.promise = true
+      }
       return expr
     }
     return parseCall()
@@ -372,7 +374,10 @@ onMounted(showJs)
       class="textarea textarea-bordered w-full resize-y overflow-auto font-mono text-[13px] leading-normal whitespace-pre-wrap"
       rows="8"
     ></textarea>
-    <pre class="overflow-auto rounded border border-base-300 bg-base-200 p-2 font-mono text-[13px] leading-normal whitespace-pre-wrap">{{ output }}</pre>
+    <pre
+      class="overflow-auto rounded border border-base-300 bg-base-200 p-2 font-mono text-[13px] leading-normal whitespace-pre-wrap"
+      >{{ output }}</pre
+    >
     <LogPanel ref="panel" height="140px" />
   </div>
 </template>

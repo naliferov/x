@@ -1,6 +1,6 @@
 // do-droplet-up — provision the x VPS from scratch, end to end.
 //
-//   node runtime/cli.js run do-droplet-up [region] [size]
+//   node runtime/cli.ts run do-droplet-up [region] [size]
 //
 // Steps (each logged via ctx.log):
 //   1. pick the latest Ubuntu image

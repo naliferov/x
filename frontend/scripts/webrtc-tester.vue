@@ -35,43 +35,48 @@ const connectWs = () => {
     status.value = 'ws open'
     logLine('ws open')
   }
-  ws.onclose = (e) => {
+  ws.onclose = (event) => {
     status.value = 'ws closed'
     // 1006 on a cross-origin url usually means the SameSite=Lax session cookie
     // wasn't sent → 401 on the upgrade; run this on the target origin instead
-    logLine(`ws closed (code ${e.code})${e.code === 1006 ? ' — rejected: missing/invalid token, or cross-origin cookie/auth' : ''}`)
+    logLine(
+      `ws closed (code ${event.code})${event.code === 1006 ? ' — rejected: missing/invalid token, or cross-origin cookie/auth' : ''}`,
+    )
   }
   ws.onerror = () => logLine('ws error')
-  ws.onmessage = (ev) => {
-    const m = JSON.parse(ev.data)
-    if (m.type === 'welcome') {
-      logLine(`you are "${m.name}" · peers: ${m.clients.join(', ') || '(none yet)'}`)
-    } else if (m.type === 'join') {
-      logLine(`join: ${m.name}`)
-    } else if (m.type === 'leave') {
-      logLine(`leave: ${m.name}`)
-    } else if (m.type === 'message') {
-      onSignal(m.from, m.data).catch((err) => logLine(`signal error: ${err.message}`))
-    } else if (m.type === 'error') {
-      logLine(`exchange error: ${m.error} (${m.to ?? ''})`)
+  ws.onmessage = (event) => {
+    const message = JSON.parse(event.data)
+    if (message.type === 'welcome') {
+      logLine(`you are "${message.name}" · peers: ${message.clients.join(', ') || '(none yet)'}`)
+    } else if (message.type === 'join') {
+      logLine(`join: ${message.name}`)
+    } else if (message.type === 'leave') {
+      logLine(`leave: ${message.name}`)
+    } else if (message.type === 'message') {
+      onSignal(message.from, message.data).catch((err) => logLine(`signal error: ${err.message}`))
+    } else if (message.type === 'error') {
+      logLine(`exchange error: ${message.error} (${message.to ?? ''})`)
     }
   }
 }
 
 const createPeer = (peer: string) => {
   const conn = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] })
-  conn.onicecandidate = (e) => {
-    if (e.candidate) {
-      logLine(`ice out: ${e.candidate.type} ${e.candidate.protocol} ${e.candidate.address}`)
-      signal(peer, { kind: 'ice', candidate: e.candidate })
+  conn.onicecandidate = (event) => {
+    if (event.candidate) {
+      logLine(
+        `ice out: ${event.candidate.type} ${event.candidate.protocol} ${event.candidate.address}`,
+      )
+      signal(peer, { kind: 'ice', candidate: event.candidate })
     } else {
       logLine('ice gathering done')
     }
   }
-  conn.onicecandidateerror = (e: any) => logLine(`ice gather error ${e.errorCode}: ${e.errorText} (${e.url})`)
+  conn.onicecandidateerror = (event: any) =>
+    logLine(`ice gather error ${event.errorCode}: ${event.errorText} (${event.url})`)
   conn.oniceconnectionstatechange = () => logLine(`ice: ${conn.iceConnectionState}`)
-  conn.ondatachannel = (e) => {
-    channel = wireChannel(e.channel)
+  conn.ondatachannel = (event) => {
+    channel = wireChannel(event.channel)
   }
   conn.onconnectionstatechange = () => logLine(`p2p: ${conn.connectionState}`)
   return conn
@@ -129,20 +134,20 @@ const wireChannel = (ch: RTCDataChannel) => {
     status.value = 'p2p closed'
     logLine('datachannel closed')
   }
-  ch.onmessage = (e) => {
-    if (typeof e.data === 'string') {
-      const m = JSON.parse(e.data)
-      if (m.kind === 'text') {
-        logLine(m.text, 'down')
-      } else if (m.kind === 'file-start') {
-        incoming = { name: m.name, size: m.size, chunks: [] }
-        logLine(`receiving ${m.name} (${m.size} bytes)…`, 'down')
-      } else if (m.kind === 'file-end') {
+  ch.onmessage = (event) => {
+    if (typeof event.data === 'string') {
+      const message = JSON.parse(event.data)
+      if (message.kind === 'text') {
+        logLine(message.text, 'down')
+      } else if (message.kind === 'file-start') {
+        incoming = { name: message.name, size: message.size, chunks: [] }
+        logLine(`receiving ${message.name} (${message.size} bytes)…`, 'down')
+      } else if (message.kind === 'file-end') {
         offerDownload(incoming)
         incoming = null
       }
     } else if (incoming) {
-      incoming.chunks.push(e.data)
+      incoming.chunks.push(event.data)
     }
   }
   return ch
@@ -154,7 +159,9 @@ const sendText = () => {
     logLine('no open datachannel — connect ws and call a peer first')
     return
   }
-  if (!text) return
+  if (!text) {
+    return
+  }
   channel.send(JSON.stringify({ kind: 'text', text }))
   logLine(text, 'up')
   msgText.value = ''
@@ -177,7 +184,7 @@ const sendFile = async (file: File) => {
   const buf = await file.arrayBuffer()
   for (let off = 0; off < buf.byteLength; off += CHUNK) {
     while (channel.bufferedAmount > 1_048_576) {
-      await new Promise((r) => setTimeout(r, 50)) // backpressure: don't flood the channel
+      await new Promise((resolve) => setTimeout(resolve, 50)) // backpressure: don't flood the channel
     }
     channel.send(buf.slice(off, off + CHUNK))
   }
@@ -185,11 +192,13 @@ const sendFile = async (file: File) => {
   logLine(`sent ${file.name} (${file.size} bytes)`, 'up')
 }
 
-const offerDownload = (f: { name: string; chunks: ArrayBuffer[] } | null) => {
-  if (!f) return
-  const blob = new Blob(f.chunks)
-  downloads.value.push({ name: f.name, url: URL.createObjectURL(blob), size: blob.size })
-  logLine(`received ${f.name} (${blob.size} bytes)`, 'down')
+const offerDownload = (file: { name: string; chunks: ArrayBuffer[] } | null) => {
+  if (!file) {
+    return
+  }
+  const blob = new Blob(file.chunks)
+  downloads.value.push({ name: file.name, url: URL.createObjectURL(blob), size: blob.size })
+  logLine(`received ${file.name} (${blob.size} bytes)`, 'down')
 }
 
 onUnmounted(() => {
@@ -205,22 +214,47 @@ onMounted(connectWs)
 <template>
   <div class="flex max-w-3xl flex-col gap-3">
     <div class="flex items-center gap-2">
-      <input v-model="wsUrl" name="ws-url" class="input input-sm input-bordered flex-1 font-mono" placeholder="wss://host/api/ws" @keydown.enter="connectWs" />
-      <input v-model="token" name="room-token" class="input input-sm input-bordered w-36 font-mono" placeholder="room token" @keydown.enter="connectWs" />
+      <input
+        v-model="wsUrl"
+        name="ws-url"
+        class="input input-sm input-bordered flex-1 font-mono"
+        placeholder="wss://host/api/ws"
+        @keydown.enter="connectWs"
+      />
+      <input
+        v-model="token"
+        name="room-token"
+        class="input input-sm input-bordered w-36 font-mono"
+        placeholder="room token"
+        @keydown.enter="connectWs"
+      />
       <button class="btn btn-sm" @click="connectWs">connect ws</button>
       <span class="text-sm opacity-60">{{ status }}</span>
     </div>
     <div class="flex items-center gap-2">
-      <input v-model="peerName" name="peer-name" class="input input-sm input-bordered flex-1" placeholder="peer name (see welcome/join in log)" />
+      <input
+        v-model="peerName"
+        name="peer-name"
+        class="input input-sm input-bordered flex-1"
+        placeholder="peer name (see welcome/join in log)"
+      />
       <button class="btn btn-sm" @click="call">call</button>
     </div>
     <div class="flex items-center gap-2">
-      <input v-model="msgText" name="msg-text" class="input input-sm input-bordered flex-1" placeholder="text message" @keydown.enter="sendText" />
+      <input
+        v-model="msgText"
+        name="msg-text"
+        class="input input-sm input-bordered flex-1"
+        placeholder="text message"
+        @keydown.enter="sendText"
+      />
       <button class="btn btn-sm" @click="sendText">send</button>
       <button class="btn btn-sm" @click="pickFile">send file</button>
     </div>
     <div v-for="d in downloads" :key="d.url">
-      <a :href="d.url" :download="d.name" class="link link-primary">⬇ {{ d.name }} ({{ d.size }} bytes)</a>
+      <a :href="d.url" :download="d.name" class="link link-primary"
+        >⬇ {{ d.name }} ({{ d.size }} bytes)</a
+      >
     </div>
     <LogPanel ref="log" height="280px" />
   </div>

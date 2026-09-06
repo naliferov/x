@@ -3,7 +3,7 @@
 // Everything here is about moving bytes over HTTP, not about x: request-body reading
 // (with a size cap), gzipped responses, a `:param` route matcher, static-file/SPA serving
 // with traversal guards, and a hardened `createServer` that turns handler throws and dropped
-// connections into responses instead of crashes. The app (runtime/api.js) supplies the
+// connections into responses instead of crashes. The app (runtime/api.ts) supplies the
 // routes, auth, and config; this module supplies the plumbing.
 import http from 'node:http'
 import fs from 'node:fs/promises'

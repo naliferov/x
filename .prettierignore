@@ -15,7 +15,6 @@ package-lock.json
 
 # Docs & notes are hand-authored — don't let Prettier reflow them.
 *.md
-plans
 
 # Personal / local Claude settings (also gitignored)
 **/.claude

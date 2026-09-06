@@ -45,9 +45,6 @@ export default [
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrors: 'none' },
       ],
-      // Use the one base no-unused-vars (above) for both js/ts — avoids double-firing
-      // with the typescript-eslint copy enabled by its recommended config.
-      '@typescript-eslint/no-unused-vars': 'off',
       // The migration uses `any` deliberately for arbitrary JSON (readBody, res.json())
       // and ad-hoc-field objects — minimal types, not exhaustive generics.
       '@typescript-eslint/no-explicit-any': 'off',
@@ -72,6 +69,18 @@ export default [
     },
   },
 
+  {
+    files: ['**/*.{ts,tsx,vue}'],
+    rules: {
+      'no-undef': 'off',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrors: 'none' },
+      ],
+    },
+  },
+
   // Node runtime: everything except the frontend app source.
   {
     files: ['**/*.{js,ts}'],
@@ -79,9 +88,9 @@ export default [
     languageOptions: { globals: globals.node },
   },
 
-  // Browser runtime: the Vue editor.
+  // Browser runtime: the frontend app and the scripts it runs.
   {
-    files: ['frontend/src/**/*.{js,ts,vue}'],
+    files: ['frontend/src/**/*.{js,ts,vue}', 'frontend/scripts/**/*.{js,ts,jsx,tsx,vue}'],
     languageOptions: { globals: globals.browser },
   },
 

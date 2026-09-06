@@ -71,7 +71,7 @@ export const runScheduler = () =>
   })
 
 // The scheduler as a long-running SERVICE: tick forever, running due tasks each
-// tick. This is what backend/services/scheduler.js spawns (node runtime/cli.js scheduler-loop),
+// tick. This is what runtime/services/scheduler.ts spawns (node runtime/cli.ts scheduler-loop),
 // replacing an external cron that called start-scheduler.
 export const runSchedulerLoop = async ({ tickMs = minutes(1) } = {}) => {
   log(`[scheduler] daemon started (tick ${tickMs}ms)`)

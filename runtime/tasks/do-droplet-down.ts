@@ -1,6 +1,6 @@
 // do-droplet-down — destroy the x VPS to stop billing (counterpart to do-droplet-up).
 //
-//   node runtime/cli.js run do-droplet-down
+//   node runtime/cli.ts run do-droplet-down
 //
 // Finds the droplet(s) named x-vps and deletes them. Logs each key moment.
 // Auth: the DigitalOcean token in mcp-servers/digitalocean-mcp/.env (via do-api.js).

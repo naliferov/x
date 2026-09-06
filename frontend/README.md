@@ -5,19 +5,14 @@ two sections — scripts and docs — with one filter; the right pane runs/rende
 Flat structure: navigation is hyperlinks (`/doc/<name>`, `/script/<name>` — in-doc links
 navigate in-app without a reload and work as deep links).
 
-**Scripts** (`scripts/`), told apart by extension:
-- `.vue` — a Vue component (Vite-compiled)
-- `.js`/`.ts` — vanilla: `export default (host) => cleanup?` gets a host `<div>`
-- `.jsx`/`.tsx` — a Solid component (vite-plugin-solid)
-
-Cross-script reuse = plain ES `import`. Styling = Tailwind v4 + daisyUI v5 classes.
+**Scripts** (`scripts/`) are `.vue` components, compiled by Vite. Cross-script reuse =
+plain ES `import`. Styling = Tailwind v4 + daisyUI v5 classes.
 
 **Docs** (`data/`), one file per doc, named by doc name — the name IS the route
-(`/doc/<name>`). Told apart by extension: `.md` (112, the default), `.html` (6), `.txt` (1);
-`.md.gz`/`.html.gz` are unpacked in the browser. Anything else in the same dir is a **bin**
-(binary asset: audio, images, archives). Originally imported from the prod x DB with
-`/node/<id>` links rewritten to `/doc/<name>`; edited in place since. No manifest, no ids —
-`import.meta.glob` over `data/` discovers everything (`src/App.vue:50-58`, `:150`).
+(`/doc/<name>`). Told apart by extension: `.md` (41) and `.txt` (1).
+Anything else in the same dir is a **bin** (binary asset: audio, images, archives), and a
+`.gz`/`.gzip` bin is inflated in the browser. No manifest, no ids — `import.meta.glob`
+over `data/` discovers everything.
 
 ## Run
 

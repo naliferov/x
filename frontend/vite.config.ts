@@ -1,18 +1,17 @@
 import { defineConfig, type Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import solid from 'vite-plugin-solid'
 import tailwindcss from '@tailwindcss/vite'
 import { writeFile } from 'node:fs/promises'
 import { resolve, sep, basename } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-// Dev-only writer for the in-app doc editor: POST /__save-doc?name=<doc>&ext=<html|md> writes the
+// Dev-only writer for the in-app doc editor: POST /__save-doc?name=<doc>&ext=<md|txt> writes the
 // body to data/<doc>.<ext>. apply:'serve' keeps it out of the static build (which stays read-only);
-// the name is confined to data/ so a crafted name can't escape the folder. Docs (.html fragments, .md,
-// and plain .txt) share the flat data/ dir with bins; docFormatOf gates this writer to those three.
+// the name is confined to data/ so a crafted name can't escape the folder. Docs (.md and plain
+// .txt) share the flat data/ dir with bins; docFormatOf gates this writer to those two.
 const dataDir = resolve(fileURLToPath(new URL('./data', import.meta.url)))
 const docFormatOf = (file: string) =>
-  file.endsWith('.md') ? 'md' : file.endsWith('.html') ? 'html' : file.endsWith('.txt') ? 'txt' : null
+  file.endsWith('.md') ? 'md' : file.endsWith('.txt') ? 'txt' : null
 const saveDoc = (): Plugin => ({
   name: 'x-save-doc',
   apply: 'serve',
@@ -21,7 +20,9 @@ const saveDoc = (): Plugin => ({
   // patches just the open doc, compiling md as needed) and return [] to cancel the default re-render.
   async handleHotUpdate({ file, read, server }) {
     const format = docFormatOf(file)
-    if (!file.startsWith(dataDir + sep) || !format) return
+    if (!file.startsWith(dataDir + sep) || !format) {
+      return
+    }
     const source = await read()
     server.ws.send({
       type: 'custom',
@@ -32,11 +33,13 @@ const saveDoc = (): Plugin => ({
   },
   configureServer(server) {
     server.middlewares.use((req, res, next) => {
-      if (req.method !== 'POST' || !req.url?.startsWith('/__save-doc')) return next()
+      if (req.method !== 'POST' || !req.url?.startsWith('/__save-doc')) {
+        return next()
+      }
       const params = new URL(req.url, 'http://localhost').searchParams
       const name = params.get('name') ?? ''
       const raw = params.get('ext') ?? ''
-      const ext = raw === 'md' || raw === 'txt' ? raw : 'html'
+      const ext = raw === 'txt' ? 'txt' : 'md'
       const file = resolve(dataDir, `${name}.${ext}`)
       if (!name || name.includes('/') || name.includes('\\') || !file.startsWith(dataDir + sep)) {
         res.statusCode = 400
@@ -60,13 +63,12 @@ const saveDoc = (): Plugin => ({
 // no middleware, no copy step.
 
 // Scripts are .vue files under ./scripts, compiled by Vite and discovered via import.meta.glob in
-// App.vue — no runtime engine. Devlab itself is offline; the /api and /ws proxies below exist only
+// App.vue — no runtime engine. x itself is offline; the /api and /ws proxies below exist only
 // for the handful of ported scripts that talk to a LIVE x api service (harness → /api/claude,
 // refactory loading vlang sources by node id, the ws testers → the /ws hub). With the api service
 // down those scripts degrade to their own error handling; everything else runs fully offline.
 export default defineConfig({
-  // solid handles only .jsx/.tsx (Solid scripts); vue handles .vue — no overlap.
-  plugins: [vue(), solid({ extensions: ['.jsx', '.tsx'] }), tailwindcss(), saveDoc()],
+  plugins: [vue(), tailwindcss(), saveDoc()],
   server: {
     proxy: {
       // ws: true also forwards the /api/ws websocket upgrade (the hub lives under /api now)

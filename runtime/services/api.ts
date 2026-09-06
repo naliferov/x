@@ -7,10 +7,6 @@
 // Run the TS entry via Node's native type stripping (no build step, no runner dep).
 export default {
   cmd: 'node',
-  args: [
-    '--experimental-strip-types',
-    '--disable-warning=ExperimentalWarning',
-    'runtime/api.ts',
-  ],
+  args: ['--experimental-strip-types', '--disable-warning=ExperimentalWarning', 'runtime/api.ts'],
   // cwd defaults to the repo root
 }

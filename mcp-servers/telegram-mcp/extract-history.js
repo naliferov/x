@@ -33,8 +33,13 @@ const resumeId = () => {
   const tail = Buffer.alloc(tailLen)
   fs.readSync(fd, tail, 0, tailLen, size - tailLen)
   fs.closeSync(fd)
-  const tailIds = [...tail.toString('utf8').matchAll(/^#(\d+)  \d{4}-/gm)].map((m) => Number(m[1]))
-  const header = fs.readFileSync(OUT, 'utf8').slice(0, 2000).match(/LAST EXTRACTED ID: (\d+)/)
+  const tailIds = [...tail.toString('utf8').matchAll(/^#(\d+) {2}\d{4}-/gm)].map((match) =>
+    Number(match[1]),
+  )
+  const header = fs
+    .readFileSync(OUT, 'utf8')
+    .slice(0, 2000)
+    .match(/LAST EXTRACTED ID: (\d+)/)
   const last = Math.max(tailIds.at(-1) ?? 0, header ? Number(header[1]) : 0)
   if (!last) {
     throw new Error('could not find a resume id in metapractise.txt (no #id lines, no header)')
@@ -62,7 +67,11 @@ const kyivTime = (date) => {
   // message.date is unix seconds; file format is "YYYY-MM-DD HH:MM" Kyiv local
   const formatted = new Date(date * 1000).toLocaleString('sv-SE', {
     timeZone: 'Europe/Kyiv',
-    year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
   })
   return formatted.replace(',', '')
 }
@@ -107,7 +116,10 @@ const updateHeader = () => {
     OUT,
     content
       .replace(/LAST EXTRACTED ID: \d+/, `LAST EXTRACTED ID: ${state.lastId}`)
-      .replace(/# extracted_at: [^\n]+/, `# extracted_at: ${new Date().toISOString().slice(0, 10)}`),
+      .replace(
+        /# extracted_at: [^\n]+/,
+        `# extracted_at: ${new Date().toISOString().slice(0, 10)}`,
+      ),
   )
 }
 

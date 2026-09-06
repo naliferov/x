@@ -2,7 +2,7 @@ import sharp from 'sharp'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 
-//node runtime/cli.js run img-optimize data/assets/img/ryan-gosling-drive.jpg data/assets/img/ryan-gosling-drive.webp
+//node runtime/cli.ts run img-optimize data/assets/img/ryan-gosling-drive.jpg data/assets/img/ryan-gosling-drive.webp
 
 export const run = async (ctx) => {
   const [inputPath, outputPath] = ctx.args

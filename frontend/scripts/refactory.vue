@@ -23,20 +23,36 @@ const localSources = import.meta.glob('../data/*.txt', {
   import: 'default',
   eager: true,
 }) as Record<string, string>
-const localNames = Object.keys(localSources).map((p) => ({
-  path: p,
-  name: p.split('/').pop()!.replace(/\.txt$/, ''),
+const localNames = Object.keys(localSources).map((path) => ({
+  path,
+  name: path
+    .split('/')
+    .pop()!
+    .replace(/\.txt$/, ''),
 }))
 
 const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) => {
   let canvas: HTMLCanvasElement | null = null
   let ctx: CanvasRenderingContext2D = null as any
-  let p: any = null // the page { w, h, bg, d } — set by the p instruction
+  let pageSpec: any = null // the page { w, h, bg, d } — set by the p instruction
   let fitObserver: ResizeObserver | null = null
   const items: any[] = [] // draw list, in program order
 
   const defaults = () => ({
-    x: 0, y: 0, w: 0, h: 0, bg: null, d: 0, mx: 0, my: 0, r: 0, c: null, t: null, s: false, size: 0, color: null,
+    x: 0,
+    y: 0,
+    w: 0,
+    h: 0,
+    bg: null,
+    d: 0,
+    mx: 0,
+    my: 0,
+    r: 0,
+    c: null,
+    t: null,
+    s: false,
+    size: 0,
+    color: null,
   })
 
   // parse a time span (seconds) shared by t (schedule) and c (cut): start[:end], start+len,
@@ -65,29 +81,44 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
       // one m prefixes the whole token; parts are bare, split on '-' only before a
       // letter so negative numbers survive: mx10-y-15 = m(x10, y-15)
       for (const part of token.slice(1).split(/-(?=[a-z])/)) {
-        if (part[0] === 'x') parsed.mx = Number(part.slice(1))
-        else if (part[0] === 'y') parsed.my = Number(part.slice(1))
-        else if (part[0] === 'r') parsed.r = Number(part.slice(1))
-        else throw new Error(`unknown motion param "${part}"`)
+        if (part[0] === 'x') {
+          parsed.mx = Number(part.slice(1))
+        } else if (part[0] === 'y') {
+          parsed.my = Number(part.slice(1))
+        } else if (part[0] === 'r') {
+          parsed.r = Number(part.slice(1))
+        } else {
+          throw new Error(`unknown motion param "${part}"`)
+        }
       }
     } else if (token.startsWith('t>')) {
       parsed.t = { after: true, dur: token.length > 2 ? Number(token.slice(2)) : null }
     } else if (token[0] === 't') {
       parsed.t = parseTimeSpan('t', token.slice(1), true) // open end allowed: bare t1
-    } else if (token[0] === 'x') parsed.x = Number(token.slice(1))
-    else if (token[0] === 'y') parsed.y = Number(token.slice(1))
-    else if (token[0] === 'w') parsed.w = Number(token.slice(1))
-    else if (token[0] === 'h') parsed.h = Number(token.slice(1))
-    else if (token[0] === 'b') parsed.bg = token.slice(1)
-    else throw new Error(`unknown param "${token}"`)
+    } else if (token[0] === 'x') {
+      parsed.x = Number(token.slice(1))
+    } else if (token[0] === 'y') {
+      parsed.y = Number(token.slice(1))
+    } else if (token[0] === 'w') {
+      parsed.w = Number(token.slice(1))
+    } else if (token[0] === 'h') {
+      parsed.h = Number(token.slice(1))
+    } else if (token[0] === 'b') {
+      parsed.bg = token.slice(1)
+    } else {
+      throw new Error(`unknown param "${token}"`)
+    }
   }
 
   // page (p): + d duration
   const pageParams = (tokens: string[]) => {
     const parsed = defaults()
     for (const token of tokens) {
-      if (token[0] === 'd') parsed.d = Number(token.slice(1))
-      else common(parsed, token)
+      if (token[0] === 'd') {
+        parsed.d = Number(token.slice(1))
+      } else {
+        common(parsed, token)
+      }
     }
     return parsed
   }
@@ -95,7 +126,9 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
   // rect (o) and image (i): only the common params
   const plainParams = (tokens: string[]) => {
     const parsed = defaults()
-    for (const token of tokens) common(parsed, token)
+    for (const token of tokens) {
+      common(parsed, token)
+    }
     return parsed
   }
 
@@ -103,10 +136,13 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
   const videoParams = (tokens: string[]) => {
     const parsed = defaults()
     for (const token of tokens) {
-      if (token === 's') parsed.s = true
-      else if (token[0] === 'c') {
+      if (token === 's') {
+        parsed.s = true
+      } else if (token[0] === 'c') {
         parsed.c = parseTimeSpan('c', token.slice(1), false) // cut must be finite: no bare c10
-      } else common(parsed, token)
+      } else {
+        common(parsed, token)
+      }
     }
     return parsed
   }
@@ -115,31 +151,43 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
   const textParams = (tokens: string[]) => {
     const parsed = defaults()
     for (const token of tokens) {
-      if (token[0] === 's') parsed.size = Number(token.slice(1))
-      else if (token[0] === 'c') parsed.color = token.slice(1)
-      else common(parsed, token)
+      if (token[0] === 's') {
+        parsed.size = Number(token.slice(1))
+      } else if (token[0] === 'c') {
+        parsed.color = token.slice(1)
+      } else {
+        common(parsed, token)
+      }
     }
     return parsed
   }
 
   const place = (kind: string, el: any, opts: any) => {
-    if (!canvas) throw new Error('p w<N> h<N> must come first')
-    if (!opts.w && !el) throw new Error('w<N> required')
+    if (!canvas) {
+      throw new Error('p w<N> h<N> must come first')
+    }
+    if (!opts.w && !el) {
+      throw new Error('w<N> required')
+    }
     const autoW = !opts.w // media falls back to the source's natural width once loaded (see draw)
     const autoH = !opts.h // media resolves it from the source aspect once loaded (see draw)
-    if (autoH) opts.h = opts.w
+    if (autoH) {
+      opts.h = opts.w
+    }
     items.push({ kind, el, autoW, autoH, ...opts })
   }
 
   const page = (opts: any) => {
-    if (!opts.w || !opts.h) throw new Error('page needs both sizes: p w<N> h<N>')
-    p = { w: opts.w, h: opts.h, bg: opts.bg ?? '#0f0f0f', d: opts.d }
+    if (!opts.w || !opts.h) {
+      throw new Error('page needs both sizes: p w<N> h<N>')
+    }
+    pageSpec = { w: opts.w, h: opts.h, bg: opts.bg ?? '#0f0f0f', d: opts.d }
     canvas = document.createElement('canvas')
     canvas.className = 'rounded border border-base-300'
     // vlang units are logical: backing store scaled by devicePixelRatio, drawn 1:1
     const dpr = window.devicePixelRatio || 1
-    canvas.width = p.w * dpr
-    canvas.height = p.h * dpr
+    canvas.width = pageSpec.w * dpr
+    canvas.height = pageSpec.h * dpr
     ctx = canvas.getContext('2d')!
     ctx.scale(dpr, dpr)
     host.append(canvas)
@@ -148,11 +196,11 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
     // page's own logical size) and its width follows, so the column claims no more than it draws.
     const el = canvas
     const fit = () => {
-      const scale = Math.min(host.clientHeight / p.h, 1)
-      const width = `${Math.round(p.w * scale)}px`
+      const scale = Math.min(host.clientHeight / pageSpec.h, 1)
+      const width = `${Math.round(pageSpec.w * scale)}px`
       if (el.style.width !== width) {
         el.style.width = width
-        el.style.height = `${Math.round(p.h * scale)}px`
+        el.style.height = `${Math.round(pageSpec.h * scale)}px`
       }
     }
     fit()
@@ -165,8 +213,12 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
   }
 
   const text = (opts: any) => {
-    if (!canvas) throw new Error('p w<N> h<N> must come first')
-    if (!opts.text) throw new Error('tx needs its text in quotes: tx x0 y0 s20 cwhite "hello"')
+    if (!canvas) {
+      throw new Error('p w<N> h<N> must come first')
+    }
+    if (!opts.text) {
+      throw new Error('tx needs its text in quotes: tx x0 y0 s20 cwhite "hello"')
+    }
     // w/h are measured each frame from the font (see draw) so motion/rotation work uniformly
     items.push({ kind: 'text', el: null, autoH: false, ...opts, size: opts.size || 20 })
   }
@@ -192,12 +244,19 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
     const [keyword, ...tokens] = bare.split(/\s+/).filter(Boolean)
 
     try {
-      if (keyword === 'p') page(pageParams(tokens))
-      else if (keyword === 'tx') text({ ...textParams(tokens), text: quote ? quote[1] : '' })
-      else if (/^i[\w-]+$/.test(keyword)) image(`/api/bin/${keyword.slice(1)}`, plainParams(tokens))
-      else if (/^v[\w-]+$/.test(keyword)) video(`/api/bin/${keyword.slice(1)}`, videoParams(tokens))
-      else if (/^o\d*$/.test(keyword)) object(plainParams(tokens))
-      else throw new Error('unknown instruction')
+      if (keyword === 'p') {
+        page(pageParams(tokens))
+      } else if (keyword === 'tx') {
+        text({ ...textParams(tokens), text: quote ? quote[1] : '' })
+      } else if (/^i[\w-]+$/.test(keyword)) {
+        image(`/api/bin/${keyword.slice(1)}`, plainParams(tokens))
+      } else if (/^v[\w-]+$/.test(keyword)) {
+        video(`/api/bin/${keyword.slice(1)}`, videoParams(tokens))
+      } else if (/^o\d*$/.test(keyword)) {
+        object(plainParams(tokens))
+      } else {
+        throw new Error('unknown instruction')
+      }
     } catch (err: any) {
       throw new Error(`${err.message} — line: "${line}"`)
     }
@@ -205,7 +264,13 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
 
   // closed-form motion: position derives from elapsed time, so the clock can be paused
   // and reset (render), and wrapping works in BOTH directions (negative speeds)
-  const wrapPos = (base: number, size: number, speed: number, elapsed: number, pageSize: number) => {
+  const wrapPos = (
+    base: number,
+    size: number,
+    speed: number,
+    elapsed: number,
+    pageSize: number,
+  ) => {
     if (!speed) {
       return base
     }
@@ -216,8 +281,8 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
   }
 
   const draw = (elapsed: number) => {
-    ctx.fillStyle = p.bg
-    ctx.fillRect(0, 0, p.w, p.h)
+    ctx.fillStyle = pageSpec.bg
+    ctx.fillRect(0, 0, pageSpec.w, pageSpec.h)
     for (const it of items) {
       if (it.t && (elapsed < it.t.start || (it.t.end !== null && elapsed >= it.t.end))) {
         continue
@@ -226,8 +291,12 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
         const srcW = it.el.videoWidth || it.el.naturalWidth
         const srcH = it.el.videoHeight || it.el.naturalHeight
         if (srcW) {
-          if (it.autoW) it.w = srcW
-          if (it.autoH) it.h = (it.w * srcH) / srcW
+          if (it.autoW) {
+            it.w = srcW
+          }
+          if (it.autoH) {
+            it.h = (it.w * srcH) / srcW
+          }
         }
       }
       if (it.kind === 'text') {
@@ -235,8 +304,8 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
         it.w = ctx.measureText(it.text).width // so (x,y) anchors top-left, like a rect
         it.h = it.size
       }
-      const px = wrapPos(it.x, it.w, it.mx, elapsed, p.w)
-      const py = wrapPos(it.y, it.h, it.my, elapsed, p.h)
+      const px = wrapPos(it.x, it.w, it.mx, elapsed, pageSpec.w)
+      const py = wrapPos(it.y, it.h, it.my, elapsed, pageSpec.h)
       const halfW = it.w / 2
       const halfH = it.h / 2
       ctx.save()
@@ -314,10 +383,10 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
     // jump the whole stage to second T: visuals derive from elapsed (closed-form), videos
     // get their internal clock aligned — cut start + time since their window opened,
     // folded into the cut length (they loop)
-    const seek = (T: number) => {
-      elapsed = T
+    const seek = (time: number) => {
+      elapsed = time
       for (const it of videos) {
-        const local = Math.max(0, T - (it.t ? it.t.start : 0))
+        const local = Math.max(0, time - (it.t ? it.t.start : 0))
         const start = it.c ? it.c.start : 0
         if (it.c && it.c.end !== null) {
           const len = it.c.end - it.c.start
@@ -356,15 +425,15 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
     seekField.className = 'input input-sm input-bordered w-20'
     seekField.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
-        const T = Number(seekField.value)
-        if (!Number.isNaN(T)) {
-          seek(T)
+        const time = Number(seekField.value)
+        if (!Number.isNaN(time)) {
+          seek(time)
         }
       }
     })
     controlsHost.append(seekField)
 
-    if (p.d) {
+    if (pageSpec.d) {
       const renderBtn = button('render', () => {
         renderBtn.disabled = true
         reset()
@@ -373,16 +442,16 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
         const stream = canvas!.captureStream(30)
         const rec = new MediaRecorder(stream, { mimeType: 'video/webm' })
         const chunks: Blob[] = []
-        rec.ondataavailable = (e) => chunks.push(e.data)
+        rec.ondataavailable = (event) => chunks.push(event.data)
         rec.onstop = () => {
-          const a = document.createElement('a')
-          a.href = URL.createObjectURL(new Blob(chunks, { type: 'video/webm' }))
-          a.download = 'collage.webm'
-          a.click()
+          const link = document.createElement('a')
+          link.href = URL.createObjectURL(new Blob(chunks, { type: 'video/webm' }))
+          link.download = 'collage.webm'
+          link.click()
           renderBtn.disabled = false
         }
         rec.start()
-        setTimeout(() => rec.stop(), p.d * 1000)
+        setTimeout(() => rec.stop(), pageSpec.d * 1000)
       })
     }
 
@@ -417,10 +486,15 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
     }
   }
 
-  for (const line of src.split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('//'))) {
+  for (const line of src
+    .split('\n')
+    .map((sourceLine) => sourceLine.trim())
+    .filter((sourceLine) => sourceLine && !sourceLine.startsWith('//'))) {
     exec(line)
   }
-  if (!p) throw new Error('no page — start with p w<N> h<N>')
+  if (!pageSpec) {
+    throw new Error('no page — start with p w<N> h<N>')
+  }
   resolveSchedule()
   return clock()
 }
@@ -456,9 +530,9 @@ const rebuild = () => {
 }
 
 const load = (name: string) => {
-  const entry = localNames.find((l) => l.name === name.trim())
+  const entry = localNames.find((candidate) => candidate.name === name.trim())
   if (!entry) {
-    status.value = `no data/${name.trim()}.txt — have: ${localNames.map((l) => l.name).join(', ') || '(none)'}`
+    status.value = `no data/${name.trim()}.txt — have: ${localNames.map((candidate) => candidate.name).join(', ') || '(none)'}`
     return
   }
   nameField.value = entry.name
@@ -489,7 +563,9 @@ const save = async () => {
       method: 'POST',
       body: source.value,
     })
-    if (!res.ok) throw new Error((await res.text()) || `save failed (${res.status})`)
+    if (!res.ok) {
+      throw new Error((await res.text()) || `save failed (${res.status})`)
+    }
     localStorage.setItem(STORE_KEY, name)
     status.value = `saved data/${name}.txt ✓`
   } catch (err: any) {
@@ -499,9 +575,9 @@ const save = async () => {
 
 onMounted(() => {
   const remembered = localStorage.getItem(STORE_KEY)
-  if (remembered && localNames.some((l) => l.name === remembered)) {
+  if (remembered && localNames.some((candidate) => candidate.name === remembered)) {
     load(remembered)
-  } else if (localNames.some((l) => l.name === 'refactory-demo')) {
+  } else if (localNames.some((candidate) => candidate.name === 'refactory-demo')) {
     load('refactory-demo')
   } else {
     source.value = INIT_SRC

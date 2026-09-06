@@ -41,8 +41,8 @@ const rooms = new Map()
 // The room a client belongs to, from its connect token. First present wins; none -> undefined
 // (a connection without a token is refused — there is no default room).
 const channelOf = (req: IncomingMessage) => {
-  const first = (v: string | string[] | undefined) =>
-    (Array.isArray(v) ? v[0] : v)?.split(',')[0].trim() || undefined
+  const first = (value: string | string[] | undefined) =>
+    (Array.isArray(value) ? value[0] : value)?.split(',')[0].trim() || undefined
   const query = new URL(req.url ?? '', 'http://x').searchParams.get('channel') || undefined
   return first(req.headers['sec-websocket-protocol']) || first(req.headers['x-ws-channel']) || query
 }
@@ -56,7 +56,9 @@ const send = (socket, message) => {
 // Tell every client in `channel` except `selfName` (used for join/leave presence).
 const announce = (channel, selfName, message) => {
   const room = rooms.get(channel)
-  if (!room) return
+  if (!room) {
+    return
+  }
   for (const [name, socket] of room) {
     if (name !== selfName) {
       send(socket, message)
@@ -130,9 +132,9 @@ export const attachWsServer = (server: Server) => {
     // Remove on disconnect; drop the room once empty, else tell the others. Guarded so
     // close+error don't double-fire.
     const drop = () => {
-      const r = rooms.get(ws.channel)
-      if (r?.delete(ws.name)) {
-        if (r.size === 0) {
+      const room = rooms.get(ws.channel)
+      if (room?.delete(ws.name)) {
+        if (room.size === 0) {
           rooms.delete(ws.channel)
         } else {
           announce(ws.channel, ws.name, { type: 'leave', name: ws.name })

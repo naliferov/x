@@ -23,7 +23,6 @@
 | где | доказательство |
 | --- | --- |
 | арт | [art constructor](/doc/art-constructor): «interest scales exactly w/ how much the space exceeds what you explicitly put in» |
-| встречи | [meetup formats](/doc/meetup-formats) - не «сходить куда-то», а набор правил; три формата = три вариации одной структуры |
 | звук | [drone](/doc/audio-drone) - три модулятора на несоизмеримых периодах 8·5·13, комбинация не повторяется никогда |
 | видео | vlang / refactory - DSL, то есть генератор вариантов, а не редактор |
 | разбор | [analytics](/doc/analytics) - девять линз, наводимых на что угодно; морфологический ящик Цвикки это ровно «параметры × значения» |

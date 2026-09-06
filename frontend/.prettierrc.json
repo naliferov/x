@@ -4,7 +4,5 @@
   "printWidth": 100,
   "trailingComma": "all",
   "arrowParens": "always",
-  "overrides": [
-    { "files": "docs/*.html", "options": { "htmlWhitespaceSensitivity": "ignore" } }
-  ]
+  "overrides": [{ "files": "docs/*.html", "options": { "htmlWhitespaceSensitivity": "ignore" } }]
 }

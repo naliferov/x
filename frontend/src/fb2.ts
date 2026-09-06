@@ -21,24 +21,36 @@ export const decodeFb2 = (buffer: ArrayBuffer) => {
 
 export const fb2ToHtml = (xml: string) => {
   const doc = new DOMParser().parseFromString(xml, 'application/xml')
-  if (doc.querySelector('parsererror')) throw new Error('malformed fb2 XML')
+  if (doc.querySelector('parsererror')) {
+    throw new Error('malformed fb2 XML')
+  }
 
   // binary id -> data URI, for <image l:href="#id"> references
   const images = new Map<string, string>()
   for (const binary of Array.from(doc.getElementsByTagName('binary'))) {
     const id = binary.getAttribute('id')
     const type = binary.getAttribute('content-type') || 'image/jpeg'
-    if (id) images.set(id, `data:${type};base64,${(binary.textContent ?? '').trim()}`)
+    if (id) {
+      images.set(id, `data:${type};base64,${(binary.textContent ?? '').trim()}`)
+    }
   }
   const imageHref = (el: Element) =>
-    (el.getAttributeNS(XLINK, 'href') || el.getAttribute('l:href') || el.getAttribute('href') || '')
-      .replace(/^#/, '')
+    (
+      el.getAttributeNS(XLINK, 'href') ||
+      el.getAttribute('l:href') ||
+      el.getAttribute('href') ||
+      ''
+    ).replace(/^#/, '')
 
   const children = (el: Element) => Array.from(el.childNodes).map(render).join('')
 
   const render = (node: Node): string => {
-    if (node.nodeType === Node.TEXT_NODE) return escapeText(node.nodeValue ?? '')
-    if (node.nodeType !== Node.ELEMENT_NODE) return ''
+    if (node.nodeType === Node.TEXT_NODE) {
+      return escapeText(node.nodeValue ?? '')
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return ''
+    }
     const el = node as Element
     switch (el.localName) {
       case 'section':
@@ -47,7 +59,7 @@ export const fb2ToHtml = (xml: string) => {
         // fb2 titles wrap <p> lines; flatten to a heading (nested <p> in a heading is invalid html)
         return `<h2>${
           Array.from(el.getElementsByTagName('p'))
-            .map((p) => escapeText(p.textContent ?? ''))
+            .map((paragraph) => escapeText(paragraph.textContent ?? ''))
             .join('<br>') || escapeText(el.textContent ?? '')
         }</h2>`
       case 'subtitle':

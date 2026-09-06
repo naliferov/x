@@ -1,16 +1,5 @@
 <script setup lang="ts">
-import {
-  ref,
-  computed,
-  shallowRef,
-  defineAsyncComponent,
-  defineComponent,
-  h,
-  onMounted,
-  onBeforeUnmount,
-  type Component,
-  type PropType,
-} from 'vue'
+import { ref, computed, shallowRef, defineAsyncComponent, type Component } from 'vue'
 import { marked } from 'marked'
 import { markedHighlight } from 'marked-highlight'
 import hljs from 'highlight.js/lib/core'
@@ -22,6 +11,7 @@ import json from 'highlight.js/lib/languages/json'
 import ini from 'highlight.js/lib/languages/ini'
 import xml from 'highlight.js/lib/languages/xml'
 import css from 'highlight.js/lib/languages/css'
+import plaintext from 'highlight.js/lib/languages/plaintext'
 import 'highlight.js/styles/github-dark.css'
 import AssetView from './AssetView.vue'
 
@@ -33,6 +23,7 @@ hljs.registerLanguage('json', json)
 hljs.registerLanguage('ini', ini)
 hljs.registerLanguage('xml', xml)
 hljs.registerLanguage('css', css)
+hljs.registerLanguage('plaintext', plaintext)
 
 marked.use(
   markedHighlight({
@@ -45,107 +36,53 @@ marked.use(
 )
 
 const vueModules = import.meta.glob<{ default: Component }>('../scripts/*.vue')
-const vanillaModules = import.meta.glob('../scripts/*.{js,ts}')
-const solidModules = import.meta.glob('../scripts/*.{jsx,tsx}')
-const docHtmlModules = import.meta.glob('../data/*.html', { query: '?raw', import: 'default' })
 const docMdModules = import.meta.glob('../data/*.md', { query: '?raw', import: 'default' })
 const docTxtModules = import.meta.glob('../data/*.txt', { query: '?raw', import: 'default' })
-// A doc may also be stored gzipped (`foo.md.gzip`): same doc, same /doc/<name>, same rendering —
-// only the source arrives as an asset url that the browser inflates instead of being inlined at
-// build time. Read-only: the editor writes plain files, so a compressed doc has no edit button.
-// .txt.gzip deliberately stays a BIN — that viewer has the line filter and the 1000-line cap the
-// large corpora (ukrainian-words, disco elysium dialogs) need.
-const docGzipModules = import.meta.glob('../data/*.{html,md}.{gz,gzip}', {
-  query: '?url',
-  import: 'default',
-  eager: true,
-}) as Record<string, string>
-const isCompressedDoc = (path: string) => /\.(html|md)\.(gz|gzip)$/i.test(path)
-
 const toName = (path: string) =>
   path
     .split('/')
     .pop()!
     .replace(/\.\w+$/, '')
 
-type ScriptKind = 'vue' | 'vanilla' | 'solid'
-const scripts = [
-  ...Object.keys(vueModules).map((path) => ({ path, kind: 'vue' as ScriptKind })),
-  ...Object.keys(vanillaModules).map((path) => ({ path, kind: 'vanilla' as ScriptKind })),
-  ...Object.keys(solidModules).map((path) => ({ path, kind: 'solid' as ScriptKind })),
-]
-  .map((s) => ({ ...s, name: toName(s.path) }))
-  .sort((a, b) => a.name.localeCompare(b.name))
+const scripts = Object.keys(vueModules)
+  .map((path) => ({ path, name: toName(path) }))
+  .sort((left, right) => left.name.localeCompare(right.name))
 
-type DocFormat = 'html' | 'md' | 'txt'
+type DocFormat = 'md' | 'txt'
 type Doc = {
   path: string
   name: string
   format: DocFormat
-  compressed: boolean
   load: () => Promise<unknown>
 }
 
-// Inflate a gzipped doc source in the browser. `as any`: lib.dom types DecompressionStream's
-// stream pair too strictly for pipeThrough (the runtime pairing is fine).
-const gunzipText = async (url: string) => {
-  const res = await fetch(url)
-  if (!res.ok || !res.body) {
-    throw new Error(`fetch ${res.status}`)
-  }
-  return new Response(res.body.pipeThrough(new DecompressionStream('gzip') as any)).text()
-}
-
-const compressedDocs: Doc[] = Object.entries(docGzipModules).map(([path, url]) => {
-  const inner = path.replace(/\.(gz|gzip)$/i, '') // '../data/foo.md.gzip' -> '../data/foo.md'
-  return {
-    path,
-    name: toName(inner),
-    format: inner.split('.').pop() as DocFormat,
-    compressed: true,
-    load: () => gunzipText(url),
-  }
-})
-
 const docs: Doc[] = [
-  ...Object.keys(docHtmlModules).map((path) => ({
-    path,
-    name: toName(path),
-    format: 'html' as DocFormat,
-    compressed: false,
-    load: docHtmlModules[path],
-  })),
   ...Object.keys(docMdModules).map((path) => ({
     path,
     name: toName(path),
     format: 'md' as DocFormat,
-    compressed: false,
     load: docMdModules[path],
   })),
   ...Object.keys(docTxtModules).map((path) => ({
     path,
     name: toName(path),
     format: 'txt' as DocFormat,
-    compressed: false,
     load: docTxtModules[path],
   })),
-  ...compressedDocs,
-].sort((a, b) => a.name.localeCompare(b.name))
+].sort((left, right) => left.name.localeCompare(right.name))
 
-const escapeHtml = (s: string) =>
-  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+const escapeHtml = (source: string) =>
+  source.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
 const renderDoc = (source: string, format: DocFormat) =>
   format === 'md'
     ? (marked.parse(source) as string)
-    : format === 'txt'
-      ? `<pre class="doc-txt">${escapeHtml(source)}</pre>`
-      : source
+    : `<pre class="doc-txt">${escapeHtml(source)}</pre>`
 
 const filter = ref('')
 const matches = (name: string) => name.toLowerCase().includes(filter.value.trim().toLowerCase())
-const visibleScripts = computed(() => scripts.filter((s) => matches(s.name)))
-const visibleDocs = computed(() => docs.filter((d) => matches(d.name)))
+const visibleScripts = computed(() => scripts.filter((script) => matches(script.name)))
+const visibleDocs = computed(() => docs.filter((doc) => matches(doc.name)))
 
 const binModules = import.meta.glob(
   '../data/*.{csv,log,json,fb2,png,jpg,jpeg,gif,webp,avif,svg,opus,mp3,ogg,wav,m4a,flac,aac,mp4,webm,mov,mkv,gz,gzip}',
@@ -154,13 +91,24 @@ const binModules = import.meta.glob(
 
 const binType = (path: string) => {
   const name = path.toLowerCase().replace(/\.(gz|gzip)$/, '')
-  if (/\.(txt|md|csv|log|json)$/.test(name)) return 'txt'
-  if (name.endsWith('.fb2')) return 'fb2'
-  if (/\.(png|jpe?g|gif|webp|avif|svg)$/.test(name)) return 'image'
-  if (/\.(opus|mp3|ogg|wav|m4a|flac|aac)$/.test(name)) return 'audio'
-  if (/\.(mp4|webm|mov|mkv)$/.test(name)) return 'video'
+  if (/\.(txt|md|csv|log|json)$/.test(name)) {
+    return 'txt'
+  }
+  if (name.endsWith('.fb2')) {
+    return 'fb2'
+  }
+  if (/\.(png|jpe?g|gif|webp|avif|svg)$/.test(name)) {
+    return 'image'
+  }
+  if (/\.(opus|mp3|ogg|wav|m4a|flac|aac)$/.test(name)) {
+    return 'audio'
+  }
+  if (/\.(mp4|webm|mov|mkv)$/.test(name)) {
+    return 'video'
+  }
   return 'file'
 }
+
 const binName = (path: string) =>
   path
     .split('/')
@@ -168,49 +116,18 @@ const binName = (path: string) =>
     .replace(/\.(gz|gzip)$/i, '')
     .replace(/\.[^.]+$/, '')
 type Bin = { name: string; url: string; type: string }
+
 const bins: Bin[] = Object.entries(binModules)
-  .filter(([path]) => !isCompressedDoc(path)) // those are docs, listed above — not bins
   .map(([path, url]) => ({ name: binName(path), url, type: binType(path) }))
-  .sort((a, b) => a.name.localeCompare(b.name))
-const visibleBins = computed(() => bins.filter((a) => matches(a.name)))
+  .sort((left, right) => left.name.localeCompare(right.name))
 
-type MountFn = (host: HTMLElement) => Promise<(() => void) | undefined>
-
-const HostMount = defineComponent({
-  props: { mount: { type: Function as PropType<MountFn>, required: true } },
-  setup(props) {
-    const host = ref<HTMLElement>()
-    let cleanup: (() => void) | undefined
-    onMounted(async () => {
-      cleanup = await props.mount(host.value!)
-    })
-    onBeforeUnmount(() => cleanup?.())
-    return () => h('div', { ref: host })
-  },
-})
-
-const mountVanilla =
-  (path: string): MountFn =>
-  async (host) => {
-    const mod = (await vanillaModules[path]()) as { default: (host: HTMLElement) => unknown }
-    const result = await mod.default(host)
-    return typeof result === 'function' ? (result as () => void) : undefined
-  }
-
-const mountSolid =
-  (path: string): MountFn =>
-  async (host) => {
-    const [{ render }, mod] = await Promise.all([import('solid-js/web'), solidModules[path]()])
-    return render((mod as { default: () => any }).default, host)
-  }
+const visibleBins = computed(() => bins.filter((bin) => matches(bin.name)))
 
 const activeUrl = ref<string | null>(null) // '/script/x' | '/doc/x'
 const activeComponent = shallowRef<Component | null>(null)
-const activeMount = shallowRef<MountFn | null>(null)
 const activeHtml = ref('') // compiled html for v-html
 const activeSource = ref('') // raw file source (what the editor edits + saves)
-const activeDocFormat = ref<DocFormat>('html')
-const activeDocCompressed = ref(false) // gzipped docs are read-only: the save writer emits plain files
+const activeDocFormat = ref<DocFormat>('md')
 const activeBin = shallowRef<Bin | null>(null)
 const missing = ref<string | null>(null)
 
@@ -224,13 +141,11 @@ const docEdits = new Map<string, string>() // raw source pushed over HMR, by doc
 const show = async (url: string | null) => {
   activeUrl.value = null
   activeComponent.value = null
-  activeMount.value = null
   activeHtml.value = ''
   activeSource.value = ''
   activeBin.value = null
   missing.value = null
   editing.value = false
-  activeDocCompressed.value = false
   document.title = 'x'
   if (!url) {
     return
@@ -261,7 +176,6 @@ const show = async (url: string | null) => {
     document.title = `x · ${doc.name}`
     const source = docEdits.get(name) ?? ((await doc.load()) as string)
     activeDocFormat.value = doc.format
-    activeDocCompressed.value = doc.compressed
     activeSource.value = source
     activeHtml.value = renderDoc(source, doc.format)
     return
@@ -274,15 +188,7 @@ const show = async (url: string | null) => {
   }
   activeUrl.value = url
   document.title = `x · ${script.name}`
-  if (script.kind === 'vue') {
-    activeComponent.value = defineAsyncComponent(vueModules[script.path])
-  }
-  if (script.kind === 'vanilla') {
-    activeMount.value = mountVanilla(script.path)
-  }
-  if (script.kind === 'solid') {
-    activeMount.value = mountSolid(script.path)
-  }
+  activeComponent.value = defineAsyncComponent(vueModules[script.path])
 }
 
 const urlFromLocation = () =>
@@ -333,8 +239,6 @@ const saveEdit = async () => {
   }
 }
 
-// In-doc navigation without reload: docs link to /doc/<name> (and may link /script/<name>).
-// Intercept those; external links behave normally.
 const onContentClick = (event: MouseEvent) => {
   const link = (event.target as HTMLElement).closest('a')
   if (!link) {
@@ -407,10 +311,10 @@ if (import.meta.hot) {
               @click="open('script', s.name)"
             >
               <span class="truncate">{{ s.name }}</span>
-              <span v-if="s.kind !== 'vue'" class="badge badge-ghost badge-xs">{{ s.kind }}</span>
             </a>
           </li>
         </ul>
+
         <div class="px-4 pt-3 pb-1 text-xs font-semibold uppercase opacity-50">
           docs ({{ visibleDocs.length }})
         </div>
@@ -422,6 +326,7 @@ if (import.meta.hot) {
             </a>
           </li>
         </ul>
+
         <template v-if="visibleBins.length">
           <div class="px-4 pt-3 pb-1 text-xs font-semibold uppercase opacity-50">
             bins ({{ visibleBins.length }})
@@ -435,6 +340,7 @@ if (import.meta.hot) {
             </li>
           </ul>
         </template>
+
         <div
           v-if="!visibleScripts.length && !visibleDocs.length && !visibleBins.length"
           class="p-4 text-xs opacity-50"
@@ -457,7 +363,7 @@ if (import.meta.hot) {
         class="max-w-3xl p-8"
         :class="{ 'flex h-full flex-col': editing }"
       >
-        <div v-if="canEdit && !activeDocCompressed" class="mb-3 flex shrink-0 items-center gap-2">
+        <div v-if="canEdit" class="mb-3 flex shrink-0 items-center gap-2">
           <template v-if="editing">
             <button class="btn btn-primary btn-xs" :disabled="saving" @click="saveEdit">
               {{ saving ? 'saving…' : 'save' }}
@@ -480,9 +386,8 @@ if (import.meta.hot) {
         <article v-else class="doc" @click="onContentClick" v-html="activeHtml"></article>
       </div>
 
-      <div v-else-if="activeComponent || activeMount" :key="'run:' + activeUrl" class="h-full p-6">
-        <component :is="activeComponent" v-if="activeComponent" />
-        <HostMount v-else :mount="activeMount!" />
+      <div v-else-if="activeComponent" :key="'run:' + activeUrl" class="h-full p-6">
+        <component :is="activeComponent" />
       </div>
       <div
         v-else-if="activeBin"
