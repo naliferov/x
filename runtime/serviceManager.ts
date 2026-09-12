@@ -6,10 +6,6 @@ import { getDirname } from './lib/path.ts'
 import { getTime } from './lib/time.ts'
 import { withLock } from './lib/lock.ts'
 
-// Supervises SERVICES — long-running processes that should stay up (the API
-// server, the frontend dev server, the scheduler daemon, a ticker). The finite
-// counterpart is the task executor running TASKS (runtime/tasks/ + taskExecutor.ts).
-
 const currentDir = getDirname(import.meta.url)
 const ROOT_DIR = path.join(currentDir, '..')
 const SERVICES_DIR = path.join(currentDir, 'services') // one config file per service
@@ -19,8 +15,6 @@ const MAX_LOG_BYTES = 2 * 1024 * 1024 // rotate the log on start once it exceeds
 const statePath = (id) => path.join(STATE_DIR, `${id}.json`)
 const logPath = (id) => path.join(STATE_DIR, `${id}.log`)
 const lockName = (id) => `service-${id}` // one lock per service, so services never block each other
-
-// --- config: discovered from the filesystem, like runtime/tasks --------------
 
 const loadConfig = async (id) => {
   try {
@@ -43,8 +37,6 @@ const listConfigs = async () => {
   return configs.filter(Boolean)
 }
 
-// --- per-service runtime state, like runtime/state/tasks/<name>.json ---------
-
 const loadServiceState = async (id) => {
   try {
     return JSON.parse(await fsp.readFile(statePath(id), 'utf-8'))
@@ -58,11 +50,6 @@ const saveServiceState = async (id, rec) => {
   await fsp.writeFile(statePath(id), JSON.stringify(rec, null, 2))
 }
 
-// --- helpers ----------------------------------------------------------------
-
-// `kill(pid, 0)` sends no signal but throws ESRCH if the pid is gone, so it
-// doubles as a liveness probe. (Caveat: the OS can recycle a pid after a crash,
-// so this can occasionally report a stale pid as alive — acceptable here.)
 const isAlive = (pid) => {
   if (!pid) {
     return false
@@ -91,7 +78,6 @@ const rotateIfLarge = async (id) => {
   }
 }
 
-// Merge a config with its saved state into the live view returned to callers.
 const statusOf = (cfg, rec: any = {}) => {
   const running = isAlive(rec.pid)
   return {
@@ -109,8 +95,6 @@ const statusOf = (cfg, rec: any = {}) => {
   }
 }
 
-// Best-effort state update from the async 'error' handler (fires after the
-// startService lock has already released, so it takes the lock itself).
 const markFailed = (id, message) =>
   withLock(lockName(id), async () => {
     const rec = await loadServiceState(id)
@@ -122,8 +106,6 @@ const markFailed = (id, message) =>
       stoppedAt: getTime(),
     })
   })
-
-// --- public API -------------------------------------------------------------
 
 export const listServices = async () => {
   const configs = await listConfigs()
@@ -148,7 +130,7 @@ export const startService = (id) =>
     const rec = await loadServiceState(id)
     if (isAlive(rec.pid)) {
       return statusOf(cfg, rec)
-    } // one instance per config
+    }
 
     await fsp.mkdir(STATE_DIR, { recursive: true })
     await rotateIfLarge(id)
@@ -172,15 +154,12 @@ export const startService = (id) =>
       fs.closeSync(out) // the child kept its own dup of the fd
     }
 
-    // ENOENT (bad cmd) and other spawn faults surface asynchronously here. Without
-    // a listener Node rethrows and would crash a long-lived server process.
     child.on('error', (err) => {
       appendLog(id, `[${getTime()}] --- spawn error: ${err.message} ---`).catch(() => {})
       markFailed(id, err.message).catch(() => {})
     })
 
     if (!child.pid) {
-      // synchronous spawn failure
       const failed = { pid: null, status: 'failed', error: 'spawn failed', stoppedAt: getTime() }
       await saveServiceState(id, failed)
       return statusOf(cfg, failed)
@@ -214,8 +193,6 @@ export const stopService = (id, { graceMs = 3000 } = {}) =>
       return statusOf(cfg, stopped)
     }
 
-    // Negative pid targets the whole process group (the detached child leads it),
-    // so any grandchildren go down too. SIGTERM first, then SIGKILL after grace.
     try {
       process.kill(-pid, 'SIGTERM')
     } catch {
@@ -243,8 +220,6 @@ export const stopService = (id, { graceMs = 3000 } = {}) =>
     return statusOf(cfg, stopped)
   })
 
-// Not wrapped in withLock: it composes stop + start, each of which locks on its
-// own (withLock is not reentrant, so wrapping would deadlock).
 export const restartService = async (id) => {
   await stopService(id)
   return startService(id)

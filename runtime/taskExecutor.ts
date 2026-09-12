@@ -5,13 +5,6 @@ import { getDirname } from './lib/path.ts'
 
 const currentDir = getDirname(import.meta.url)
 
-// A TASK is finite: its run(ctx) MUST terminate. Enforce that with a timeout — if
-// a task blows past its budget (e.g. it accidentally started a server, which
-// belongs in a SERVICE under serviceManager), the run is flagged failed instead of
-// hanging the executor (and, in the daemon, the scheduler) forever. Override per
-// task by exporting `timeoutMs`. Soft enforcement: a JS promise can't be hard-
-// killed, so stray work keeps running in the background — but the execution record
-// is closed out. Hard isolation would need a subprocess (see the roadmap).
 const DEFAULT_TIMEOUT_MS = 15 * 60 * 1000
 
 const runWithTimeout = (fn, ctx, timeoutMs, name) =>

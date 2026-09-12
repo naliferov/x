@@ -21,8 +21,6 @@ const isActiveHour = (activeHours, date) => {
   return hour >= activeHours.from && hour < activeHours.to
 }
 
-// Each job fires a TASK (runtime/tasks/<task>.ts) on an interval or a cron-like
-// schedule. The scheduler itself runs as a SERVICE — see runtime/services/scheduler.ts.
 type Job = {
   id: string
   task: string
@@ -31,11 +29,8 @@ type Job = {
   intervalMs?: number
   args?: unknown[]
 }
-// No scheduled jobs at the moment. Add one here (id + task + schedule) to run a runtime/tasks/*.ts
-// on a cadence — that's the runtime's own instrument, not a system cron.
 const jobs: Job[] = []
 
-// One pass: run every job that's due now. Call periodically (cron) or via the loop below.
 export const runScheduler = () =>
   withLock('scheduler', async () => {
     const state = await loadSchedulerState()
@@ -70,9 +65,6 @@ export const runScheduler = () =>
     }
   })
 
-// The scheduler as a long-running SERVICE: tick forever, running due tasks each
-// tick. This is what runtime/services/scheduler.ts spawns (node runtime/cli.ts scheduler-loop),
-// replacing an external cron that called start-scheduler.
 export const runSchedulerLoop = async ({ tickMs = minutes(1) } = {}) => {
   log(`[scheduler] daemon started (tick ${tickMs}ms)`)
   for (;;) {

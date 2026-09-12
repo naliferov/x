@@ -1,41 +1,9 @@
-// wsServer.ts — the local WebSocket EXCHANGE on /api/ws.
-//
-// A dumb meeting point, NOT a feed of server state. It does not know or care about the
-// node store; it only:
-//   - puts each client in a ROOM chosen by the token it presents on connect,
-//   - gives each client a unique funny name within that room (its address for direct messages),
-//   - tells everyone in the room when a client joins or leaves,
-//   - routes a direct message from one client to another by name, within the same room.
-//
-// Rooms (channels): the token the client sends IS the room key — there is no token registry on
-// the server. Clients that present the same token share a room; clients in different rooms can't
-// see or message each other. This isolates client groups (e.g. one site, or your own network of
-// chrome tabs) so an unrelated connection can't join or snoop. A room is created on first join
-// and its Map key is deleted when the last client leaves. A connection with no token is refused.
-//
-// The token is read from (first present): the Sec-WebSocket-Protocol header — the only "header" a
-// browser can set, via `new WebSocket(url, [token])`, which we echo back so the handshake succeeds
-// — then an `x-ws-channel` header (non-browser clients), then a `?channel=` query param.
-//
-// Same origin as /api, attached to the existing http.Server via its 'upgrade' event (no separate
-// port, no second deploy). NOT session-gated — the room token the client presents IS the access
-// control (see channelOf); a connection with no token is refused.
-//
-// Protocol (JSON text frames):
-//   server → you  (on connect): { type: 'welcome', name, channel, clients: [names] }
-//   server → others in room:    { type: 'join', name }
-//                               { type: 'leave', name }
-//   you → server:               { type: 'message', to, data }   DM another client by name
-//                               { type: 'ping' }                → { type: 'pong' }
-//   server → recipient:         { type: 'message', from, data }
-//   server → you (bad target):  { type: 'error', error: 'no such client', to }
 import type { Server, IncomingMessage } from 'node:http'
 import { WebSocketServer } from 'ws'
 import { uniqueName } from './lib/nameGenerator.ts'
 
 const HEARTBEAT_MS = 30_000
 
-// channel(token) -> (name -> socket). Each socket carries `channel`, `name`, `isAlive`.
 const rooms = new Map()
 
 // The room a client belongs to, from its connect token. First present wins; none -> undefined
@@ -89,11 +57,7 @@ const handleMessage = (socket, raw) => {
   send(socket, { type: 'error', error: 'unknown type', received: message.type })
 }
 
-// Attach the exchange to an existing http.Server. Upgrades on /api/ws; access is the room token
-// (no session gate) — a connection with no token is refused in the handler below.
 export const attachWsServer = (server: Server) => {
-  // Echo the client's offered subprotocol (browsers close the connection unless the server
-  // selects one) so the room token can travel as the Sec-WebSocket-Protocol "header".
   const wss = new WebSocketServer({
     noServer: true,
     handleProtocols: (protocols) => protocols.values().next().value ?? false,
@@ -150,7 +114,6 @@ export const attachWsServer = (server: Server) => {
     ws.on('error', drop) // a single socket erroring must not sink the exchange
   })
 
-  // Heartbeat: drop sockets that stop answering pings (half-open) so rooms don't leak.
   const heartbeat = setInterval(() => {
     for (const [channel, room] of rooms) {
       for (const [name, ws] of room) {
@@ -170,7 +133,7 @@ export const attachWsServer = (server: Server) => {
       }
     }
   }, HEARTBEAT_MS)
-  heartbeat.unref?.() // never keep the process alive just for the heartbeat
+  heartbeat.unref?.()
 
   return wss
 }
