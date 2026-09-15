@@ -1,3 +1,0 @@
-# Pre-existing malformed HTML prettier can't parse (</ div> typos + a mangled line 30).
-# Left as-is on purpose — it's user content whose intent I won't guess. Fix by hand.
-docs/sense.html

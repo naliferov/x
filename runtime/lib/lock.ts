@@ -9,7 +9,7 @@ const lockPath = (name) => path.join(LOCKS_DIR, `${name}.lock`)
 
 const POLL_MS = 500
 
-export const waitForUnlock = async (name) => {
+const waitForUnlock = async (name) => {
   const file = lockPath(name)
   while (true) {
     try {

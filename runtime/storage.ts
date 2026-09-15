@@ -39,22 +39,7 @@ export const listTaskExecutions = async () => {
 }
 
 const STATE_DIR = path.join(currentDir, 'state')
-const SCHEDULER_STATE_FILE = path.join(STATE_DIR, 'scheduler.json')
 const taskStatePath = (name) => path.join(STATE_DIR, 'tasks', `${name}.json`)
-
-export const loadSchedulerState = async () => {
-  try {
-    const raw = await fs.readFile(SCHEDULER_STATE_FILE, 'utf-8')
-    return JSON.parse(raw)
-  } catch {
-    return {}
-  }
-}
-
-export const saveSchedulerState = async (state) => {
-  await fs.mkdir(path.dirname(SCHEDULER_STATE_FILE), { recursive: true })
-  await fs.writeFile(SCHEDULER_STATE_FILE, JSON.stringify(state, null, 2))
-}
 
 export const loadTaskState = async (name) => {
   try {

@@ -1,14 +1,13 @@
 // http.js — a tiny, framework-free HTTP transport kit (domain-agnostic).
 //
 // Everything here is about moving bytes over HTTP, not about x: request-body reading
-// (with a size cap), gzipped responses, a `:param` route matcher, static-file/SPA serving
+// (with a size cap), a `:param` route matcher, static-file/SPA serving
 // with traversal guards, and a hardened `createServer` that turns handler throws and dropped
 // connections into responses instead of crashes. The app (runtime/api.ts) supplies the
 // routes, auth, and config; this module supplies the plumbing.
 import http from 'node:http'
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import zlib from 'node:zlib'
 
 // --- Request bodies --------------------------------------------------------
 // Cap request bodies so a client can't exhaust memory by streaming an unbounded payload.
@@ -42,31 +41,6 @@ const readRaw = async (req: http.IncomingMessage) => {
 
 export const readBody = async (req: http.IncomingMessage): Promise<any> =>
   JSON.parse(await readRaw(req))
-export const readText = (req: http.IncomingMessage) => readRaw(req)
-
-// --- Responses -------------------------------------------------------------
-// Send a text/JSON body, gzipped when the client accepts it and it's big enough to be
-// worth the header overhead. Synchronous gzip is fine for this single-user server.
-export const sendText = (
-  req: http.IncomingMessage,
-  res: http.ServerResponse,
-  body: string | Buffer,
-  contentType: string,
-) => {
-  const buffer = Buffer.from(body)
-  const acceptsGzip = (req.headers['accept-encoding'] || '').includes('gzip')
-  if (acceptsGzip && buffer.length > 512) {
-    res
-      .writeHead(200, {
-        'Content-Type': contentType,
-        'Content-Encoding': 'gzip',
-        Vary: 'Accept-Encoding',
-      })
-      .end(zlib.gzipSync(buffer))
-  } else {
-    res.writeHead(200, { 'Content-Type': contentType }).end(buffer)
-  }
-}
 
 // --- Routing ---------------------------------------------------------------
 // A route handler: the matched request, its response, and the `:param` values pulled from the URL.
@@ -146,7 +120,7 @@ export const serveStatic = async (
 // A dropped/reset connection (client closed mid-request or mid-response) shows up as one of
 // these codes. They carry no server state — the only correct response is to stop touching
 // that socket, never to crash.
-export const isTransientNetworkError = (err) =>
+const isTransientNetworkError = (err) =>
   !!err &&
   [
     'ECONNRESET',

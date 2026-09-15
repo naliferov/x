@@ -14,5 +14,5 @@
     "verbatimModuleSyntax": false
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "scripts/**/*.vue", "vite.config.ts"],
-  "exclude": ["node_modules", "dist", "scripts/_legacy"]
+  "exclude": ["node_modules", "dist"]
 }

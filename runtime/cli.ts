@@ -1,7 +1,6 @@
 import 'dotenv/config'
 import { execute } from './taskExecutor.ts'
 import { listTaskExecutions } from './storage.ts'
-import { runScheduler, runSchedulerLoop } from './scheduler.ts'
 import {
   listServices,
   getService,
@@ -15,7 +14,6 @@ import {
 const [command, ...args] = process.argv.slice(2)
 
 const commands = {
-  // Run one TASK to completion (finite). See runtime/tasks/.
   run: async () => {
     const [name, ...fnArgs] = args
     if (!name) {
@@ -25,16 +23,6 @@ const commands = {
 
     const execution = await execute(name, fnArgs)
     console.log(`\nStatus: ${execution.status}`)
-  },
-  // Run every due task once (call periodically from cron). The long-running
-  // equivalent is the `scheduler` SERVICE (scheduler-loop), supervised below.
-  'start-scheduler': async () => {
-    await runScheduler()
-  },
-  // The scheduler as a daemon: tick forever, running due tasks. This is what the
-  // `scheduler` service runs (runtime/services/scheduler.ts).
-  'scheduler-loop': async () => {
-    await runSchedulerLoop()
   },
   'list-executions': async () => {
     const executions = await listTaskExecutions()
@@ -124,8 +112,6 @@ if (!exec) {
   console.error('Usage: node runtime/cli.ts <command> [args...]')
   console.error('Commands:')
   console.error('  run <task-name> [args...]   run a single task to completion')
-  console.error('  start-scheduler             run all due tasks once (call from cron)')
-  console.error('  scheduler-loop              run the scheduler daemon (the `scheduler` service)')
   console.error('  list-executions             print recent task executions')
   console.error('  service <list|status|start|stop|restart|logs|clear-logs> [id] [lines]')
   process.exit(1)

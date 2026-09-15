@@ -7,8 +7,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "vue-tsc -p tsconfig.json",
-    "format": "prettier --write \"docs/**/*.html\" \"src/**/*.{ts,vue}\" \"*.ts\"",
-    "format:check": "prettier --check \"docs/**/*.html\" \"src/**/*.{ts,vue}\" \"*.ts\""
+    "format": "prettier --write \"src/**/*.{ts,vue}\" \"*.ts\"",
+    "format:check": "prettier --check \"src/**/*.{ts,vue}\" \"*.ts\""
   },
   "dependencies": {
     "highlight.js": "^11.11.1",

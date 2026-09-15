@@ -1,17 +1,9 @@
 node_modules
 .env
 runtime/state/taskExecutions/
-runtime/state/scheduler.json
 runtime/state/tasks/
 runtime/state/services/
 runtime/*.lock
-
-# oh-my-claudecode session state (created wherever OMC runs, at any depth)
-.omc/
-runtime/state/droplet.json
-
-# temporary backup of the old Vue editor frontend (recoverable from git history)
-_legacy_frontend/
 
 .DS_Store
 **/.DS_Store

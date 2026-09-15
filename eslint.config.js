@@ -8,16 +8,9 @@ import prettier from 'eslint-config-prettier'
 import tseslint from 'typescript-eslint'
 
 export default [
-  // Not project source: deps, build output, and the backend data plane (node
-  // bodies / state / assets — sandboxed user content).
+  // Not project source: deps, build output, runtime state.
   {
-    ignores: [
-      '**/node_modules/**',
-      '**/dist/**',
-      'data/**',
-      'runtime/executions/**',
-      'runtime/state/**',
-    ],
+    ignores: ['**/node_modules/**', '**/dist/**', 'runtime/state/**'],
   },
 
   js.configs.recommended,
@@ -59,10 +52,6 @@ export default [
       curly: ['error', 'all'],
       // Node-type components are intentionally single-word (Html, Script, …).
       'vue/multi-word-component-names': 'off',
-      // The editor edits the `node` prop in place, then persists via store.save()
-      // — a deliberate edit-in-place model, not accidental prop mutation. (A future
-      // refactor to store actions / emits could re-enable this.)
-      'vue/no-mutating-props': 'off',
       // The `html` node renders its own stored HTML by design — a single-user
       // local tool over trusted local content, not untrusted input.
       'vue/no-v-html': 'off',

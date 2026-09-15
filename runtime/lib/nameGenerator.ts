@@ -257,7 +257,7 @@ const NOUNS = [
 const pick = (list) => list[Math.floor(Math.random() * list.length)]
 
 // A random "adjective-noun". The space is |ADJECTIVES| × |NOUNS| (~15k combos).
-export const randomName = () => `${pick(ADJECTIVES)}-${pick(NOUNS)}`
+const randomName = () => `${pick(ADJECTIVES)}-${pick(NOUNS)}`
 
 // A name that passes `isTaken(name) === false`. Tries random names first; if it keeps
 // colliding (tiny space / many clients) it falls back to appending a numeric suffix so it
