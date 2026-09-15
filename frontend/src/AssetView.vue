@@ -2,10 +2,6 @@
 import { ref, computed, watch, nextTick } from 'vue'
 import { fb2ToHtml, decodeFb2 } from './fb2'
 
-// Renders one bin item by its content type. Files live in frontend/data (fetched on demand). A
-// .gz/.gzip suffix is a TRANSPARENT compression layer — inflated in-browser via DecompressionStream
-// (see isGzipped), independent of type: both txt and fb2 handle it. fb2 books are parsed + rendered
-// with a saved scroll position; images/audio/video get a native element; else a download link.
 const props = defineProps<{ asset: { name: string; url: string; type: string } }>()
 const src = computed(() => props.asset.url)
 const text = ref('')
@@ -13,10 +9,8 @@ const bookHtml = ref('')
 const status = ref('')
 const filter = ref('')
 
-// a trailing .gz/.gzip on the (fingerprinted) url means the bytes are gzip-compressed
 const isGzipped = () => /\.(gz|gzip)(\?|$)/i.test(props.asset.url)
 
-// --- reading position: persist a reader's scrollTop per file, restore on reopen ---
 const reader = ref<HTMLElement>()
 const scrollKey = () => `x.read:${props.asset.name}`
 let scrollSaveTimer: ReturnType<typeof setTimeout> | undefined
@@ -26,7 +20,9 @@ const onScroll = () => {
     return
   }
   clearTimeout(scrollSaveTimer)
-  scrollSaveTimer = setTimeout(() => localStorage.setItem(scrollKey(), String(el.scrollTop)), 200)
+  scrollSaveTimer = setTimeout(() => {
+    localStorage.setItem(scrollKey(), String(el.scrollTop))
+  }, 200)
 }
 const restoreScroll = () => {
   const saved = Number(localStorage.getItem(scrollKey()) || 0)
@@ -43,11 +39,13 @@ const loadFb2 = async () => {
     if (!res.ok || !res.body) {
       throw new Error(`fetch ${res.status}`)
     }
+
     const buffer = isGzipped()
       ? await new Response(
           res.body.pipeThrough(new DecompressionStream('gzip') as any),
         ).arrayBuffer()
       : await res.arrayBuffer()
+
     bookHtml.value = fb2ToHtml(decodeFb2(buffer))
     status.value = `${Math.round(buffer.byteLength / 1024)} KB`
     await nextTick()
@@ -58,7 +56,6 @@ const loadFb2 = async () => {
 }
 
 const gunzip = (stream: ReadableStream<Uint8Array>) =>
-  // `as any`: lib.dom types DecompressionStream's pair too strictly for pipeThrough (runtime is fine)
   new Response(stream.pipeThrough(new DecompressionStream('gzip') as any)).text()
 
 const loadText = async () => {
@@ -85,6 +82,7 @@ watch(
     bookHtml.value = ''
     status.value = ''
     filter.value = ''
+
     if (asset.type === 'fb2') {
       loadFb2()
     } else if (isText(asset.type)) {
@@ -95,9 +93,8 @@ watch(
 )
 
 const lines = computed(() => (text.value ? text.value.split('\n') : []))
-const CAP = 1000 // filter first, then cap what we paint
+const CAP = 1000
 const view = computed(() => {
-  // prefix match: the query starts a word on the line, so "кав" hits "кава" but not "заковика"
   const query = filter.value.trim().toLowerCase()
   const hits = query
     ? lines.value.filter((line) =>
