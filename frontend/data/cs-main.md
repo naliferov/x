@@ -16,7 +16,6 @@ takeaway: each popular repo owns ONE axis; the x combo (folder-per-node on disk 
 
 ## languages
 
-[vlang](/doc/vlang)  
 [terse](/doc/terse)  
 [live-runtime](/doc/live-runtime)  
 [php upgrade audit](/doc/php-upgrade-audit)

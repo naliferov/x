@@ -1,7 +1,6 @@
 ## art / music
 
 [творческие идеи](/doc/creative-ideas)  
-[phrases](/doc/phrases) · [script](/script/phrases)  
 [art constructor](/doc/art-constructor)  
 [club photo](/doc/club-photo)  
 [drone](/doc/audio-drone)  

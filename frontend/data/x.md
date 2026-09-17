@@ -1,26 +1,20 @@
 # x
 
-## ПОДВИЖНОСТЬ, ВЫХОД НА ПРЕДЕЛЫ, ДРУГОЕ
+подвижность
+выход за пределы
+другое
 
-the backward law - как реактивное движение к цели отдаляет тебя от цели.
-
+закон обратного усилия (the backward law) - реактивное движение к цели отдаляет тебя от цели.
 усилие во времени
-
 акт акта
-
-плотина
-
-нехватка нежности
-
+нехватка
 что бы там ни было, ты можешь
-
 большой взрыв
 маневры su-57
-
 образ + работа над собой
 присутствие в качестве присутствия?
 
-Гурджиев: "If 'I am', only then 'I can'; if 'I can', only then do I deserve and have the objective right to want."
-trekchö - release by cutting through; tögal - surpass the utmost.
-Play, don't complete. The playing is the point.
-Китайская стратегия ([huxley.media](https://huxley.media/ru/ne-budte-zdes-i-sejchas-i-pozhalujsta-zanimajtes-pustjakami-kitajskie-strategii-o-kotoryh-malo-kto-rasskazhet/)): Find and lose · "Do not follow your dream and do not fight the inevitable, but pass between them!" · Laozi: "to take from what is lacking and give to what is in excess - this is the human way"; Taiji, the Heavenly way: "to take from what is in excess and give to what is in want".
+Гурджиев: «Если "я есть" - только тогда "я могу"; если "я могу" - только тогда я заслуживаю и имею объективное право хотеть».
+trekchö - освобождение через рассечение, tögal - превзойти предельное.
+Играй, не завершай. Смысл в самой игре.
+Китайская стратегия ([huxley.media](https://huxley.media/ru/ne-budte-zdes-i-sejchas-i-pozhalujsta-zanimajtes-pustjakami-kitajskie-strategii-o-kotoryh-malo-kto-rasskazhet/)): найти и потерять · «Не следуй за мечтой и не борись с неизбежным - пройди между ними!» · Лао-цзы: «отнимать у недостающего и отдавать избыточному - таков путь человека», Тайцзи, путь Неба: «отнимать у избыточного и отдавать нуждающемуся».

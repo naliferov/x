@@ -12,7 +12,7 @@ const channelOf = (req: IncomingMessage) => {
   const first = (value: string | string[] | undefined) =>
     (Array.isArray(value) ? value[0] : value)?.split(',')[0].trim() || undefined
   const query = new URL(req.url ?? '', 'http://x').searchParams.get('channel') || undefined
-  return first(req.headers['sec-websocket-protocol']) || first(req.headers['x-ws-channel']) || query
+  return first(req.headers['sec-websocket-protocol']) || query
 }
 
 const send = (socket, message) => {
@@ -40,10 +40,6 @@ const handleMessage = (socket, raw) => {
     message = JSON.parse(raw)
   } catch {
     return // the exchange ignores non-JSON frames
-  }
-  if (message.type === 'ping') {
-    send(socket, { type: 'pong' })
-    return
   }
   if (message.type === 'message') {
     const target = rooms.get(socket.channel)?.get(message.to)
@@ -115,17 +111,10 @@ export const attachWsServer = (server: Server) => {
   })
 
   const heartbeat = setInterval(() => {
-    for (const [channel, room] of rooms) {
-      for (const [name, ws] of room) {
+    for (const room of rooms.values()) {
+      for (const ws of room.values()) {
         if (!ws.isAlive) {
-          ws.terminate()
-          if (room.delete(name)) {
-            if (room.size === 0) {
-              rooms.delete(channel)
-            } else {
-              announce(channel, name, { type: 'leave', name })
-            }
-          }
+          ws.terminate() // fires 'close' -> drop() does the bookkeeping
           continue
         }
         ws.isAlive = false

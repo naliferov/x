@@ -95,7 +95,7 @@ teatr-studiya beat — 5.0, theater company, 050 380 7654
 often find there: rehearsals, showcases, hanging out afterward  
   
 
-[concept db](/doc/vlang) — collects not references, but language  
+concept db — collects not references, but language  
   
 [fiction](/doc/fiction)  
 [творческие идеи](/doc/creative-ideas)  
