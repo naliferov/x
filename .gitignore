@@ -1,9 +1,5 @@
 node_modules
 .env
-runtime/state/taskExecutions/
-runtime/state/tasks/
-runtime/state/services/
-runtime/*.lock
 
 .DS_Store
 **/.DS_Store

@@ -8,9 +8,9 @@ import prettier from 'eslint-config-prettier'
 import tseslint from 'typescript-eslint'
 
 export default [
-  // Not project source: deps, build output, runtime state.
+  // Not project source: deps, build output.
   {
-    ignores: ['**/node_modules/**', '**/dist/**', 'runtime/state/**'],
+    ignores: ['**/node_modules/**', '**/dist/**'],
   },
 
   js.configs.recommended,

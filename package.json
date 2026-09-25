@@ -2,9 +2,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "cli": "node --experimental-strip-types --disable-warning=ExperimentalWarning runtime/cli.ts",
-    "service": "node --experimental-strip-types --disable-warning=ExperimentalWarning runtime/cli.ts service",
-    "typecheck": "tsc -p tsconfig.json && npm --prefix frontend run typecheck",
+    "typecheck": "npm --prefix frontend run typecheck",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -12,14 +10,11 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
-    "dotenv": "^17.4.1",
-    "sharp": "^0.34.5",
-    "ws": "^8.21.0"
+    "dotenv": "^17.4.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@types/node": "^26.1.0",
-    "@types/ws": "^8.18.1",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vue": "^10.9.2",

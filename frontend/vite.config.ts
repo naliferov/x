@@ -63,16 +63,7 @@ const saveDoc = (): Plugin => ({
 // no middleware, no copy step.
 
 // Scripts are .vue files under ./scripts, compiled by Vite and discovered via import.meta.glob in
-// App.vue — no runtime engine. x itself is offline; the /api and /ws proxies below exist only
-// for the handful of ported scripts that talk to a LIVE x api service (harness → /api/claude,
-// refactory loading vlang sources by node id, the ws testers → the /ws hub). With the api service
-// down those scripts degrade to their own error handling; everything else runs fully offline.
+// App.vue — no runtime engine, x is fully offline.
 export default defineConfig({
   plugins: [vue(), tailwindcss(), saveDoc()],
-  server: {
-    proxy: {
-      // ws: true also forwards the /api/ws websocket upgrade (the hub lives under /api now)
-      '/api': { target: 'http://localhost:3001', ws: true },
-    },
-  },
 })

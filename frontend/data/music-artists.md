@@ -1,6 +1,5 @@
 - 5'nizza
 - 50 cent
-- 55 escape
 - A$AP rocky
 - a balladeer
 - a day to remember

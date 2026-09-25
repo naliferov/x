@@ -22,8 +22,3 @@ npm run dev        # http://localhost:5173
 npm run build      # -> dist/ (fully static, docs bundled as lazy chunks)
 npm run typecheck
 ```
-
-Managed service: `npm run service -- start frontend` (from the repo root).
-
-The `/api` + `/ws` dev proxies exist only for scripts that talk to a live x api
-(harness, refactory media, the ws testers); everything else is fully offline.
