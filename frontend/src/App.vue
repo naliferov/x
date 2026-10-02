@@ -223,7 +223,7 @@ const saveEdit = async () => {
   saveError.value = null
   try {
     const res = await fetch(
-      `/__save-doc?name=${encodeURIComponent(activeDocName.value)}&ext=${activeDocFormat.value}`,
+      `/__save?name=${encodeURIComponent(activeDocName.value)}&ext=${activeDocFormat.value}`,
       { method: 'POST', body: draft.value },
     )
     if (!res.ok) {

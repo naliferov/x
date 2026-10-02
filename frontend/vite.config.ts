@@ -5,22 +5,29 @@ import { writeFile } from 'node:fs/promises'
 import { resolve, sep, basename } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-// Dev-only writer for the in-app doc editor: POST /__save-doc?name=<doc>&ext=<md|txt> writes the
-// body to data/<doc>.<ext>. apply:'serve' keeps it out of the static build (which stays read-only);
-// the name is confined to data/ so a crafted name can't escape the folder. Docs (.md and plain
-// .txt) share the flat data/ dir with bins; docFormatOf gates this writer to those two.
+// Dev-only writer for data/: POST /__save?name=<name>&ext=<md|txt|json> writes the body to
+// data/<name>.<ext> (docs from the editor, collage layouts). apply:'serve' keeps it out of the static
+// build (which stays read-only); the name is confined to data/ so a crafted name can't escape the folder.
 const dataDir = resolve(fileURLToPath(new URL('./data', import.meta.url)))
+const savedFormats = ['md', 'txt', 'json']
 const docFormatOf = (file: string) =>
   file.endsWith('.md') ? 'md' : file.endsWith('.txt') ? 'txt' : null
-const saveDoc = (): Plugin => ({
-  name: 'x-save-doc',
+const save = (): Plugin => ({
+  name: 'x-save',
   apply: 'serve',
-  // A doc file is a dep of App.vue via import.meta.glob, so its change hot-updates the whole
-  // component and the UI blinks. Instead, push the raw source over a custom event (the client
-  // patches just the open doc, compiling md as needed) and return [] to cancel the default re-render.
+  // A data file is a dep of App.vue via import.meta.glob, so its change hot-updates the whole
+  // component and the UI blinks. For a doc, push the raw source over a custom event (the client
+  // patches just the open doc, compiling md as needed); for a collage layout the open script already
+  // holds the state, and a re-render would remount it. Return [] to cancel the default re-render.
   async handleHotUpdate({ file, read, server }) {
+    if (!file.startsWith(dataDir + sep)) {
+      return
+    }
+    if (file.endsWith('.json')) {
+      return []
+    }
     const format = docFormatOf(file)
-    if (!file.startsWith(dataDir + sep) || !format) {
+    if (!format) {
       return
     }
     const source = await read()
@@ -33,17 +40,21 @@ const saveDoc = (): Plugin => ({
   },
   configureServer(server) {
     server.middlewares.use((req, res, next) => {
-      if (req.method !== 'POST' || !req.url?.startsWith('/__save-doc')) {
+      if (req.method !== 'POST' || !req.url?.startsWith('/__save?')) {
         return next()
       }
       const params = new URL(req.url, 'http://localhost').searchParams
       const name = params.get('name') ?? ''
-      const raw = params.get('ext') ?? ''
-      const ext = raw === 'txt' ? 'txt' : 'md'
+      const ext = params.get('ext') ?? ''
       const file = resolve(dataDir, `${name}.${ext}`)
+      if (!savedFormats.includes(ext)) {
+        res.statusCode = 400
+        res.end('bad ext')
+        return
+      }
       if (!name || name.includes('/') || name.includes('\\') || !file.startsWith(dataDir + sep)) {
         res.statusCode = 400
-        res.end('bad doc name')
+        res.end('bad name')
         return
       }
       let body = ''
@@ -65,5 +76,5 @@ const saveDoc = (): Plugin => ({
 // Scripts are .vue files under ./scripts, compiled by Vite and discovered via import.meta.glob in
 // App.vue — no runtime engine, x is fully offline.
 export default defineConfig({
-  plugins: [vue(), tailwindcss(), saveDoc()],
+  plugins: [vue(), tailwindcss(), save()],
 })

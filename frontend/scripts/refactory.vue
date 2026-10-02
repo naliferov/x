@@ -501,7 +501,7 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
 
 // --- app mode: load a vlang source by data-file NAME (frontend/data/*.txt), edit / save / run ---
 // Sources are plain files. The buffer edits live; `run` re-renders the stage; `save` writes the
-// buffer back to frontend/data/<name>.txt via the dev /__save-doc middleware (the same path the doc
+// buffer back to frontend/data/<name>.txt via the dev /__save middleware (the same path the doc
 // editor uses — .txt is a doc format now). Typing a new name then saving creates a new source.
 const STORE_KEY = 'devlab.vlang-app.source' // last loaded file name — survives reloads
 // starter state — small canvas so the stage is never blank (also a live tx demo)
@@ -559,7 +559,7 @@ const save = async () => {
     return
   }
   try {
-    const res = await fetch(`/__save-doc?name=${encodeURIComponent(name)}&ext=txt`, {
+    const res = await fetch(`/__save?name=${encodeURIComponent(name)}&ext=txt`, {
       method: 'POST',
       body: source.value,
     })

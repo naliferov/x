@@ -1,9 +1,11 @@
 <script setup lang="ts">
 // Desktop notification every 50 minutes, so I don't sit too long. Asks for the permission on open
-// and starts once it is granted; opening another node stops the timer.
+// and starts once it is granted. The deadline lives in localStorage, so a reload or coming back from
+// another node continues the same period; while the script is not open, nothing fires.
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 const PERIOD_MS = 50 * 60 * 1000
+const STORE_KEY = 'x.timer' // deadline of the running period, ms since epoch
 
 const permission = ref<NotificationPermission>('default')
 const deadline = ref(0)
@@ -16,13 +18,18 @@ const countdown = computed(() => {
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`
 })
 
+const startPeriod = () => {
+  deadline.value = Date.now() + PERIOD_MS
+  localStorage.setItem(STORE_KEY, String(deadline.value))
+}
+
 const step = () => {
   now.value = Date.now()
   if (now.value < deadline.value) {
     return
   }
-  new Notification('50 minutes', { body: 'get up and move' })
-  deadline.value = now.value + PERIOD_MS
+  new Notification('50 minutes')
+  startPeriod()
 }
 
 onMounted(async () => {
@@ -31,7 +38,12 @@ onMounted(async () => {
   if (permission.value !== 'granted' || unmounted) {
     return
   }
-  deadline.value = Date.now() + PERIOD_MS
+  const storedDeadline = Number(localStorage.getItem(STORE_KEY))
+  if (storedDeadline) {
+    deadline.value = storedDeadline
+  } else {
+    startPeriod()
+  }
   step()
   tick = window.setInterval(step, 1000)
 })
@@ -43,10 +55,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="permission === 'granted'" class="flex flex-col gap-1">
-    <span class="font-mono text-6xl">{{ countdown }}</span>
-    <span class="opacity-60">until the next reminder</span>
-  </div>
+  <span v-if="permission === 'granted'" class="font-mono text-6xl">{{ countdown }}</span>
   <p v-else class="opacity-60">
     notifications are not allowed: allow them for this site and reload
   </p>

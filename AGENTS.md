@@ -1,4 +1,4 @@
-# CLAUDE.md
+# AGENTS.md
 
 ## Что это
 
@@ -48,6 +48,14 @@
 
 Образец операционной заметки - `frontend/data/bicycle.md`: давления в двух единицах, какую шкалу читать на манометре, два мастера с именами, днями работы и телефонами.
 
+## Видео
+
+Любое видео, которое скачивается или сохраняется, - **H.264 (High, `yuv420p`) + AAC в `.mp4` с `+faststart`**. Это единственная связка, которую играют все устройства. VP9 в `.mp4` Telegram на iPhone не показывает: 26.09.2026 так сломались 3 сообщения с рилсами, пришлось редактировать.
+
+- **Instagram через yt-dlp** по умолчанию отдаёт VP9 (до 1080p). H.264 у него есть только до 720p, и в метаданных у этих форматов `vcodec=NA`, поэтому `-S vcodec:h264` и `-f b[vcodec^=avc]` выбирают вслепую. Качать лучшее, потом проверять.
+- **Проверка:** `ffprobe -v error -select_streams v -show_entries stream=codec_name -of csv=p=0 file.mp4` должен вернуть `h264`.
+- **Если не `h264`:** `ffmpeg -i in.mp4 -c:v libx264 -preset slow -crf 18 -profile:v high -pix_fmt yuv420p -c:a aac -movflags +faststart out.mp4`.
+
 ## Работа
 
-Прямо в `main`, без веток и MR. Remote - `git@github.com:naliferov/x.git`. `CLAUDE.md` и `AGENTS.md` здесь коммитятся (в отличие от репозиториев YHelper). Коммит - только по явной просьбе.
+Прямо в `main`, без веток и MR. Remote - `git@github.com:naliferov/x.git`. `AGENTS.md` здесь коммитится (в отличие от репозиториев YHelper). Коммит - только по явной просьбе.
