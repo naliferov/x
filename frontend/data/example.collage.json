@@ -1,13 +1,43 @@
 {
   "width": 1080,
-  "height": 1350,
-  "background": "#111111",
+  "height": 1920,
+  "background": "#403030",
   "layers": [
-    { "image": "collage-mountains", "x": 540, "y": 675, "scale": 1.7, "rotation": 0, "opacity": 1, "blend": "source-over" },
-    { "image": "collage-clouds", "x": 540, "y": 675, "scale": 1.5, "rotation": 0, "opacity": 0.6, "blend": "screen" },
-    { "image": "collage-drops", "x": 540, "y": 675, "scale": 1.8, "rotation": 0, "opacity": 0.45, "blend": "soft-light" },
-    { "image": "collage-walker", "x": 330, "y": 1010, "scale": 0.34, "rotation": 4, "opacity": 1, "blend": "source-over" },
-    { "image": "collage-heels", "x": 780, "y": 1110, "scale": 0.3, "rotation": -3, "opacity": 0.95, "blend": "multiply" },
-    { "image": "collage-camera-bw", "x": 790, "y": 380, "scale": 0.3, "rotation": -6, "opacity": 1, "blend": "source-over" }
+    {
+      "image": "collage-mountains",
+      "x": 1129,
+      "y": 876,
+      "scale": 1.7,
+      "rotation": 0,
+      "opacity": 1,
+      "blend": "source-over"
+    },
+    {
+      "image": "collage-walker",
+      "x": 330,
+      "y": 1010,
+      "scale": 0.34,
+      "rotation": 4,
+      "opacity": 1,
+      "blend": "source-over"
+    },
+    {
+      "image": "collage-heels",
+      "x": 780,
+      "y": 1110,
+      "scale": 0.3,
+      "rotation": -3,
+      "opacity": 0.95,
+      "blend": "multiply"
+    },
+    {
+      "image": "collage-camera-bw",
+      "x": 790,
+      "y": 380,
+      "scale": 0.3,
+      "rotation": -6,
+      "opacity": 1,
+      "blend": "source-over"
+    }
   ]
 }

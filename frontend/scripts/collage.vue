@@ -4,6 +4,7 @@
 // points at images by bin name; export renders the same canvas, without the selection frame, to a PNG.
 // Drag moves a layer, wheel scales it, shift+wheel rotates it.
 import { ref, computed, watch, onMounted } from 'vue'
+import { saveData } from '../src/data'
 
 type Layer = {
   image: string
@@ -261,13 +262,7 @@ const save = async () => {
     return
   }
   try {
-    const res = await fetch(`/__save?name=${encodeURIComponent(`${target}.collage`)}&ext=json`, {
-      method: 'POST',
-      body: JSON.stringify(collage.value, null, 2),
-    })
-    if (!res.ok) {
-      throw new Error((await res.text()) || `save failed (${res.status})`)
-    }
+    await saveData(`${target}.collage`, 'json', JSON.stringify(collage.value, null, 2))
     if (!layouts.value.some((layout) => layout.name === target)) {
       layouts.value.push({ name: target, url: `/data/${target}.collage.json` })
     }

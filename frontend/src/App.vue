@@ -14,6 +14,7 @@ import css from 'highlight.js/lib/languages/css'
 import plaintext from 'highlight.js/lib/languages/plaintext'
 import 'highlight.js/styles/github-dark.css'
 import AssetView from './AssetView.vue'
+import { saveData, deleteData } from './data'
 
 hljs.registerLanguage('javascript', javascript)
 hljs.registerLanguage('typescript', typescript)
@@ -135,10 +136,10 @@ const canEdit = import.meta.env.DEV
 const editing = ref(false)
 const draft = ref('')
 const saving = ref(false)
-const saveError = ref<string | null>(null)
+const docError = ref<string | null>(null)
 const docEdits = new Map<string, string>() // raw source pushed over HMR, by doc name
 
-const show = async (url: string | null) => {
+const show = async (url: string) => {
   activeUrl.value = null
   activeComponent.value = null
   activeHtml.value = ''
@@ -146,10 +147,8 @@ const show = async (url: string | null) => {
   activeBin.value = null
   missing.value = null
   editing.value = false
+  docError.value = null
   document.title = 'x'
-  if (!url) {
-    return
-  }
 
   const [, kind, rawName] = url.match(/^\/(script|doc|bin)\/(.+)$/) ?? []
   const name = rawName && decodeURIComponent(rawName)
@@ -191,8 +190,13 @@ const show = async (url: string | null) => {
   activeComponent.value = defineAsyncComponent(vueModules[script.path])
 }
 
-const urlFromLocation = () =>
-  location.pathname.match(/^\/(script|doc|bin)\/.+$/) ? location.pathname : null
+const homeUrl = '/doc/x'
+const showLocation = () => {
+  if (!/^\/(script|doc|bin)\/.+$/.test(location.pathname)) {
+    history.replaceState(null, '', homeUrl)
+  }
+  show(location.pathname)
+}
 
 const open = (kind: 'script' | 'doc' | 'bin', name: string) => {
   const url = `/${kind}/${encodeURIComponent(name)}`
@@ -207,7 +211,7 @@ const activeDocName = computed(() => {
 
 const startEdit = () => {
   draft.value = activeSource.value
-  saveError.value = null
+  docError.value = null
   editing.value = true
 }
 
@@ -220,22 +224,30 @@ const saveEdit = async () => {
     return
   }
   saving.value = true
-  saveError.value = null
+  docError.value = null
   try {
-    const res = await fetch(
-      `/__save?name=${encodeURIComponent(activeDocName.value)}&ext=${activeDocFormat.value}`,
-      { method: 'POST', body: draft.value },
-    )
-    if (!res.ok) {
-      throw new Error((await res.text()) || `save failed (${res.status})`)
-    }
+    await saveData(activeDocName.value, activeDocFormat.value, draft.value)
     activeSource.value = draft.value
     activeHtml.value = renderDoc(draft.value, activeDocFormat.value)
     editing.value = false
   } catch (error) {
-    saveError.value = error instanceof Error ? error.message : String(error)
+    docError.value = error instanceof Error ? error.message : String(error)
   } finally {
     saving.value = false
+  }
+}
+
+const deleteDoc = async () => {
+  const name = activeDocName.value
+  if (!name || !confirm(`delete ${name}?`)) {
+    return
+  }
+  try {
+    await deleteData(name, activeDocFormat.value)
+    history.replaceState(null, '', homeUrl)
+    show(homeUrl)
+  } catch (error) {
+    docError.value = error instanceof Error ? error.message : String(error)
   }
 }
 
@@ -252,19 +264,8 @@ const onContentClick = (event: MouseEvent) => {
   open(match[1] as 'script' | 'doc' | 'bin', decodeURIComponent(match[2]))
 }
 
-window.addEventListener('popstate', () => show(urlFromLocation()))
-show(urlFromLocation())
-
-const theme = ref<'dark' | 'light'>(
-  (localStorage.getItem('x.theme') as 'dark' | 'light') ?? 'light',
-)
-const applyTheme = () => (document.documentElement.dataset.theme = theme.value)
-const toggleTheme = () => {
-  theme.value = theme.value === 'dark' ? 'light' : 'dark'
-  localStorage.setItem('x.theme', theme.value)
-  applyTheme()
-}
-applyTheme()
+window.addEventListener('popstate', showLocation)
+showLocation()
 
 // A changed doc file arrives here (not as a full App re-render) — patch the open doc in place.
 if (import.meta.hot) {
@@ -284,13 +285,6 @@ if (import.meta.hot) {
 <template>
   <div class="flex h-screen bg-base-100 text-base-content">
     <aside class="flex w-72 shrink-0 flex-col border-r border-base-300">
-      <div class="flex items-center justify-between border-b border-base-300 p-4">
-        <span class="text-lg font-bold">x</span>
-        <button class="btn btn-ghost btn-xs" @click="toggleTheme">
-          {{ theme === 'dark' ? '☀' : '☾' }}
-        </button>
-      </div>
-
       <div class="border-b border-base-300 p-2">
         <input
           v-model="filter"
@@ -371,9 +365,12 @@ if (import.meta.hot) {
             <button class="btn btn-ghost btn-xs" :disabled="saving" @click="cancelEdit">
               cancel
             </button>
-            <span v-if="saveError" class="text-xs text-error">{{ saveError }}</span>
           </template>
-          <button v-else class="btn btn-primary btn-xs" @click="startEdit">edit</button>
+          <template v-else>
+            <button class="btn btn-primary btn-xs" @click="startEdit">edit</button>
+            <button class="btn btn-error btn-xs" @click="deleteDoc">delete</button>
+          </template>
+          <span v-if="docError" class="text-xs text-error">{{ docError }}</span>
         </div>
 
         <textarea

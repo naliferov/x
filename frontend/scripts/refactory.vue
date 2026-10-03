@@ -17,6 +17,7 @@
 // Sources: plain files in frontend/data/*.txt, loaded by NAME (refactory-demo lives there).
 // No node ids. Media inside a program (i<id>/v<name>) still resolves via the /api proxy.
 import { ref, onMounted, onUnmounted } from 'vue'
+import { saveData } from '../src/data'
 
 const localSources = import.meta.glob('../data/*.txt', {
   query: '?raw',
@@ -501,7 +502,7 @@ const createStage = (host: HTMLElement, controlsHost: HTMLElement, src: string) 
 
 // --- app mode: load a vlang source by data-file NAME (frontend/data/*.txt), edit / save / run ---
 // Sources are plain files. The buffer edits live; `run` re-renders the stage; `save` writes the
-// buffer back to frontend/data/<name>.txt via the dev /__save middleware (the same path the doc
+// buffer back to frontend/data/<name>.txt via saveData and x.js (the same path the doc
 // editor uses — .txt is a doc format now). Typing a new name then saving creates a new source.
 const STORE_KEY = 'devlab.vlang-app.source' // last loaded file name — survives reloads
 // starter state — small canvas so the stage is never blank (also a live tx demo)
@@ -550,7 +551,7 @@ const clear = () => {
   rebuild()
 }
 
-// Persist the buffer to frontend/data/<name>.txt (dev only — the middleware isn't served in a build).
+// Persist the buffer to frontend/data/<name>.txt (dev only: the static build has no x.js behind it).
 const canSave = import.meta.env.DEV
 const save = async () => {
   const name = nameField.value.trim()
@@ -559,13 +560,7 @@ const save = async () => {
     return
   }
   try {
-    const res = await fetch(`/__save?name=${encodeURIComponent(name)}&ext=txt`, {
-      method: 'POST',
-      body: source.value,
-    })
-    if (!res.ok) {
-      throw new Error((await res.text()) || `save failed (${res.status})`)
-    }
+    await saveData(name, 'txt', source.value)
     localStorage.setItem(STORE_KEY, name)
     status.value = `saved data/${name}.txt ✓`
   } catch (err: any) {

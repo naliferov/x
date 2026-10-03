@@ -19,6 +19,7 @@ over `data/` discovers everything.
 ```
 npm install
 npm run dev        # http://localhost:5173
+node --watch ../x.js   # saving docs, collages, vlang sources: http://localhost:3000
 npm run build      # -> dist/ (fully static, docs bundled as lazy chunks)
 npm run typecheck
 ```
