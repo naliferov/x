@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// Desktop notification every 50 minutes, so I don't sit too long. Asks for the permission on open
-// and starts once it is granted. The deadline lives in localStorage, so a reload or coming back from
-// another node continues the same period; while the script is not open, nothing fires.
+// Desktop notification and a beep every 50 minutes, so I don't sit too long. Asks for the permission
+// on open and starts once it is granted. The deadline lives in localStorage, so a reload or coming back
+// from another node continues the same period; while the script is not open, nothing fires.
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 const PERIOD_MS = 50 * 60 * 1000
@@ -23,12 +23,31 @@ const startPeriod = () => {
   localStorage.setItem(STORE_KEY, String(deadline.value))
 }
 
+// Chrome starts an AudioContext suspended until the page has had a click. The context is made at the
+// beep, so any click since the tab opened is enough; in a tab nobody clicked the beep is skipped and
+// only the notification comes.
+const beep = () => {
+  const audio = new AudioContext()
+  if (audio.state !== 'running') {
+    audio.close()
+    return
+  }
+  const tone = new OscillatorNode(audio, { frequency: 880 })
+  const volume = new GainNode(audio, { gain: 0.3 })
+  volume.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + 1)
+  tone.connect(volume).connect(audio.destination)
+  tone.onended = () => audio.close()
+  tone.start()
+  tone.stop(audio.currentTime + 1)
+}
+
 const step = () => {
   now.value = Date.now()
   if (now.value < deadline.value) {
     return
   }
   new Notification('50 minutes')
+  beep()
   startPeriod()
 }
 
